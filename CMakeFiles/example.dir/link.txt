@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.0.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/example.dir/main.cpp.o -o example  /usr/local/Cellar/raylib/3.0.0/lib/libraylib.dylib -L/usr/local/Cellar/raylib/3.0.0/lib -lraylib 

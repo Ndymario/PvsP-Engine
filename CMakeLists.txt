@@ -1,12 +1,17 @@
-cmake_minimum_required(VERSION 3.11) # FetchContent is available in 3.11+
-project(example)
+cmake_minimum_required(VERSION 3.11)
+project(mvsl_recoded)
 
-# Set this to the minimal version you want to support
-find_package(raylib 3.0 QUIET) # Let CMake search for a raylib-config.cmake
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-# You could change the QUIET above to REQUIRED and remove this if() clause
-# This part downloads raylib and builds it if it's not installed on your system
-if (NOT raylib_FOUND) # If there's none, fetch and build raylib
+set(BINARY_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIR})
+
+find_package(raylib 3.0 QUIET)
+
+if (NOT raylib_FOUND)
   include(FetchContent)
 
   FetchContent_Declare(
@@ -15,23 +20,20 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
   )
 
   FetchContent_GetProperties(raylib)
-  if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
+  if (NOT raylib_POPULATED)
     set(FETCHCONTENT_QUIET NO)
     FetchContent_Populate(raylib)
 
-    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-    # build raylib
     add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
 
   endif()
 
 endif()
 
-# This is the main part:
+include_directories("src")
+file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "src/*.cpp")
 
-add_executable(${PROJECT_NAME} main.cpp)
-#set(raylib_VERBOSE 1)
+add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} raylib)
-
-# That's it! You should have an example executable that you can run. Have fun!
