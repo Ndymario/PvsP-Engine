@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/main.cpp
+stdio.h
+-
+raylib.h
+-
+
+/usr/local/Cellar/raylib/3.0.0/include/raylib.h
+stdarg.h
+-
+stdbool.h
+-
+
