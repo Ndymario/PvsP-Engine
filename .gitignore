@@ -1,1 +1,10 @@
+# VS-Code specific
 workspace.code-workspace
+.vscode/
+
+# MSVS specific
+.vs/
+
+# General
+bin/
+build/
