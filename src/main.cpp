@@ -18,15 +18,14 @@ int main(void) {
         // Titlescreen:
     const int highlightedPipeWidth = 228;
     const int highlightedPipeHeight = 35;
-    const int unhighlightedPipeWidth = 218;
+    const int unhighlightedPipeWidth = 217;
     const int unhighlightedPipeHeight = 35;
-    const int numOfButtons = 3;
 
     // Initalize the game window
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Mario vs Luigi - Title Screen");
 
-    // Load the Title Screen assets
-    Image asset = LoadImage("assets/title/title_screen_assets.png");
+    // Load the Title Screen assets (NOTE: This path needs to be hard coded for macOS, will find a fix later)
+    Image asset = LoadImage("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/title/title_screen_assets.png");
 
     // Define the rectangles for the bounding boxes of the buttons. (Also used for cropping)
     // Y pos of first buttton in the .png is 68
@@ -56,15 +55,55 @@ int main(void) {
         int minigameHover = 0;
         int optionsHover = 0;
 
+        // Declare some bounding boxes for the title screen buttons
+        Rectangle mvslButton = { SCREEN_WIDTH/4, 0, highlightedPipeWidth, highlightedPipeHeight };
+        Rectangle minigameButton = { SCREEN_WIDTH/4, highlightedPipeHeight, highlightedPipeWidth, highlightedPipeHeight };
+        Rectangle optionsButton = { SCREEN_WIDTH/4, highlightedPipeHeight * 2, highlightedPipeWidth, highlightedPipeHeight };
+
+        Vector2 mvslButtonCoords = { mvslButton.x, mvslButton.y };
+        Vector2 minigameButtonCoords = { minigameButton.x, minigameButton.y };
+        Vector2 optionsButtonCoords = { optionsButton.x, optionsButton.y };
+
         while (titleScreen) {
 
+            // Swap the Texture for if the buttons are highlightted are not
+
+            if (GetMouseX() > mvslButton.x & GetMouseX() < (mvslButton.x + highlightedPipeWidth)){
+                if (GetMouseY() > mvslButton.y & GetMouseY() < (mvslButton.y + highlightedPipeHeight)){
+                    mvslHover = 1;
+                } else {
+                    mvslHover = 0;
+                }
+            } else {
+                mvslHover = 0;
+            }
+
+            if (GetMouseX() > minigameButton.x & GetMouseX() < (minigameButton.x + highlightedPipeWidth)){
+                if ((GetMouseY() > minigameButton.y) & (GetMouseY() < (minigameButton.y + highlightedPipeHeight))){
+                    minigameHover = 1;
+                } else {
+                    minigameHover = 0;
+                }
+            } else {
+                minigameHover = 0;
+            }
+
+            if (GetMouseX() > optionsButton.x & GetMouseX() < (optionsButton.x + highlightedPipeWidth)){
+                if ((GetMouseY() > optionsButton.y) & (GetMouseY() < (optionsButton.y + highlightedPipeHeight))){
+                    optionsHover = 1;
+                } else {
+                    optionsHover = 0;
+                }
+            } else {
+                optionsHover = 0;
+            }
             // Draw
             //----------------------------------------------------------------------------------
             BeginDrawing();
             ClearBackground(BLACK);
-            DrawTextureRec(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, ZERO, WHITE);
-            DrawTextureRec(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, { 0, highlightedPipeHeight }, WHITE);
-            DrawTextureRec(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, { 0, highlightedPipeHeight * 2 }, WHITE);
+            DrawTextureRec(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, mvslButtonCoords, WHITE);
+            DrawTextureRec(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, minigameButtonCoords, WHITE);
+            DrawTextureRec(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, optionsButtonCoords, WHITE);
 
             EndDrawing();
             //----------------------------------------------------------------------------------
