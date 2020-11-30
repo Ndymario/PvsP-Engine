@@ -1,13 +1,16 @@
 /*
-Contributors to this file: Nolan Y.
+Contributors to this file: Nolan Y., Gota7
 */
 #include <stdio.h>
 #include <raylib.h>
+#include <algorithm>
 
 // Some constants.
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 450;
 const Vector2 ZERO = { 0, 0 };
+const char* currentDir = GetWorkingDirectory();
+const char* titleScreenAsset = "/assets/title/title_screen_assets.png";
 
 int main(void) {
 
@@ -21,11 +24,21 @@ int main(void) {
     const int unhighlightedPipeWidth = 217;
     const int unhighlightedPipeHeight = 35;
 
+    // Set up the CWD
+    int * result = new int[sizeof(currentDir) + sizeof(titleScreenAsset)];
+    std::copy(currentDir, currentDir + sizeof(currentDir), result);
+    std::copy(titleScreenAsset, titleScreenAsset + sizeof(titleScreenAsset), result + sizeof(currentDir));
+    char cwd[sizeof(result)];
+    *result = *cwd;
+    result = result + sizeof(cwd);
+    *result = *titleScreenAsset;
+    *cwd = (char) * result;
+
     // Initalize the game window
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Mario vs Luigi - Title Screen");
 
     // Load the Title Screen assets (NOTE: This path needs to be hard coded for macOS, will find a fix later)
-    Image asset = LoadImage("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/title/title_screen_assets.png");
+    Image asset = LoadImage(cwd);
 
     // Define the rectangles for the bounding boxes of the buttons. (Also used for cropping)
     // Y pos of first buttton in the .png is 68
