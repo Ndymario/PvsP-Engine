@@ -8,3 +8,4 @@ workspace.code-workspace
 # General
 bin/
 build/
+.DS_Store
