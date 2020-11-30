@@ -45,6 +45,11 @@ int main(void) {
     bool inMinigame = false;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+
+    // Initalize the Audio and set the Master Audio to default
+    InitAudioDevice();
+    SetMasterVolume(100);
+
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -63,6 +68,9 @@ int main(void) {
         Vector2 mvslButtonCoords = { mvslButton.x, mvslButton.y };
         Vector2 minigameButtonCoords = { minigameButton.x, minigameButton.y };
         Vector2 optionsButtonCoords = { optionsButton.x, optionsButton.y };
+
+        // Load button sounds
+        Sound buttonSound = LoadSoundFromWave(LoadWave("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/sounds/Mario/whoohoo.wav"));
 
         while (titleScreen) {
 
@@ -97,6 +105,26 @@ int main(void) {
             } else {
                 optionsHover = 0;
             }
+
+            // Check to see if the mouse is being clicked inside of a button, and do something based
+            // on what button is pressed
+
+            if (IsMouseButtonPressed(0)){
+                if (mvslHover == 1){
+                    // If the mouse clicks on the MvsL Button
+                    PlaySound(buttonSound);
+                }
+
+                if (minigameHover == 1){
+                    // If the mouse clicks on the Minigame Button
+                    PlaySound(buttonSound);
+                }
+
+                if (optionsHover == 1){
+                    // If the mouse clicks on the Options Button
+                    PlaySound(buttonSound);
+                }
+            }
             // Draw
             //----------------------------------------------------------------------------------
             BeginDrawing();
@@ -112,6 +140,7 @@ int main(void) {
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
+    CloseAudioDevice();   // Close the Audio Device
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
