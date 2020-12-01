@@ -23,6 +23,8 @@ int main(void) {
     const int highlightedPipeHeight = 35;
     const int unhighlightedPipeWidth = 217;
     const int unhighlightedPipeHeight = 35;
+    const int backgroundWidth = 256;
+    const int backgroundHeight = 160;
 
     // Set up the CWD
     char * result = new char[sizeof(currentDir) + sizeof(titleScreenAsset)];
@@ -33,16 +35,18 @@ int main(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Mario vs Luigi - Title Screen");
 
     // Load the Title Screen assets (NOTE: This path needs to be hard coded for macOS, will find a fix later)
-    Image asset = LoadImage(result);
+    Image asset = LoadImage("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/title/title_screen_assets.png");
 
     // Define the rectangles for the bounding boxes of the buttons. (Also used for cropping)
     // Y pos of first buttton in the .png is 68
+    // BG Coords (270, 195)
     Rectangle mvslHighlightedBox = { 0, 68, highlightedPipeWidth, highlightedPipeHeight };
     Rectangle mvslUnhighlightedBox = { 0, 68 + highlightedPipeHeight, unhighlightedPipeWidth, unhighlightedPipeHeight };
     Rectangle minigameHighlightedBox = { 0, 68 + (highlightedPipeHeight * 2), highlightedPipeWidth, highlightedPipeHeight };
     Rectangle minigameUnhighlightedBox = { 0, 68 + (highlightedPipeHeight * 3), unhighlightedPipeWidth, unhighlightedPipeHeight };
     Rectangle optionsHighlightedBox = { 0, 68 + (highlightedPipeHeight * 4), highlightedPipeWidth, highlightedPipeHeight };
     Rectangle optionsUnhighlightedBox = { 0, 68 + (highlightedPipeHeight * 5), unhighlightedPipeWidth, unhighlightedPipeHeight };
+    Rectangle backgroundBox = { 270, 195, backgroundWidth, backgroundHeight};
 
     // Create Textures for drawing to the screen
     Texture2D titleAsset = LoadTextureFromImage(asset);
@@ -69,13 +73,16 @@ int main(void) {
         int optionsHover = 0;
 
         // Declare some bounding boxes for the title screen buttons
-        Rectangle mvslButton = { SCREEN_WIDTH/4, 0, highlightedPipeWidth, highlightedPipeHeight };
-        Rectangle minigameButton = { SCREEN_WIDTH/4, highlightedPipeHeight, highlightedPipeWidth, highlightedPipeHeight };
-        Rectangle optionsButton = { SCREEN_WIDTH/4, highlightedPipeHeight * 2, highlightedPipeWidth, highlightedPipeHeight };
+        Rectangle mvslButton = { SCREEN_WIDTH/4 + 20, backgroundHeight, highlightedPipeWidth, highlightedPipeHeight };
+        Rectangle minigameButton = { mvslButton.x, mvslButton.y + highlightedPipeHeight, highlightedPipeWidth, highlightedPipeHeight };
+        Rectangle optionsButton = { mvslButton.x, minigameButton.y + highlightedPipeHeight, highlightedPipeWidth, highlightedPipeHeight };
 
         Vector2 mvslButtonCoords = { mvslButton.x, mvslButton.y };
         Vector2 minigameButtonCoords = { minigameButton.x, minigameButton.y };
         Vector2 optionsButtonCoords = { optionsButton.x, optionsButton.y };
+
+        // Make a position vector for the background
+        Vector2 backgroundCoords = { SCREEN_WIDTH/4, backgroundHeight};
 
         // Load button sounds
         Sound buttonSound = LoadSoundFromWave(LoadWave("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/sounds/Mario/whoohoo.wav"));
@@ -137,6 +144,7 @@ int main(void) {
             //----------------------------------------------------------------------------------
             BeginDrawing();
             ClearBackground(BLACK);
+            DrawTextureRec(titleAsset, backgroundBox, backgroundCoords, WHITE);
             DrawTextureRec(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, mvslButtonCoords, WHITE);
             DrawTextureRec(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, minigameButtonCoords, WHITE);
             DrawTextureRec(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, optionsButtonCoords, WHITE);
