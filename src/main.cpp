@@ -1,6 +1,7 @@
 /*
 Contributors to this file: Nolan Y., Gota7
 */
+#include <iostream>
 #include <stdio.h>
 #include <raylib.h>
 #include <algorithm>
@@ -9,8 +10,9 @@ Contributors to this file: Nolan Y., Gota7
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 450;
 const Vector2 ZERO = { 0, 0 };
-const char* currentDir = GetWorkingDirectory();
-const char* titleScreenAsset = "mvsl_recoded/assets/title/title_screen_assets.png";
+std::string rootDir = std::string(GetWorkingDirectory());
+std::string titleScreenAsset = "/./../assets/title/title_screen_assets.png";
+std::string audioAsset = "/./../assets/sounds";
 
 int main(void) {
 
@@ -27,15 +29,13 @@ int main(void) {
     const int backgroundHeight = 160;
 
     // Set up the CWD
-    char * result = new char[sizeof(currentDir) + sizeof(titleScreenAsset)];
-    std::copy(currentDir, currentDir + sizeof(currentDir), result);
-    std::copy(titleScreenAsset, titleScreenAsset + sizeof(titleScreenAsset), result + sizeof(currentDir));
+    std::string backgroundAsset = rootDir + titleScreenAsset;
 
     // Initalize the game window
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Mario vs Luigi - Title Screen");
 
-    // Load the Title Screen assets (NOTE: This path needs to be hard coded for macOS, will find a fix later)
-    Image asset = LoadImage("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/title/title_screen_assets.png");
+    // Load the Title Screen assets
+    Image asset = LoadImage(backgroundAsset.c_str());
 
     // Define the rectangles for the bounding boxes of the buttons. (Also used for cropping)
     // Y pos of first buttton in the .png is 68
@@ -85,7 +85,8 @@ int main(void) {
         Vector2 backgroundCoords = { SCREEN_WIDTH/4, backgroundHeight};
 
         // Load button sounds
-        Sound buttonSound = LoadSoundFromWave(LoadWave("/Users/ndymario/Desktop/Programming/C/MvsL-Recoded/assets/sounds/Mario/whoohoo.wav"));
+        std::string buttonSoundAsset = rootDir + audioAsset + "/Mario/whoohoo.wav";
+        Sound buttonSound = LoadSoundFromWave(LoadWave(buttonSoundAsset.c_str()));
 
         while (titleScreen) {
 
