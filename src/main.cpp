@@ -68,9 +68,9 @@ int main(void) {
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Declare some ints for determining if the mouse is hovering over a button
-        int mvslHover = 0;
-        int minigameHover = 0;
-        int optionsHover = 0;
+        bool mvslHover = 0;
+        bool minigameHover = 0;
+        bool optionsHover = 0;
 
         // Declare some bounding boxes for the title screen buttons
         Rectangle mvslButton = { SCREEN_WIDTH/4 + 20, backgroundHeight, highlightedPipeWidth, highlightedPipeHeight };
