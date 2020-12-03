@@ -1,5 +1,7 @@
 /*
-Contributors to this file: Nolan Y., Gota7
+Main contributors to this file: Nolan Y.
+
+Bug fixers: Gota7, bbomb64
 */
 #include <iostream>
 #include <stdio.h>
