@@ -1,7 +1,7 @@
 /*
 Main contributors to this file: Nolan Y.
 
-Bug fixers: Gota7, bbomb64
+Bug fixers: Gota7, bbomb64, SkilLP
 */
 #include <iostream>
 #include <stdio.h>
@@ -70,9 +70,9 @@ int main(void) {
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Declare some ints for determining if the mouse is hovering over a button
-        bool mvslHover = 0;
-        bool minigameHover = 0;
-        bool optionsHover = 0;
+        bool mvslHover = false;
+        bool minigameHover = false;
+        bool optionsHover = false;
 
         // Declare some bounding boxes for the title screen buttons
         Rectangle mvslButton = { SCREEN_WIDTH/4 + 20, backgroundHeight, highlightedPipeWidth, highlightedPipeHeight };
@@ -98,59 +98,29 @@ int main(void) {
         while (titleScreen) {
 
             // Swap the Texture for if the buttons are highlightted are not
-
-            if (GetMouseX() > mvslButton.x & GetMouseX() < (mvslButton.x + highlightedPipeWidth)){
-                if (GetMouseY() > mvslButton.y & GetMouseY() < (mvslButton.y + highlightedPipeHeight)){
-                    mvslHover = 1;
-                } else {
-                    mvslHover = 0;
-                }
-            } else {
-                mvslHover = 0;
-            }
-
-            if (GetMouseX() > minigameButton.x & GetMouseX() < (minigameButton.x + highlightedPipeWidth)){
-                if ((GetMouseY() > minigameButton.y) & (GetMouseY() < (minigameButton.y + highlightedPipeHeight))){
-                    minigameHover = 1;
-                } else {
-                    minigameHover = 0;
-                }
-            } else {
-                minigameHover = 0;
-            }
-
-            if (GetMouseX() > optionsButton.x & GetMouseX() < (optionsButton.x + highlightedPipeWidth)){
-                if ((GetMouseY() > optionsButton.y) & (GetMouseY() < (optionsButton.y + highlightedPipeHeight))){
-                    optionsHover = 1;
-                } else {
-                    optionsHover = 0;
-                }
-            } else {
-                optionsHover = 0;
-            }
+            mvslHover       = CheckCollisionPointRec(GetMousePosition(), mvslButton);
+            minigameHover   = CheckCollisionPointRec(GetMousePosition(), minigameButton);
+            optionsHover    = CheckCollisionPointRec(GetMousePosition(), optionsButton);
 
             // Check to see if the mouse is being clicked inside of a button, and do something based
             // on what button is pressed
 
             if (IsMouseButtonPressed(0)){
-                if (mvslHover == 1){
+                if (mvslHover){
                     // If the mouse clicks on the MvsL Button
                     PlaySound(buttonSound);
                     mvslButtonPressed = true;
-                }
-
-                if (minigameHover == 1){
+                } else if (minigameHover){
                     // If the mouse clicks on the Minigame Button
                     PlaySound(buttonSound);
                     miniGameButtonPressed = true;
-                }
-
-                if (optionsHover == 1){
+                } else if (optionsHover){
                     // If the mouse clicks on the Options Button
                     PlaySound(buttonSound);
                     optionsButtonPressed = true;
                 }
             }
+
             // Draw to the screen
             BeginDrawing();
 
@@ -169,6 +139,7 @@ int main(void) {
             }
 
             // End Drawing to the screen
+            DrawRectangle(10, 10, 10, 10, RED);
             EndDrawing();
 
             // Post rendering
@@ -186,7 +157,6 @@ int main(void) {
                     // [TODO]
                 }
             }
-
         }
     }
 
