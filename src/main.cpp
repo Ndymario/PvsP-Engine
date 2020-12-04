@@ -95,7 +95,7 @@ int main(void) {
         bool miniGameButtonPressed = false;
         bool optionsButtonPressed = false;
 
-        while (titleScreen) {
+        while (titleScreen && !WindowShouldClose()) {
 
             // Swap the Texture for if the buttons are highlightted are not
             mvslHover       = CheckCollisionPointRec(GetMousePosition(), mvslButton);
@@ -135,11 +135,9 @@ int main(void) {
             }
 
             if(optionsButtonPressed){
-                //TODO: Add buttons to draw for the options menu
+                DrawRectangle(10, 10, 10, 10, RED);
             }
 
-            // End Drawing to the screen
-            DrawRectangle(10, 10, 10, 10, RED);
             EndDrawing();
 
             // Post rendering
