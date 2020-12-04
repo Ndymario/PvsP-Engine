@@ -90,6 +90,11 @@ int main(void) {
         std::string buttonSoundAsset = rootDir + audioAsset + "/Mario/whoohoo.wav";
         Sound buttonSound = LoadSoundFromWave(LoadWave(buttonSoundAsset.c_str()));
 
+        // Declare and Initalized the status of the buttons
+        bool mvslButtonPressed = false;
+        bool miniGameButtonPressed = false;
+        bool optionsButtonPressed = false;
+
         while (titleScreen) {
 
             // Swap the Texture for if the buttons are highlightted are not
@@ -131,29 +136,57 @@ int main(void) {
                 if (mvslHover == 1){
                     // If the mouse clicks on the MvsL Button
                     PlaySound(buttonSound);
+                    mvslButtonPressed = true;
                 }
 
                 if (minigameHover == 1){
                     // If the mouse clicks on the Minigame Button
                     PlaySound(buttonSound);
+                    miniGameButtonPressed = true;
                 }
 
                 if (optionsHover == 1){
                     // If the mouse clicks on the Options Button
                     PlaySound(buttonSound);
+                    optionsButtonPressed = true;
                 }
             }
-            // Draw
-            //----------------------------------------------------------------------------------
+            // Draw to the screen
             BeginDrawing();
-            ClearBackground(BLACK);
-            DrawTextureRec(titleAsset, backgroundBox, backgroundCoords, WHITE);
-            DrawTextureRec(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, mvslButtonCoords, WHITE);
-            DrawTextureRec(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, minigameButtonCoords, WHITE);
-            DrawTextureRec(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, optionsButtonCoords, WHITE);
 
+            // Clear the frame for the next frame
+            ClearBackground(BLACK);
+
+            if(!optionsButtonPressed){
+                DrawTextureRec(titleAsset, backgroundBox, backgroundCoords, WHITE);
+                DrawTextureRec(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, mvslButtonCoords, WHITE);
+                DrawTextureRec(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, minigameButtonCoords, WHITE);
+                DrawTextureRec(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, optionsButtonCoords, WHITE);
+            }
+
+            if(optionsButtonPressed){
+                //TODO: Add buttons to draw for the options menu
+            }
+
+            // End Drawing to the screen
             EndDrawing();
-            //----------------------------------------------------------------------------------
+
+            // Post rendering
+            if(mvslButtonPressed || miniGameButtonPressed){
+                // Transition to the other scene
+                titleScreen = false;
+
+                if(mvslButtonPressed){
+                    // Load the MvsL game scene
+                    // [TODO]
+                }
+
+                if(miniGameButtonPressed){
+                    // Load the minigame game scene
+                    // [TODO]
+                }
+            }
+
         }
     }
 
