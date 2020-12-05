@@ -3,7 +3,17 @@ Main contributors to this file: Nolan Y.
 
 Bug fixers: Gota7, bbomb64, SkilLP
 */
-#include <main.h>
+
+#include <raylib.h>
+#include "scene.h"
+#include "titleScreen.h"
+#include "gameplay.h"
+
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 450;
+
+TitleScreen titleScreen;
+Gameplay gameplay;
 
 // Main method.
 int main(void) {
@@ -15,30 +25,23 @@ int main(void) {
     SetMasterVolume(100);
 
     // Set the initial scene.
-    Scene::ChangeScene(&TitleScreenScene);
-
-    // Init camera.
-    MainCamera = new Camera();
-    MainCamera->position = { 10.0f, 10.0f, 10.0f }; // Camera position
-    MainCamera->target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
-    MainCamera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    MainCamera->fovy = 45.0f;                                // Camera field-of-view Y
-    MainCamera->type = CAMERA_PERSPECTIVE;                   // Camera mode type
-    SetCameraMode(*MainCamera, CAMERA_FREE);
+    Scene::LoadScene("TitleScreen", &titleScreen);
+    Scene::LoadScene("Gameplay", &gameplay);
+    Scene::ChangeScene("TitleScreen");
 
     // Main game loop
     while (!WindowShouldClose())
     {
         
         // Do update.
-        UpdateCamera(MainCamera);
+        UpdateCamera(&Scene::GetCamera());
         Scene::DoUpdate();
 
         // Draw everything.
         BeginDrawing();
             ClearBackground(BLACK);
             Scene::DoDrawBackground2D();
-            BeginMode3D(*MainCamera);
+            BeginMode3D(Scene::GetCamera());
                 Scene::DoDraw3D();
             EndMode3D();
             Scene::DoDrawForeground2D();

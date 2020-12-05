@@ -1,5 +1,8 @@
 #include "titleScreen.h"
-#include <main.h>
+#include "assetManager.h"
+
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 450;
 
 // Declare constants for the dimentions of assets
         // Titlescreen:
@@ -128,7 +131,7 @@ void TitleScreen::Update()
 
         if (mvslButtonPressed) {
             // Load the MvsL game scene
-            Scene::ChangeScene(&GameplayScene);
+            Scene::ChangeScene("Gameplay");
         }
 
         if (miniGameButtonPressed) {

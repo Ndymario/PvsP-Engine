@@ -1,14 +1,15 @@
 #include "scene.h"
 
 Scene* Scene::currentScene;
+map<string, Scene*> Scene::loadedScenes;
 
-void Scene::ChangeScene(Scene* newScene)
+void Scene::ChangeScene(string name)
 {
 	if (currentScene != nullptr)
 	{
 		currentScene->Cleanup();
 	}
-	currentScene = newScene;
+	currentScene = loadedScenes[name];
 	currentScene->Initialize();
 }
 
@@ -34,4 +35,14 @@ void Scene::DoUpdate()
 {
 	if (currentScene == nullptr) return;
 	currentScene->Update();
+}
+
+void Scene::LoadScene(string name, Scene* scene)
+{
+	loadedScenes[name] = scene;
+}
+
+Camera& Scene::GetCamera()
+{
+	return currentScene->camera;
 }
