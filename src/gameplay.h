@@ -8,6 +8,7 @@ struct Gameplay : public Scene
 
 	// Player data.
 	Mdl playerModel;
+	Mdl playerHeadModel;
 
 	// To implement.
 	void Initialize();

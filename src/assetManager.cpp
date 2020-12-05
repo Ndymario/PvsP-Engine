@@ -9,18 +9,13 @@ map<string, Sound> AssetManager::loadedSounds;
 
 void AssetManager::LoadModelAsset(string path, string name)
 {
-	if (!loadedModels.contains(name))
-	{
-		loadedModels[name] = LoadModel((AssetFolder + path).c_str());
-	}
+	loadedModels[name] = LoadModel((AssetFolder + path).c_str());
 }
 
 void AssetManager::UnloadModelAsset(string name)
 {
-	if (loadedModels.contains(name)) {
-		UnloadModel(loadedModels[name]);
-		loadedModels.erase(name);
-	}
+	UnloadModel(loadedModels[name]);
+	loadedModels.erase(name);
 }
 
 Model& AssetManager::GetModel(string name)
@@ -30,18 +25,13 @@ Model& AssetManager::GetModel(string name)
 
 void AssetManager::LoadAnimationAsset(string path, string name)
 {
-	if (!loadedAnimations.contains(name))
-	{
-		loadedAnimations[name] = LoadModelAnimations((AssetFolder + path).c_str(), &dummyCount);
-	}
+	loadedAnimations[name] = LoadModelAnimations((AssetFolder + path).c_str(), &dummyCount);
 }
 
 void AssetManager::UnloadAnimationAsset(string name)
 {
-	if (loadedAnimations.contains(name)) {
-		UnloadModelAnimation(*loadedAnimations[name]);
-		loadedAnimations.erase(name);
-	}
+	UnloadModelAnimation(*loadedAnimations[name]);
+	loadedAnimations.erase(name);
 }
 
 ModelAnimation& AssetManager::GetAnimation(string name)
@@ -51,18 +41,13 @@ ModelAnimation& AssetManager::GetAnimation(string name)
 
 void AssetManager::LoadTextureAsset(string path, string name)
 {
-	if (!loadedTextures.contains(name))
-	{
-		loadedTextures[name] = LoadTexture((AssetFolder + path).c_str());
-	}
+	loadedTextures[name] = LoadTexture((AssetFolder + path).c_str());
 }
 
 void AssetManager::UnloadTextureAsset(string name)
 {
-	if (loadedTextures.contains(name)) {
-		UnloadTexture(loadedTextures[name]);
-		loadedTextures.erase(name);
-	}
+	UnloadTexture(loadedTextures[name]);
+	loadedTextures.erase(name);
 }
 
 Texture& AssetManager::GetTexture(string name)
@@ -72,18 +57,13 @@ Texture& AssetManager::GetTexture(string name)
 
 void AssetManager::LoadSoundAsset(string path, string name)
 {
-	if (!loadedSounds.contains(name))
-	{
-		loadedSounds[name] = LoadSound((AssetFolder + path).c_str());
-	}
+	loadedSounds[name] = LoadSound((AssetFolder + path).c_str());
 }
 
 void AssetManager::UnloadSoundAsset(string name)
 {
-	if (loadedSounds.contains(name)) {
-		UnloadSound(loadedSounds[name]);
-		loadedSounds.erase(name);
-	}
+	UnloadSound(loadedSounds[name]);
+	loadedSounds.erase(name);
 }
 
 Sound& AssetManager::GetSound(string name)
