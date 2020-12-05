@@ -8,15 +8,14 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "scene.h"
 #include "titleScreen.h"
 #include "gameplay.h"
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 450;
+#include "screen.h"
 
 // Main method.
 int main(void) {
 
     // Initalize the game window
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Mario vs Luigi - Title Screen");
+    InitWindow(Screen::GAME_WIDTH, Screen::GAME_HEIGHT, "Mario vs Luigi - Title Screen");
+    Screen::Init();
     SetTargetFPS(60);
     InitAudioDevice();
     SetMasterVolume(100);
@@ -37,6 +36,12 @@ int main(void) {
         // Do update.
         UpdateCamera(&Scene::GetCamera());
         Scene::DoUpdate();
+
+        // Fullscreen check.
+        if (IsKeyPressed(KEY_F4))
+        {
+            Screen::DoToggleFullscreen();
+        }
 
         // Draw everything.
         BeginDrawing();
