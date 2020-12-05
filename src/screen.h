@@ -1,4 +1,6 @@
 #pragma once
+#include <raylib.h>
+
 struct Screen
 {
 	
@@ -22,6 +24,8 @@ struct Screen
 		static void ResizeWindow(float scale);
 		static void ResizeWindow(int width);
 		static void DoToggleFullscreen();
+		static Vector2 ScaleVector2(Vector2* vector);
+		static Rectangle ScaleRectangle(Rectangle* rect);
 
 };
 
