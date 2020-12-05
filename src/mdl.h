@@ -17,8 +17,8 @@ struct Mdl
 	public:
 
 		// Timer stuff.
-		int frameTimer;
-		bool timerFrozen;
+		int frameTimer = 0;
+		bool timerFrozen = false;
 
 		// Set aspect.
 		void SetModel(string name);

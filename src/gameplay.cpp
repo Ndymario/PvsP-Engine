@@ -1,7 +1,6 @@
 #include "gameplay.h"
 #include <assetManager.h>
 
-int frameCounter;
 Vector3 pos = { 0, 0, 0 };
 
 void Gameplay::Initialize()

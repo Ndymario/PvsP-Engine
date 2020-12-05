@@ -12,9 +12,6 @@ Bug fixers: Gota7, bbomb64, SkilLP
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 450;
 
-TitleScreen titleScreen;
-Gameplay gameplay;
-
 // Main method.
 int main(void) {
 
@@ -23,6 +20,10 @@ int main(void) {
     SetTargetFPS(60);
     InitAudioDevice();
     SetMasterVolume(100);
+
+    // Scenes that exist.
+    TitleScreen titleScreen;
+    Gameplay gameplay;
 
     // Set the initial scene.
     Scene::LoadScene("TitleScreen", &titleScreen);
