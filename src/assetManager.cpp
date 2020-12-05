@@ -1,11 +1,11 @@
 #include "assetManager.h"
 
 int AssetManager::dummyCount;
-map<const char*, Model> AssetManager::loadedModels;
-map<const char*, ModelAnimation*> AssetManager::loadedAnimations;
-map<const char*, Texture2D> AssetManager::loadedTextures;
+map<string, Model> AssetManager::loadedModels;
+map<string, ModelAnimation*> AssetManager::loadedAnimations;
+map<string, Texture2D> AssetManager::loadedTextures;
 
-void AssetManager::LoadModelAsset(const char* path, const char* name)
+void AssetManager::LoadModelAsset(const char* path, string name)
 {
 	if (!loadedModels.contains(name))
 	{
@@ -13,7 +13,7 @@ void AssetManager::LoadModelAsset(const char* path, const char* name)
 	}
 }
 
-void AssetManager::UnloadModelAsset(const char* name)
+void AssetManager::UnloadModelAsset(string name)
 {
 	if (loadedModels.contains(name)) {
 		UnloadModel(loadedModels[name]);
@@ -21,12 +21,12 @@ void AssetManager::UnloadModelAsset(const char* name)
 	}
 }
 
-Model& AssetManager::GetModel(const char* name)
+Model& AssetManager::GetModel(string name)
 {
 	return loadedModels[name];
 }
 
-void AssetManager::LoadAnimationAsset(const char* path, const char* name)
+void AssetManager::LoadAnimationAsset(const char* path, string name)
 {
 	if (!loadedAnimations.contains(name))
 	{
@@ -34,7 +34,7 @@ void AssetManager::LoadAnimationAsset(const char* path, const char* name)
 	}
 }
 
-void AssetManager::UnloadAnimationAsset(const char* name)
+void AssetManager::UnloadAnimationAsset(string name)
 {
 	if (loadedAnimations.contains(name)) {
 		UnloadModelAnimation(*loadedAnimations[name]);
@@ -42,12 +42,12 @@ void AssetManager::UnloadAnimationAsset(const char* name)
 	}
 }
 
-ModelAnimation& AssetManager::GetAnimation(const char* name)
+ModelAnimation& AssetManager::GetAnimation(string name)
 {
 	return *loadedAnimations[name];
 }
 
-void AssetManager::LoadTextureAsset(const char* path, const char* name)
+void AssetManager::LoadTextureAsset(const char* path, string name)
 {
 	if (!loadedTextures.contains(name))
 	{
@@ -55,7 +55,7 @@ void AssetManager::LoadTextureAsset(const char* path, const char* name)
 	}
 }
 
-void AssetManager::UnloadTextureAsset(const char* name)
+void AssetManager::UnloadTextureAsset(string name)
 {
 	if (loadedTextures.contains(name)) {
 		UnloadTexture(loadedTextures[name]);
@@ -63,7 +63,7 @@ void AssetManager::UnloadTextureAsset(const char* name)
 	}
 }
 
-Texture& AssetManager::GetTexture(const char* name)
+Texture& AssetManager::GetTexture(string name)
 {
 	return loadedTextures[name];
 }

@@ -1,5 +1,6 @@
 #include <map>
 #include <raylib.h>
+#include <string>
 
 using namespace std;
 
@@ -10,26 +11,26 @@ struct AssetManager
 	// Place to store loaded data.
 	private:
 		static int dummyCount;
-		static map<const char*, Model> loadedModels;
-		static map<const char*, ModelAnimation*> loadedAnimations;
-		static map<const char*, Texture2D> loadedTextures;
+		static map<string, Model> loadedModels;
+		static map<string, ModelAnimation*> loadedAnimations;
+		static map<string, Texture2D> loadedTextures;
 
 	// Public info.
 	public:
 
 		// Models.
-		static void LoadModelAsset(const char* path, const char* name);
-		static void UnloadModelAsset(const char* name);
-		static Model& GetModel(const char* name);
+		static void LoadModelAsset(const char* path, string name);
+		static void UnloadModelAsset(string name);
+		static Model& GetModel(string name);
 
 		// Animations.
-		static void LoadAnimationAsset(const char* path, const char* name);
-		static void UnloadAnimationAsset(const char* name);
-		static ModelAnimation& GetAnimation(const char* name);
+		static void LoadAnimationAsset(const char* path, string name);
+		static void UnloadAnimationAsset(string name);
+		static ModelAnimation& GetAnimation(string name);
 
 		// Textures.
-		static void LoadTextureAsset(const char* path, const char* name);
-		static void UnloadTextureAsset(const char* name);
-		static Texture2D& GetTexture(const char* name);
+		static void LoadTextureAsset(const char* path, string name);
+		static void UnloadTextureAsset(string name);
+		static Texture2D& GetTexture(string name);
 
 };

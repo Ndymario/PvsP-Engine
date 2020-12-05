@@ -7,6 +7,7 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include <stdio.h>
 #include <raylib.h>
 #include <algorithm>
+#include <assetManager.h>
 
 // Some constants.
 const int SCREEN_WIDTH = 800;
@@ -48,10 +49,11 @@ int main(void) {
     Rectangle minigameUnhighlightedBox = { 0, 68 + (highlightedPipeHeight * 3), unhighlightedPipeWidth, unhighlightedPipeHeight };
     Rectangle optionsHighlightedBox = { 0, 68 + (highlightedPipeHeight * 4), highlightedPipeWidth, highlightedPipeHeight };
     Rectangle optionsUnhighlightedBox = { 0, 68 + (highlightedPipeHeight * 5), unhighlightedPipeWidth, unhighlightedPipeHeight };
-    Rectangle backgroundBox = { 270, 195, backgroundWidth, backgroundHeight};
+    Rectangle backgroundBox = { 270, 195, backgroundWidth, backgroundHeight };
 
     // Create Textures for drawing to the screen
-    Texture2D titleAsset = LoadTextureFromImage(asset);
+    AssetManager::LoadTextureAsset((rootDir + "/assets/title/title_screen_assets.png").c_str(), "TitleTexture");
+    Texture2D titleAsset = AssetManager::GetTexture("TitleTexture");
 
     // Declare bools to keep track of what game state we are in
     bool titleScreen = true;
@@ -75,7 +77,7 @@ int main(void) {
         bool optionsHover = false;
 
         // Declare some bounding boxes for the title screen buttons
-        Rectangle mvslButton = { SCREEN_WIDTH/4 + 20, backgroundHeight, highlightedPipeWidth, highlightedPipeHeight };
+        Rectangle mvslButton = { SCREEN_WIDTH / 4 + 20, backgroundHeight, highlightedPipeWidth, highlightedPipeHeight };
         Rectangle minigameButton = { mvslButton.x, mvslButton.y + highlightedPipeHeight, highlightedPipeWidth, highlightedPipeHeight };
         Rectangle optionsButton = { mvslButton.x, minigameButton.y + highlightedPipeHeight, highlightedPipeWidth, highlightedPipeHeight };
 
@@ -84,7 +86,7 @@ int main(void) {
         Vector2 optionsButtonCoords = { optionsButton.x, optionsButton.y };
 
         // Make a position vector for the background
-        Vector2 backgroundCoords = { SCREEN_WIDTH/4, backgroundHeight};
+        Vector2 backgroundCoords = { SCREEN_WIDTH / 4, backgroundHeight };
 
         // Load button sounds
         std::string buttonSoundAsset = rootDir + audioAsset + "/Mario/whoohoo.wav";
@@ -98,23 +100,25 @@ int main(void) {
         while (titleScreen && !WindowShouldClose()) {
 
             // Swap the Texture for if the buttons are highlightted are not
-            mvslHover       = CheckCollisionPointRec(GetMousePosition(), mvslButton);
-            minigameHover   = CheckCollisionPointRec(GetMousePosition(), minigameButton);
-            optionsHover    = CheckCollisionPointRec(GetMousePosition(), optionsButton);
+            mvslHover = CheckCollisionPointRec(GetMousePosition(), mvslButton);
+            minigameHover = CheckCollisionPointRec(GetMousePosition(), minigameButton);
+            optionsHover = CheckCollisionPointRec(GetMousePosition(), optionsButton);
 
             // Check to see if the mouse is being clicked inside of a button, and do something based
             // on what button is pressed
 
-            if (IsMouseButtonPressed(0)){
-                if (mvslHover){
+            if (IsMouseButtonPressed(0)) {
+                if (mvslHover) {
                     // If the mouse clicks on the MvsL Button
                     PlaySound(buttonSound);
                     mvslButtonPressed = true;
-                } else if (minigameHover){
+                }
+                else if (minigameHover) {
                     // If the mouse clicks on the Minigame Button
                     PlaySound(buttonSound);
                     miniGameButtonPressed = true;
-                } else if (optionsHover){
+                }
+                else if (optionsHover) {
                     // If the mouse clicks on the Options Button
                     PlaySound(buttonSound);
                     optionsButtonPressed = true;
@@ -127,30 +131,30 @@ int main(void) {
             // Clear the frame for the next frame
             ClearBackground(BLACK);
 
-            if(!optionsButtonPressed){
+            if (!optionsButtonPressed) {
                 DrawTextureRec(titleAsset, backgroundBox, backgroundCoords, WHITE);
                 DrawTextureRec(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, mvslButtonCoords, WHITE);
                 DrawTextureRec(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, minigameButtonCoords, WHITE);
                 DrawTextureRec(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, optionsButtonCoords, WHITE);
             }
 
-            if(optionsButtonPressed){
+            if (optionsButtonPressed) {
                 DrawRectangle(10, 10, 10, 10, RED);
             }
 
             EndDrawing();
 
             // Post rendering
-            if(mvslButtonPressed || miniGameButtonPressed){
+            if (mvslButtonPressed || miniGameButtonPressed) {
                 // Transition to the other scene
                 titleScreen = false;
 
-                if(mvslButtonPressed){
+                if (mvslButtonPressed) {
                     // Load the MvsL game scene
                     // [TODO]
                 }
 
-                if(miniGameButtonPressed){
+                if (miniGameButtonPressed) {
                     // Load the minigame game scene
                     // [TODO]
                 }
