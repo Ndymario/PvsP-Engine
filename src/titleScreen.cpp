@@ -128,7 +128,7 @@ void TitleScreen::Update()
 
         if (mvslButtonPressed) {
             // Load the MvsL game scene
-            // [TODO]
+            Scene::ChangeScene(&GameplayScene);
         }
 
         if (miniGameButtonPressed) {
@@ -142,6 +142,6 @@ void TitleScreen::Cleanup()
 {
 
     AssetManager::UnloadTextureAsset("TitleAsset");
-    AssetManager::UnloadSoundAsset("TitleButtonSound");
+    //AssetManager::UnloadSoundAsset("TitleButtonSound");
 
 }

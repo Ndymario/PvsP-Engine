@@ -17,18 +17,28 @@ int main(void) {
     // Set the initial scene.
     Scene::ChangeScene(&TitleScreenScene);
 
+    // Init camera.
+    MainCamera = new Camera();
+    MainCamera->position = { 10.0f, 10.0f, 10.0f }; // Camera position
+    MainCamera->target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    MainCamera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
+    MainCamera->fovy = 45.0f;                                // Camera field-of-view Y
+    MainCamera->type = CAMERA_PERSPECTIVE;                   // Camera mode type
+    SetCameraMode(*MainCamera, CAMERA_FREE);
+
     // Main game loop
     while (!WindowShouldClose())
     {
         
         // Do update.
+        UpdateCamera(MainCamera);
         Scene::DoUpdate();
 
         // Draw everything.
         BeginDrawing();
             ClearBackground(BLACK);
             Scene::DoDrawBackground2D();
-            BeginMode3D(MainCamera);
+            BeginMode3D(*MainCamera);
                 Scene::DoDraw3D();
             EndMode3D();
             Scene::DoDrawForeground2D();

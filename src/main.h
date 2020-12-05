@@ -7,6 +7,7 @@
 #include <assetManager.h>
 #include <scene.h>
 #include <titleScreen.h>
+#include <gameplay.h>
 
 // Some constants.
 const int SCREEN_WIDTH = 800;
@@ -14,7 +15,8 @@ const int SCREEN_HEIGHT = 450;
 const Vector2 ZERO = { 0, 0 };
 
 // We need these.
-static Camera3D MainCamera;
+static Camera3D* MainCamera;
 
 // Scenes.
 static TitleScreen TitleScreenScene;
+static Gameplay GameplayScene;
