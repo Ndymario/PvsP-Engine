@@ -15,23 +15,23 @@ void Scene::ChangeScene(Scene* newScene)
 void Scene::DoDrawBackground2D()
 {
 	if (currentScene == nullptr) return;
-	currentScene->DoDrawBackground2D();
+	currentScene->DrawBackground2D();
 }
 
 void Scene::DoDrawForeground2D()
 {
 	if (currentScene == nullptr) return;
-	currentScene->DoDrawForeground2D();
+	currentScene->DrawForeground2D();
 }
 
 void Scene::DoDraw3D()
 {
 	if (currentScene == nullptr) return;
-	currentScene->DoDraw3D();
+	currentScene->Draw3D();
 }
 
 void Scene::DoUpdate()
 {
 	if (currentScene == nullptr) return;
-	currentScene->DoUpdate();
+	currentScene->Update();
 }
