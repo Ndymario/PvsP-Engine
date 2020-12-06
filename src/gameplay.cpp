@@ -1,5 +1,6 @@
 #include "gameplay.h"
 #include <assetManager.h>
+#include "input.h"
 
 Vector3 pos = { 0, 0, 0 };
 
@@ -62,6 +63,9 @@ void Gameplay::Update()
     playerModel.Update();
     hammerBro.Update();
     //pos.x += 0.075;
+
+    pos.x -= Input::ButtonDown("Left", 0) * 0.1f;
+    pos.x += Input::ButtonDown("Right", 0) * 0.1f;
 
 }
 

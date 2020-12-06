@@ -9,6 +9,7 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "titleScreen.h"
 #include "gameplay.h"
 #include "screen.h"
+#include "input.h"
 
 // Main method.
 int main(void) {
@@ -19,6 +20,11 @@ int main(void) {
     SetTargetFPS(60);
     InitAudioDevice();
     SetMasterVolume(100);
+
+    // Some input.
+    Input::AddControl("Left", KEY_LEFT, GAMEPAD_BUTTON_LEFT_FACE_LEFT, GAMEPAD_AXIS_LEFT_X, false, 0);
+    Input::AddControl("Right", KEY_RIGHT, GAMEPAD_BUTTON_LEFT_FACE_RIGHT, GAMEPAD_AXIS_LEFT_X, true, 0);
+    Input::gamePadIDs[0] = 0;
 
     // Scenes that exist.
     TitleScreen titleScreen;
