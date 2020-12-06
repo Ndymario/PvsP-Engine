@@ -19,6 +19,10 @@ struct Input
 		static void AddControl(string name, int keyboard, int gamepadButton, int player);
 		static void AddControl(string name, int keyboard, int gamepadAxis, bool isPosAxisDir, int player);
 		static void AddControl(string name, int keyboard, int gamepadButton, int gamepadAxis, bool isPosAxisDir, int player);
+		static void ChangeControlKeyboard(string name, int keyboard, int player);
+		static void ChangeControlGamepad(string name, int gamepadButton, int player);
+		static void ChangeControlGamepadAxis(string name, int gamepadAxis, bool isPosAxisDir, int player);
+		static void ChangeControlRemoveGamepadAxis(string name, int player);
 		static void RemoveControl(string name, int player);
 		static float ButtonDown(string name, int player);
 		static bool ButtonUp(string name, int player);
