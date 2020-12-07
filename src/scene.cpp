@@ -1,7 +1,7 @@
 #include "scene.h"
 
-Scene* Scene::currentScene;
-map<string, Scene*> Scene::loadedScenes;
+Scene *Scene::currentScene;
+map<string, Scene *> Scene::loadedScenes;
 
 void Scene::ChangeScene(string name)
 {
@@ -15,34 +15,38 @@ void Scene::ChangeScene(string name)
 
 void Scene::DoDrawBackground2D()
 {
-	if (currentScene == nullptr) return;
+	if (currentScene == nullptr)
+		return;
 	currentScene->DrawBackground2D();
 }
 
 void Scene::DoDrawForeground2D()
 {
-	if (currentScene == nullptr) return;
+	if (currentScene == nullptr)
+		return;
 	currentScene->DrawForeground2D();
 }
 
 void Scene::DoDraw3D()
 {
-	if (currentScene == nullptr) return;
+	if (currentScene == nullptr)
+		return;
 	currentScene->Draw3D();
 }
 
 void Scene::DoUpdate()
 {
-	if (currentScene == nullptr) return;
+	if (currentScene == nullptr)
+		return;
 	currentScene->Update();
 }
 
-void Scene::LoadScene(string name, Scene* scene)
+void Scene::LoadScene(string name, Scene *scene)
 {
 	loadedScenes[name] = scene;
 }
 
-Camera& Scene::GetCamera()
+Camera &Scene::GetCamera()
 {
 	return currentScene->camera;
 }

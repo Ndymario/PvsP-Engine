@@ -9,7 +9,9 @@ void Mdl::SetModel(string name)
 
 void Mdl::SetAnimation(string name)
 {
+    timerFrozen = false;
 	currAnimation = AssetManager::GetAnimation(name);
+    std::cout << name << std::endl;
 	frameTimer = 0;
 }
 
@@ -19,15 +21,34 @@ void Mdl::SetTexture(string name, int materialId, int mapType)
 	SetMaterialTexture(&currModel.materials[materialId], mapType, currTexture);
 }
 
-Model& Mdl::GetModel()
+bool Mdl::AnimationIsFinished()
+{
+    return (frameTimer == currAnimation.frameCount - 1);
+}
+
+void Mdl::Freeze()
+{
+    timerFrozen = true;
+}
+
+void Mdl::Rotate(Vector3 rotateVec)
+{
+	currModel.transform = MatrixRotateXYZ({DEG2RAD * rotateVec.x, DEG2RAD * rotateVec.y, DEG2RAD * rotateVec.z});
+}
+
+Model &Mdl::GetModel()
 {
 	return currModel;
 }
 
 void Mdl::Update()
 {
-	if (timerFrozen) return;
+	if (timerFrozen)
+		return;
 	frameTimer++;
 	UpdateModelAnimation(currModel, currAnimation, frameTimer);
-	if (frameTimer >= currAnimation.frameCount) { frameTimer = 0; }
+	if (frameTimer >= currAnimation.frameCount)
+	{
+		frameTimer = 0;
+	}
 }

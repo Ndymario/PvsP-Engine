@@ -47,12 +47,12 @@ void Screen::DoToggleFullscreen()
 	}
 }
 
-Vector2 Screen::ScaleVector2(Vector2* vector)
+Vector2 Screen::ScaleVector2(Vector2 *vector)
 {
-	return { vector->x * screenScale, vector->y * screenScale };
+	return {vector->x * screenScale, vector->y * screenScale};
 }
 
-Rectangle Screen::ScaleRectangle(Rectangle* rect)
+Rectangle Screen::ScaleRectangle(Rectangle *rect)
 {
-	return { rect->x * screenScale, rect->y * screenScale, rect->width * screenScale, rect->height * screenScale };
+	return {rect->x * screenScale, rect->y * screenScale, rect->width * screenScale, rect->height * screenScale};
 }

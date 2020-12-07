@@ -10,30 +10,28 @@ struct Scene
 {
 
 	// Private data.
-	private:
-		static Scene* currentScene;
-		static map<string, Scene*> loadedScenes;
+private:
+	static Scene *currentScene;
+	static map<string, Scene *> loadedScenes;
 
 	// Public members.
-	public:
-		Camera3D camera;
+public:
+	Camera3D camera;
 
-		// To be implemented.
-		virtual void Initialize() {}
-		virtual void DrawBackground2D() {}
-		virtual void DrawForeground2D() {}
-		virtual void Draw3D() {}
-		virtual void Update() {}
-		virtual void Cleanup() {}
+	// To be implemented.
+	virtual void Initialize() {}
+	virtual void DrawBackground2D() {}
+	virtual void DrawForeground2D() {}
+	virtual void Draw3D() {}
+	virtual void Update() {}
+	virtual void Cleanup() {}
 
-		// To execute.
-		static void ChangeScene(string name);
-		static void DoDrawBackground2D();
-		static void DoDrawForeground2D();
-		static void DoDraw3D();
-		static void DoUpdate();
-		static void LoadScene(string name, Scene* scene);
-		static Camera& GetCamera();
-
+	// To execute.
+	static void ChangeScene(string name);
+	static void DoDrawBackground2D();
+	static void DoDrawForeground2D();
+	static void DoDraw3D();
+	static void DoUpdate();
+	static void LoadScene(string name, Scene *scene);
+	static Camera &GetCamera();
 };
-

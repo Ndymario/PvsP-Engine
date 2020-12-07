@@ -10,6 +10,4 @@ struct TitleScreen : public Scene
 	void Draw3D();
 	void Update();
 	void Cleanup();
-
 };
-

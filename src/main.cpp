@@ -12,60 +12,62 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "input.h"
 
 // Main method.
-int main(void) {
+int main(void)
+{
 
-    // Initalize the game window
-    InitWindow(Screen::GAME_WIDTH, Screen::GAME_HEIGHT, "Mario vs Luigi - Title Screen");
-    Screen::Init();
-    SetTargetFPS(60);
-    InitAudioDevice();
-    SetMasterVolume(100);
+	// Initalize the game window
+	InitWindow(Screen::GAME_WIDTH, Screen::GAME_HEIGHT, "Mario vs Luigi - ReCoded (development build)");
+	Screen::Init();
+	SetTargetFPS(60);
+	InitAudioDevice();
+	SetMasterVolume(100);
 
     // Some input.
-    Input::AddControl("Left", KEY_LEFT, GAMEPAD_BUTTON_LEFT_FACE_LEFT, GAMEPAD_AXIS_LEFT_X, false, 0);
-    Input::AddControl("Right", KEY_RIGHT, GAMEPAD_BUTTON_LEFT_FACE_RIGHT, GAMEPAD_AXIS_LEFT_X, true, 0);
-    Input::gamePadIDs[0] = 0;
+    Input::AddControl("Left", KEY_A, GAMEPAD_BUTTON_LEFT_FACE_LEFT, GAMEPAD_AXIS_LEFT_X, false, 0);
+    Input::AddControl("Right", KEY_D, GAMEPAD_BUTTON_LEFT_FACE_RIGHT, GAMEPAD_AXIS_LEFT_X, true, 0);
+    Input::AddControl("Run", KEY_LEFT_SHIFT, 0);
+    Input::AddControl("Jump", KEY_SPACE, 0);
+    Input::gamePadIDs[0] = -1;
 
     // Scenes that exist.
     TitleScreen titleScreen;
     Gameplay gameplay;
 
-    // Set the initial scene.
-    Scene::LoadScene("TitleScreen", &titleScreen);
-    Scene::LoadScene("Gameplay", &gameplay);
-    Scene::ChangeScene("TitleScreen");
+	// Set the initial scene.
+	Scene::LoadScene("TitleScreen", &titleScreen);
+	Scene::LoadScene("Gameplay", &gameplay);
+	Scene::ChangeScene("TitleScreen");
 
-    // Main game loop
-    while (!WindowShouldClose())
-    {
-        
-        // Do update.
-        UpdateCamera(&Scene::GetCamera());
-        Scene::DoUpdate();
+	// Main game loop
+	while (!WindowShouldClose())
+	{
 
-        // Fullscreen check.
-        if (IsKeyPressed(KEY_F4))
-        {
-            Screen::DoToggleFullscreen();
-        }
+		// Do update.
+		UpdateCamera(&Scene::GetCamera());
+		Scene::DoUpdate();
 
-        // Draw everything.
-        BeginDrawing();
-            ClearBackground(BLACK);
-            Scene::DoDrawBackground2D();
-            BeginMode3D(Scene::GetCamera());
-                Scene::DoDraw3D();
-            EndMode3D();
-            Scene::DoDrawForeground2D();
-        EndDrawing();
+		// Fullscreen check.
+		if (IsKeyPressed(KEY_F4))
+		{
+			Screen::DoToggleFullscreen();
+		}
 
-    }
+		// Draw everything.
+		BeginDrawing();
+		ClearBackground(BLACK);
+		Scene::DoDrawBackground2D();
+		BeginMode3D(Scene::GetCamera());
+		Scene::DoDraw3D();
+		EndMode3D();
+		Scene::DoDrawForeground2D();
+		EndDrawing();
+	}
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseAudioDevice();   // Close the Audio Device
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+	// De-Initialization
+	//--------------------------------------------------------------------------------------
+	CloseAudioDevice(); // Close the Audio Device
+	CloseWindow();      // Close window and OpenGL context
+	//--------------------------------------------------------------------------------------
 
-    return 0;
+	return 0;
 }

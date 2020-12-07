@@ -1,80 +1,110 @@
+#include "entity.h"
+
+Vector3& Entity::GetPosition()
+{
+    return position;
+}
+
+Vector2& Entity::GetVelocity()
+{
+    return velocity;
+}
+
+Vector2& Entity::GetAcceleration()
+{
+    return acceleration;
+}
+
+Mdl& Entity::GetModel()
+{
+    return mainModel;
+}
+
+void Entity::SetPosition(Vector3 pos)
+{
+    position = pos;
+}
+
+void Entity::SetVelocity(Vector2 vel)
+{
+    velocity = vel;
+}
+
+void Entity::SetAcceleration(Vector2 acc)
+{
+    acceleration = acc;
+}
+
+void Entity::SetMaxVelocity(Vector2 max)
+{
+    maxVelocity = max;
+}
+
+void Entity::SetModel(std::string name)
+{
+    mainModel.SetModel(name);
+}
+
+void Entity::UpdatePhysics(float dt)
+{
+    velocity.x += acceleration.x * dt;
+    position.x += velocity.x * dt;
+    
+    if (velocity.x >= maxVelocity.x)
+    {
+        velocity.x = maxVelocity.x;
+    }
+    if (velocity.x <= -maxVelocity.x)
+    {
+        velocity.x = -maxVelocity.x;
+    }
+}
+
+void Entity::UpdateModel()
+{
+    mainModel.Update();
+}
+
 /*
-Main contributors to this file: Nolan Y?
-
-Bug fixers: [None, yet]
-*/
-
-#include <raylib.h>
-
-// Physics Object struct
-struct PhysicsObject
-{
-    // Declare the object's postion, velocity, and acceleration
-    // Initalize each var to (0, 0)
-    Vector2 pos = { 0, 0 };
-    Vector2 vel = { 0, 0 };
-    Vector2 accel = { 0, 0 };
-};
-
-// Player Struct
-struct Player : PhysicsObject
-{
-    // Declare and initalize the player's special properties.
-    int playerPowerState = 0;
-    bool isJumping = false;
-    bool isRunning = false;
-    bool isSkidding = false;
-    bool isGroundPounding = false;
-    bool isSpinning = false;
-    bool isWalljumping = false;
-    bool isAttacking = false;
-    bool isDead = false;
-    bool isTransitioning = false;
-    bool isStomped = false;
-    bool isInvincible = false;
-    bool isHurt = false;
-};
-
 // Entity Structs
-struct BigStar : PhysicsObject
+struct BigStar : Entity
 {
     // Declare and initalize the Big Star's special properties
     int starID = 0;
     bool wasCollected = false;
 };
 
-struct Goomba : PhysicsObject
+struct Goomba : Entity
 {
     // Declare and initalize the Goomba's special properties
     bool isStomped = false;
     bool isFacingRight = false;
 };
 
-struct Koopa : PhysicsObject
+struct Koopa : Entity
 {
     // Declare and initalize the Koopa's special properties
     int shellType = 0;
     bool isStomped = false;
     bool isFacingRight = false;
     bool wasThrown = false;
-
 };
 
-struct BulletBill : PhysicsObject
+struct BulletBill : Entity
 {
     // Declare and initalize the Bullet Bill's special properties
     bool isStomped = false;
     bool isFacingRight = false;
 };
 
-struct PiranhaPlant : PhysicsObject
+struct PiranhaPlant : Entity
 {
     // Declare and initalize the Piranha Plant's special properties
     bool isStomped = false;
     bool isInPipe = false;
 };
 
-struct Bobomb : PhysicsObject
+struct Bobomb : Entity
 {
     // Declare and initalize the Bobomb's special properties
     bool isStomped = false;
@@ -88,47 +118,46 @@ struct StoneWall
     int height = 0;
 };
 
-struct FireBall : PhysicsObject
+struct FireBall : Entity
 {
     // Declare the Fire Ball's special properties
     int playerNumber = 0;
 };
 
-
 // Powerup Structs
-struct Mushroom : PhysicsObject
+struct Mushroom : Entity
 {
     // Declare and initalize the Mushroom's special properties
     int powerupValue = 0;
     bool isEvil = false;
 };
 
-struct FireFlower : PhysicsObject
+struct FireFlower : Entity
 {
     // Declare and initalize the Fire Flower's special properties
     int powerupValue = 1;
 };
 
-struct BlueShell : PhysicsObject
+struct BlueShell : Entity
 {
     // Declare and initalize the Blue Shell's special properties
     int powerupValue = 2;
 };
 
-struct MiniMushroom : PhysicsObject
+struct MiniMushroom : Entity
 {
     // Declare and initalize the Mini Mushroom's special properties
     int powerupValue = 3;
 };
 
-struct SuperStar : PhysicsObject
+struct SuperStar : Entity
 {
     // Declare and initalize the Super Star's special properties
     int powerupValue = 4;
 };
 
-struct MegaMushroom : PhysicsObject
+struct MegaMushroom : Entity
 {
     // Declare and initalize the Fire Flower's special properties
     int powerupValue = 5;
-};
+};*/
