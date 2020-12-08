@@ -5,6 +5,24 @@ workspace.code-workspace
 # MSVS specific
 .vs/
 
+# Visual Studio Community
+_deps/
+CMakeFiles/
+mvsl_recoded.dir/
+cmake/
+x64/
+x86/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Some cmake stuff
+cmake_install.cmake
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+
 # General
 bin/
 build/

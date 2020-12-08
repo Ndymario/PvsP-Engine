@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 
+#include <queue>
+
 using namespace std;
 
 struct Mdl
@@ -14,6 +16,9 @@ private:
 	Model currModel;
 	ModelAnimation currAnimation;
 	Texture2D currTexture;
+	bool queueMode = false;
+	queue<string> animationQueue;
+	string currAnimationName;
 
 	//Public members.
 public:
@@ -24,7 +29,10 @@ public:
 	// Set aspect.
 	void SetModel(string name);
 	void SetAnimation(string name);
+	void QueueAnimation(string name);
+	void ExecuteQueue();
 	void SetTexture(string name, int materialId, int mapType);
+	string CurrentAnimation();
 
     // Testing for state stuff
     bool AnimationIsFinished();
