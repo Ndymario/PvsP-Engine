@@ -9,24 +9,24 @@ Vector3 rot = {90, 0, 0};
 void Gameplay::Initialize()
 {
 
-	AssetManager::LoadModelAsset("player/Mario/models/Big.iqm", "MarioBig");
-	AssetManager::LoadTextureAsset("player/Mario/textures/Normal.png", "MarioNormal");
-	AssetManager::LoadAnimationAsset("player/Animations/Run.iqm", "MarioRun");
-    AssetManager::LoadAnimationAsset("player/Animations/Walk.iqm", "MarioWalk");
-    AssetManager::LoadAnimationAsset("player/Animations/Wait.iqm", "MarioIdle");
-    AssetManager::LoadAnimationAsset("player/Animations/Turn.iqm", "MarioTurn");
-    AssetManager::LoadAnimationAsset("player/Animations/Turn.iqm", "MarioTurned");
+	AssetManager::LoadModelAsset("player/Martin/models/Big.iqm", "MartinBig");
+	AssetManager::LoadTextureAsset("player/Martin/textures/Normal.png", "MartinNormal");
+	AssetManager::LoadAnimationAsset("player/Animations/Run.iqm", "MartinRun");
+    AssetManager::LoadAnimationAsset("player/Animations/Walk.iqm", "MartinWalk");
+    AssetManager::LoadAnimationAsset("player/Animations/Wait.iqm", "MartinIdle");
+    AssetManager::LoadAnimationAsset("player/Animations/Turn.iqm", "MartinTurn");
+    AssetManager::LoadAnimationAsset("player/Animations/Turn.iqm", "MartinTurned");
 
-	//AssetManager::LoadModelAsset("player/Mario/models/Head.iqm", "MarioHead");
+	//AssetManager::LoadModelAsset("player/Martin/models/Head.iqm", "MartinHead");
 
 	AssetManager::LoadModelAsset("enemy/Bros/Bros.iqm", "Bros");
 	AssetManager::LoadTextureAsset("enemy/Bros/HammerBro.png", "HammerBro");
 	AssetManager::LoadAnimationAsset("enemy/Bros/ThrowAnim.iqm", "HammerThrow");
 
-	marioModel.SetModel("MarioBig");
-	marioModel.SetAnimation("MarioRun");
-	marioModel.SetTexture("MarioNormal", 0, MAP_DIFFUSE);
-	//playerHeadModel.SetModel("MarioHead");
+	martinModel.SetModel("MartinBig");
+	martinModel.SetAnimation("MartinRun");
+	martinModel.SetTexture("MartinNormal", 0, MAP_DIFFUSE);
+	//playerHeadModel.SetModel("MartinHead");
 
 	hammerBro.SetModel("Bros");
 	hammerBro.SetAnimation("HammerThrow");

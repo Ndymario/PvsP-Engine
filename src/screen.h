@@ -12,10 +12,10 @@ private:
 	// Public members.
 public:
 	// Constants.
-	const static int GAME_WIDTH = 1920;
-	const static int GAME_HEIGHT = 1080;
-	const static int DEFAULT_WIDTH = 1024;
-	const static int DEFAULT_HEIGHT = 576;
+	const static int GAME_WIDTH = 2880;
+	const static int GAME_HEIGHT = 1800;
+	const static int DEFAULT_WIDTH = 1435;
+	const static int DEFAULT_HEIGHT = 900;
 
 	// Helper functions.
 	static void Init();

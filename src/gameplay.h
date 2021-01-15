@@ -9,7 +9,7 @@ struct Gameplay : public Scene
 {
 
 	// Player data.
-	Mdl marioModel;
+	Mdl martinModel;
 	Mdl playerHeadModel;
 	Mdl hammerBro;
 

@@ -2,15 +2,15 @@
 #include "assetManager.h"
 #include "screen.h"
 
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
+const int SCREEN_WIDTH = 1435;
+const int SCREEN_HEIGHT = 900;
 
 // Declare constants for the dimentions of assets
 // Titlescreen:
-const int highlightedPipeWidth = 228;
-const int highlightedPipeHeight = 35;
-const int unhighlightedPipeWidth = 228;
-const int unhighlightedPipeHeight = 35;
+const int highlightedButtonWidth = 228;
+const int highlightedButtonHeight = 35;
+const int unhighlightedButtonWidth = 228;
+const int unhighlightedButtonHeight = 35;
 const int backgroundWidth = 256;
 const int backgroundHeight = 160;
 
@@ -20,35 +20,35 @@ bool inGame = false;
 bool inMinigame = false;
 
 // Declare some bools for determining if the mouse is hovering over a button
-bool mvslHover = false;
+bool pvspHover = false;
 bool minigameHover = false;
 bool optionsHover = false;
 
 // Define the rectangles for the bounding boxes of the buttons. (Also used for cropping)
 // Y pos of first buttton in the .png is 68
 // BG Coords (270, 195)
-Rectangle mvslHighlightedBox = {0, 68, highlightedPipeWidth, highlightedPipeHeight};
-Rectangle mvslUnhighlightedBox = {0, 68 + highlightedPipeHeight, unhighlightedPipeWidth, unhighlightedPipeHeight};
-Rectangle minigameHighlightedBox = {0, 68 + (highlightedPipeHeight * 2), highlightedPipeWidth, highlightedPipeHeight};
-Rectangle minigameUnhighlightedBox = {0, 68 + (highlightedPipeHeight * 3), unhighlightedPipeWidth, unhighlightedPipeHeight};
-Rectangle optionsHighlightedBox = {0, 68 + (highlightedPipeHeight * 4), highlightedPipeWidth, highlightedPipeHeight};
-Rectangle optionsUnhighlightedBox = {0, 68 + (highlightedPipeHeight * 5), unhighlightedPipeWidth, unhighlightedPipeHeight};
+Rectangle pvspHighlightedBox = {0, 68, highlightedButtonWidth, highlightedButtonHeight};
+Rectangle pvspUnhighlightedBox = {0, 68 + highlightedButtonHeight, unhighlightedButtonWidth, unhighlightedButtonHeight};
+Rectangle minigameHighlightedBox = {0, 68 + (highlightedButtonHeight * 2), highlightedButtonWidth, highlightedButtonHeight};
+Rectangle minigameUnhighlightedBox = {0, 68 + (highlightedButtonHeight * 3), unhighlightedButtonWidth, unhighlightedButtonHeight};
+Rectangle optionsHighlightedBox = {0, 68 + (highlightedButtonHeight * 4), highlightedButtonWidth, highlightedButtonHeight};
+Rectangle optionsUnhighlightedBox = {0, 68 + (highlightedButtonHeight * 5), unhighlightedButtonWidth, unhighlightedButtonHeight};
 Rectangle backgroundBox = {270, 195, backgroundWidth, backgroundHeight};
 
 // Declare some bounding boxes for the title screen buttons
-Rectangle mvslButton = {SCREEN_WIDTH / 4 + 20, backgroundHeight, highlightedPipeWidth * 3, highlightedPipeHeight * 3};
-Rectangle minigameButton = {mvslButton.x, mvslButton.y + highlightedPipeHeight * 3, highlightedPipeWidth * 3, highlightedPipeHeight * 3};
-Rectangle optionsButton = {mvslButton.x, minigameButton.y + highlightedPipeHeight * 3, highlightedPipeWidth * 3, highlightedPipeHeight * 3};
+Rectangle pvspButton = {SCREEN_WIDTH / 4 + 20, backgroundHeight, highlightedButtonWidth * 3, highlightedButtonHeight * 3};
+Rectangle minigameButton = {pvspButton.x, pvspButton.y + highlightedButtonHeight * 3, highlightedButtonWidth * 3, highlightedButtonHeight * 3};
+Rectangle optionsButton = {pvspButton.x, minigameButton.y + highlightedButtonHeight * 3, highlightedButtonWidth * 3, highlightedButtonHeight * 3};
 
-Rectangle mvslButtonCoords = {mvslButton.x, mvslButton.y, highlightedPipeWidth * 3, highlightedPipeHeight * 3};
-Rectangle minigameButtonCoords = {minigameButton.x, minigameButton.y, highlightedPipeWidth * 3, highlightedPipeHeight * 3};
-Rectangle optionsButtonCoords = {optionsButton.x, optionsButton.y, highlightedPipeWidth * 3, highlightedPipeHeight * 3};
+Rectangle pvspButtonCoords = {pvspButton.x, pvspButton.y, highlightedButtonWidth * 3, highlightedButtonHeight * 3};
+Rectangle minigameButtonCoords = {minigameButton.x, minigameButton.y, highlightedButtonWidth * 3, highlightedButtonHeight * 3};
+Rectangle optionsButtonCoords = {optionsButton.x, optionsButton.y, highlightedButtonWidth * 3, highlightedButtonHeight * 3};
 
 // Make a position vector for the background
 Rectangle backgroundCoords = {SCREEN_WIDTH / 4, backgroundHeight, backgroundWidth * 3, backgroundHeight * 3};
 
 // Declare and Initalized the status of the buttons
-bool mvslButtonPressed = false;
+bool pvspButtonPressed = false;
 bool miniGameButtonPressed = false;
 bool optionsButtonPressed = false;
 
@@ -60,7 +60,7 @@ void TitleScreen::Initialize()
 {
 	AssetManager::LoadTextureAsset("title/title_screen_assets.png", "TitleAsset");
 	titleAsset = AssetManager::GetTexture("TitleAsset");
-	AssetManager::LoadSoundAsset("sounds/Mario/whoohoo.wav", "TitleButtonSound");
+	AssetManager::LoadSoundAsset("sounds/Martin/whoohoo.wav", "TitleButtonSound");
 	buttonSound = AssetManager::GetSound("TitleButtonSound");
 }
 
@@ -74,7 +74,7 @@ void TitleScreen::DrawForeground2D()
 	if (!optionsButtonPressed)
 	{
 		DrawTexturePro(titleAsset, backgroundBox, Screen::ScaleRectangle(&backgroundCoords), {0, 0}, 0, WHITE);
-		DrawTexturePro(titleAsset, mvslHover ? mvslHighlightedBox : mvslUnhighlightedBox, Screen::ScaleRectangle(&mvslButtonCoords), {0, 0}, 0, WHITE);
+		DrawTexturePro(titleAsset, pvspHover ? pvspHighlightedBox : pvspUnhighlightedBox, Screen::ScaleRectangle(&pvspButtonCoords), {0, 0}, 0, WHITE);
 		DrawTexturePro(titleAsset, minigameHover ? minigameHighlightedBox : minigameUnhighlightedBox, Screen::ScaleRectangle(&minigameButtonCoords), {0, 0}, 0, WHITE);
 		DrawTexturePro(titleAsset, optionsHover ? optionsHighlightedBox : optionsUnhighlightedBox, Screen::ScaleRectangle(&optionsButtonCoords), {0, 0}, 0, WHITE);
 	}
@@ -93,7 +93,7 @@ void TitleScreen::Update()
 {
 
 	// Swap the Texture for if the buttons are highlightted are not
-	mvslHover = CheckCollisionPointRec(GetMousePosition(), Screen::ScaleRectangle(&mvslButton));
+	pvspHover = CheckCollisionPointRec(GetMousePosition(), Screen::ScaleRectangle(&pvspButton));
 	minigameHover = CheckCollisionPointRec(GetMousePosition(), Screen::ScaleRectangle(&minigameButton));
 	optionsHover = CheckCollisionPointRec(GetMousePosition(), Screen::ScaleRectangle(&optionsButton));
 
@@ -102,11 +102,11 @@ void TitleScreen::Update()
 
 	if (IsMouseButtonPressed(0))
 	{
-		if (mvslHover)
+		if (pvspHover)
 		{
-			// If the mouse clicks on the MvsL Button
+			// If the mouse clicks on the pvsp Button
 			//PlaySound(buttonSound);
-			mvslButtonPressed = true;
+			pvspButtonPressed = true;
 		}
 		else if (minigameHover)
 		{
@@ -122,14 +122,14 @@ void TitleScreen::Update()
 		}
 	}
 
-	if (mvslButtonPressed || miniGameButtonPressed)
+	if (pvspButtonPressed || miniGameButtonPressed)
 	{
 		// Transition to the other scene
 		titleScreen = false;
 
-		if (mvslButtonPressed)
+		if (pvspButtonPressed)
 		{
-			// Load the MvsL game scene
+			// Load the pvsp game scene
 			Scene::ChangeScene("Gameplay");
 		}
 

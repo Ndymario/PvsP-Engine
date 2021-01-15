@@ -1,6 +1,6 @@
 # MvsL-Recoded
 
-Public project to port the New Super Mario Bros. DS gamemode Mario vs Luigi to C++
+Public project to port the New Super Martin Bros. DS gamemode Martin vs Louis to C++
 
 # Contributor Notes
 

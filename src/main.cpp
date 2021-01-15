@@ -16,7 +16,7 @@ int main(void)
 {
 
 	// Initalize the game window
-	InitWindow(Screen::GAME_WIDTH, Screen::GAME_HEIGHT, "Mario vs Luigi - ReCoded (development build)");
+	InitWindow(Screen::GAME_WIDTH, Screen::GAME_HEIGHT, "Player vs Player Engine (development build)");
 	Screen::Init();
 	SetTargetFPS(60);
 	InitAudioDevice();

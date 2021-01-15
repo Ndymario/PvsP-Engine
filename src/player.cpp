@@ -8,7 +8,7 @@ void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft
     isFacingLeft = startFacingLeft;
     isPlayerTwo = playerTwo;
 
-    SetModel("MarioBig");
+    SetModel("MartinBig");
     if (startFacingLeft) 
     {
         GetModel().Rotate({90, 180, 0});

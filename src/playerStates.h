@@ -6,7 +6,7 @@ struct PlayerIdleState : public PlayerState
 {
     void Start(Player* player)
     {
-        player->GetModel().SetAnimation("MarioIdle");
+        player->GetModel().SetAnimation("MartinIdle");
         player->SetAcceleration({(player->isFacingLeft ? 1 : -1) * player->deaccelRate, 0.0f});
     }
 
@@ -43,7 +43,7 @@ struct PlayerWalkState : public PlayerState
             player->GetModel().Rotate({90, 0, 0});
         }
         player->SetAcceleration({-(player->isFacingLeft ? 1 : -1) * player->accelRate, 0.0f});
-        player->GetModel().SetAnimation("MarioWalk");
+        player->GetModel().SetAnimation("MartinWalk");
     }
 
     void Execute(Player* player)
