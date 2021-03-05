@@ -130,7 +130,7 @@ void TitleScreen::Update()
 		if (pvspButtonPressed)
 		{
 			// Load the pvsp game scene
-			Scene::ChangeScene("Gameplay");
+			Scene::ChangeScene("PvsP Menu");
 		}
 
 		if (miniGameButtonPressed)

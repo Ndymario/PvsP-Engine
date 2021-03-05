@@ -31,7 +31,7 @@ int width, int height, bool isCircular, int radius, int xPos, int yPos, bool is3
 
     // Store the texture of the shape
     newShape.shapeTexture = AssetManager::GetTexture(textureName);
-    newShape.shapeRectangle = {texture_xPos, texture_yPos, width, height};
+    newShape.shapeRectangle = {float(texture_xPos), float(texture_yPos), float(width), float(height)};
 
     // Return the new shape
     return newShape;
