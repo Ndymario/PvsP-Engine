@@ -67,10 +67,10 @@ RM = /usr/local/Cellar/cmake/3.19.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ndymario/Desktop/Programming/C/MvsL-Recoded
+CMAKE_SOURCE_DIR = /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ndymario/Desktop/Programming/C/MvsL-Recoded
+CMAKE_BINARY_DIR = /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/C/MvsL-Recoded/CMakeFiles /Users/ndymario/Desktop/Programming/C/MvsL-Recoded//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine/CMakeFiles /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/C/MvsL-Recoded/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -331,6 +331,33 @@ src/player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/player.cpp.s
 .PHONY : src/player.cpp.s
 
+src/pvpScene.o: src/pvpScene.cpp.o
+
+.PHONY : src/pvpScene.o
+
+# target to build an object file
+src/pvpScene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/pvpScene.cpp.o
+.PHONY : src/pvpScene.cpp.o
+
+src/pvpScene.i: src/pvpScene.cpp.i
+
+.PHONY : src/pvpScene.i
+
+# target to preprocess a source file
+src/pvpScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/pvpScene.cpp.i
+.PHONY : src/pvpScene.cpp.i
+
+src/pvpScene.s: src/pvpScene.cpp.s
+
+.PHONY : src/pvpScene.s
+
+# target to generate assembly for a file
+src/pvpScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/pvpScene.cpp.s
+.PHONY : src/pvpScene.cpp.s
+
 src/scene.o: src/scene.cpp.o
 
 .PHONY : src/scene.o
@@ -412,6 +439,33 @@ src/titleScreen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/titleScreen.cpp.s
 .PHONY : src/titleScreen.cpp.s
 
+src/ui.o: src/ui.cpp.o
+
+.PHONY : src/ui.o
+
+# target to build an object file
+src/ui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/ui.cpp.o
+.PHONY : src/ui.cpp.o
+
+src/ui.i: src/ui.cpp.i
+
+.PHONY : src/ui.i
+
+# target to preprocess a source file
+src/ui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/ui.cpp.i
+.PHONY : src/ui.cpp.i
+
+src/ui.s: src/ui.cpp.s
+
+.PHONY : src/ui.s
+
+# target to generate assembly for a file
+src/ui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mvsl_recoded.dir/build.make CMakeFiles/mvsl_recoded.dir/src/ui.cpp.s
+.PHONY : src/ui.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -442,6 +496,9 @@ help:
 	@echo "... src/player.o"
 	@echo "... src/player.i"
 	@echo "... src/player.s"
+	@echo "... src/pvpScene.o"
+	@echo "... src/pvpScene.i"
+	@echo "... src/pvpScene.s"
 	@echo "... src/scene.o"
 	@echo "... src/scene.i"
 	@echo "... src/scene.s"
@@ -451,6 +508,9 @@ help:
 	@echo "... src/titleScreen.o"
 	@echo "... src/titleScreen.i"
 	@echo "... src/titleScreen.s"
+	@echo "... src/ui.o"
+	@echo "... src/ui.i"
+	@echo "... src/ui.s"
 .PHONY : help
 
 

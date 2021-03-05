@@ -1,11 +1,16 @@
 // Include any headers we need
 #include "scene.h"
-#include <raylib.h>
+#include "ui.h"
 
 // Define a struct for our pvp scene
 
-struct PvP_Menu : public Scene{
-    // Useful scene functions
+struct PvsP_Menu : public Scene{
+    // Define any UI elements
+	Shape localButton;
+	Shape onlineButton;
+	Shape trainingButton;
+	
+	// Useful scene functions
     void Initialize();
 	void DrawBackground2D();
 	void DrawForeground2D();

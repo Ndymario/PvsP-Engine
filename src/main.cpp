@@ -7,6 +7,7 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include <raylib.h>
 #include "scene.h"
 #include "titleScreen.h"
+#include "pvpScene.h"
 #include "gameplay.h"
 #include "screen.h"
 #include "input.h"
@@ -31,11 +32,13 @@ int main(void)
 
     // Scenes that exist.
     TitleScreen titleScreen;
+	PvsP_Menu pvspMenu;
     Gameplay gameplay;
 
 	// Set the initial scene.
 	Scene::LoadScene("TitleScreen", &titleScreen);
 	Scene::LoadScene("Gameplay", &gameplay);
+	Scene::LoadScene("PvsP Menu", &pvspMenu);
 	Scene::ChangeScene("TitleScreen");
 
 	// Main game loop
