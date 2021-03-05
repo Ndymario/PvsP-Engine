@@ -3,6 +3,10 @@
 #include <raymath.h>
 #include "mdl.h"
 
+struct Entity;
+
+typedef void(*StateFunction)(Entity* ent);
+
 struct Entity 
 {
 // Physics variables.
@@ -18,6 +22,8 @@ private:
 
 // Getters and setters.
 public:
+    int currentState = -1;
+    StateFunction* stateFunctions;
 
     Vector3& GetPosition();
     Vector2& GetVelocity();
@@ -32,4 +38,9 @@ public:
 
     void UpdatePhysics(float dt);
     void UpdateModel();
+
+    void InitStates(int numStates);
+    void DoState();
+
+    void Cleanup();
 };

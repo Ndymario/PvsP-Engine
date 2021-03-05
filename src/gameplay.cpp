@@ -48,8 +48,16 @@ void Gameplay::Initialize()
 	camera.type = CAMERA_ORTHOGRAPHIC;     // Camera mode type
 
 	AssetManager::LoadModelAsset("tileset/Cube.gltf", "Cube");
-	AssetManager::LoadTextureAsset("tileset/grassland/Side.png", "GrassSide");
-	Tile::AddTileDef(0, "GrassSide");
+	AssetManager::LoadTextureAsset("tileset/dummyGrass/grassCenter.png", "Dirt");
+	AssetManager::LoadTextureAsset("tileset/dummyGrass/grassMid.png", "Grass");
+	Tile::AddTileDef(0, "Dirt");
+	Tile::AddTileDef(1, "Grass");
+
+	AssetManager::LoadModelAsset("player/Skeleton.gltf", "Skeleton");
+	AssetManager::LoadAnimationAsset("player/Skeleton.gltf", "Skelewalk");
+	martinModel.SetModel("Skeleton");
+	martinModel.SetAnimation("Skelewalk");
+	player.Initialize(5, 0, false, false, "Skeleton");
 }
 
 void Gameplay::DrawBackground2D()
@@ -66,15 +74,17 @@ void Gameplay::Draw3D()
 	//DrawModelEx(hammerBro.GetModel(), { 0, 0, 0 }, { 1.0f, 0.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	//DrawModel(player.GetModel().GetModel(), player.GetPosition(), 0.1f, WHITE);
 	//DrawModelEx(playerHeadModel.GetModel(), {0, 3, 0 }, { 1.0f, 0.0f, 0.0f }, -270.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
-	Tile::DrawTile(0, { 0, 0, 0}, 0, 0);
+	DrawModelEx(player.GetModel().GetModel(), { 0, 1, 0 }, { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
+	Tile::DrawTile(0, { 0, 0, 0}, 0, 0, 0, 1.0f);
 	Tile::DrawTile(0, { 0, 0, 0}, 1, 0, 0, 1.0f);
 	Tile::DrawTile(0, { 0, 0, 0}, 1, 1, 0, 1.0f);
-	Tile::DrawTile(0, { 0, 0, 0}, 1, 2, 0, 1.0f);
+	Tile::DrawTile(1, { 0, 0, 0}, 1, 2, 0, 1.0f);
+	Tile::DrawTile(1, { 0, 0, 0}, 2, 2, 0, 1.0f);
 }
 
 void Gameplay::Update()
 {
-    //player.Update(GetFrameTime());
+    player.Update(GetFrameTime());
 }
 
 void Gameplay::Cleanup()

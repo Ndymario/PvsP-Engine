@@ -19,12 +19,14 @@ private:
 	bool queueMode = false;
 	queue<string> animationQueue;
 	string currAnimationName;
+	bool hasAnimation = false;
 
 	//Public members.
 public:
 	// Timer stuff.
 	int frameTimer = 0;
 	bool timerFrozen = false;
+	bool skipLastFrame = true;
 
 	// Set aspect.
 	void SetModel(string name);
@@ -42,6 +44,9 @@ public:
 
 	// Transformational things.
 	void Rotate(Vector3 rotateVec);
+
+	// Scale a model.
+	void Scale(Vector3 scale);
 
 	Model &GetModel();
 	void Update();

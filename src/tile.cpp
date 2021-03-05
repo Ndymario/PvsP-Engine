@@ -4,7 +4,7 @@
 map<uint, string> Tile::tileDefinitions;
 Mdl Tile::basicCube;
 bool Tile::init = false;
-float Tile::TILE_SIZE = 2.01f;
+float Tile::TILE_SIZE = 1.999f;
 
 void Tile::AddTileDef(uint id, string textureName)
 {

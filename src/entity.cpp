@@ -64,3 +64,19 @@ void Entity::UpdateModel()
 {
     mainModel.Update();
 }
+
+void Entity::InitStates(int numStates)
+{
+    stateFunctions = new StateFunction[numStates];
+}
+
+void Entity::DoState()
+{
+    if (currentState == -1) { return; }
+    stateFunctions[currentState](this);
+}
+
+void Entity::Cleanup()
+{
+    delete[] stateFunctions;
+}

@@ -13,6 +13,7 @@ void Mdl::SetAnimation(string name)
 	currAnimation = AssetManager::GetAnimation(name);
 	currAnimationName = name;
 	frameTimer = 0;
+	hasAnimation = true;
 }
 
 void Mdl::QueueAnimation(string name)
@@ -44,7 +45,7 @@ string Mdl::CurrentAnimation()
 
 bool Mdl::AnimationIsFinished()
 {
-    return (frameTimer == currAnimation.frameCount - 1);
+    return (frameTimer == currAnimation.frameCount - skipLastFrame ? 1 : 0);
 }
 
 void Mdl::Freeze()
@@ -54,7 +55,12 @@ void Mdl::Freeze()
 
 void Mdl::Rotate(Vector3 rotateVec)
 {
-	currModel.transform = MatrixRotateXYZ({DEG2RAD * rotateVec.x, DEG2RAD * rotateVec.y, DEG2RAD * rotateVec.z});
+	currModel.transform = MatrixMultiply(currModel.transform, MatrixRotateXYZ({DEG2RAD * rotateVec.x, DEG2RAD * rotateVec.y, DEG2RAD * rotateVec.z}));
+}
+
+void Mdl::Scale(Vector3 scaleVec)
+{
+	currModel.transform = MatrixMultiply(currModel.transform, MatrixScale(scaleVec.x, scaleVec.y, scaleVec.z));
 }
 
 Model &Mdl::GetModel()
@@ -64,11 +70,11 @@ Model &Mdl::GetModel()
 
 void Mdl::Update()
 {
-	if (timerFrozen)
+	if (timerFrozen || !hasAnimation)
 		return;
 	frameTimer++;
 	UpdateModelAnimation(currModel, currAnimation, frameTimer);
-	if (frameTimer >= currAnimation.frameCount)
+	if (frameTimer >= currAnimation.frameCount - 1)
 	{
 		frameTimer = 0;
 		if (queueMode)

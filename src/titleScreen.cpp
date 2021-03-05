@@ -137,6 +137,7 @@ void TitleScreen::Update()
 		{
 			// Load the minigame game scene
 			// [TODO]
+			Scene::ChangeScene("Gameplay");
 		}
 	}
 }
