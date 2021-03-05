@@ -27,4 +27,4 @@ CPackSourceConfig.cmake
 bin/
 build/
 .DS_Store
-assets/
+*.sh

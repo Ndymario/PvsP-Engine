@@ -30,16 +30,24 @@ void PvsP_Menu::Initialize(){
     false, 0, 0, 180, false, 0);
 };
 
+void PvsP_Menu::DrawBackground2D()
+{
+}
+
 void PvsP_Menu::DrawForeground2D(){
     DrawTexturePro(localButton.shapeTexture, localButton.textureRectangle, localButton.shapeRectangle, {0, 0}, 0, WHITE);
     DrawTexturePro(onlineButton.shapeTexture, onlineButton.textureRectangle, onlineButton.shapeRectangle, {0, 0}, 0, WHITE);
     DrawTexturePro(trainingButton.shapeTexture, trainingButton.textureRectangle, trainingButton.shapeRectangle, {0, 0}, 0, WHITE);
-};
+}
+
+void PvsP_Menu::Draw3D()
+{
+}
 
 void PvsP_Menu::Update(){
     // TODO
-};
+}
 
 void PvsP_Menu::Cleanup(){
     // TODO
-};
+}

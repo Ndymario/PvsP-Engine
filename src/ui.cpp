@@ -1,8 +1,8 @@
 #include "ui.h"
 
-Shape Shape::createShape(string name, string textureName, bool isInteractable = true, bool hasHighlightedTexture = false,\
-int highlightedTexture_xPos = 0, int highlightedTexture_yPos = 0,int texture_xPos = 0, int texture_yPos = 0,\
-int width = 0, int height = 0, bool isCircular = false, int radius = NULL, int xPos = 0, int yPos = 0, bool is3D = false, int zPos = NULL)
+Shape Shape::createShape(string name, string textureName, bool isInteractable, bool hasHighlightedTexture,\
+int highlightedTexture_xPos, int highlightedTexture_yPos, int texture_xPos, int texture_yPos,\
+int width, int height, bool isCircular, int radius, int xPos, int yPos, bool is3D, int zPos)
 {
     // Create a new shape, and store what was passed to the function into the new shape
     // (variables commented in "ui.h")
