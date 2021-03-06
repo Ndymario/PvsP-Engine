@@ -2,7 +2,7 @@
 
 Shape Shape::createShape(string name, string textureName, bool isInteractable, bool hasHighlightedTexture,\
 int highlightedTexture_xPos, int highlightedTexture_yPos, int texture_xPos, int texture_yPos,\
-int width, int height, bool isCircular, int radius, int xPos, int yPos, bool is3D, int zPos)
+int width, int height, bool isCircular, float radius, float xPos, float yPos, bool is3D, float zPos)
 {
     // Create a new shape, and store what was passed to the function into the new shape
     // (variables commented in "ui.h")
@@ -36,3 +36,16 @@ int width, int height, bool isCircular, int radius, int xPos, int yPos, bool is3
     // Return the new shape
     return newShape;
 };
+
+void Shape::drawRepeated(int width, int height)
+{
+    int numRepsX = width / this->width + 1;
+    int numRepsY = height / this->height + 1;
+    for (int r = 0; r < numRepsY; r++)
+    {
+        for (int c = 0; c < numRepsX; c++)
+        {
+            DrawTexturePro(shapeTexture, shapeRectangle, { xPos + c * this->width, yPos + r * this->width, this->width, this->height }, { 0, 0 }, 0.0f, WHITE);
+        }
+    }
+}

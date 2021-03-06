@@ -63,6 +63,7 @@ int main(void)
 		Scene::DoDraw3D();
 		EndMode3D();
 		Scene::DoDrawForeground2D();
+		DrawFPS(0, 0);
 		EndDrawing();
 	}
 
