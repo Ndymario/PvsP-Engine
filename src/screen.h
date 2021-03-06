@@ -16,6 +16,7 @@ public:
 	const static int GAME_HEIGHT = 1800;
 	const static int DEFAULT_WIDTH = 1435;
 	const static int DEFAULT_HEIGHT = 900;
+	static bool quitGame;
 
 	// Helper functions.
 	static void Init();

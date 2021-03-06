@@ -1,4 +1,5 @@
 #include "ui.h"
+#include "screen.h"
 
 Shape Shape::createShape(string name, string textureName, bool isInteractable, bool hasHighlightedTexture,\
 int highlightedTexture_xPos, int highlightedTexture_yPos, int texture_xPos, int texture_yPos,\
@@ -11,11 +12,11 @@ int width, int height, bool isCircular, float radius, float xPos, float yPos, bo
     newShape.isInteractable = isInteractable;
     newShape.hasHighligthedTexture = hasHighlightedTexture;
     newShape.highlightedTexture_xPos = highlightedTexture_xPos;
-    newShape.highlightedTexxture_yPos = highlightedTexture_yPos;
+    newShape.highlightedTexture_yPos = highlightedTexture_yPos;
     newShape.texture_xPos = texture_xPos;
     newShape.texture_yPos = texture_yPos;
-    newShape.width = width;
-    newShape.height = height;
+    newShape.oldWidth = newShape.width = width;
+    newShape.oldHeight = newShape.height = height;
     newShape.isCircular = isCircular;
     newShape.radius = radius;
     newShape.xPos = xPos;
@@ -31,11 +32,32 @@ int width, int height, bool isCircular, float radius, float xPos, float yPos, bo
 
     // Store the texture of the shape
     newShape.shapeTexture = AssetManager::GetTexture(textureName);
-    newShape.shapeRectangle = {float(texture_xPos), float(texture_yPos), float(width), float(height)};
+    newShape.textureRectangle = {float(texture_xPos), float(texture_yPos), float(width), float(height)};
 
     // Return the new shape
     return newShape;
 };
+
+void Shape::scale(float scale)
+{
+    width = oldWidth * scale;
+    height = oldHeight * scale;
+}
+
+void Shape::scaleX(float scale)
+{
+    width = oldWidth * scale;
+}
+
+void Shape::scaleY(float scale)
+{
+    height = oldHeight * scale;
+}
+
+void Shape::draw(float xOff, float yOff)
+{
+    DrawTexturePro(shapeTexture, textureRectangle, { (xPos + xOff) * Screen::GetScreenScale(), (yPos + yOff) * Screen::GetScreenScale(), this->width * Screen::GetScreenScale(), this->height * Screen::GetScreenScale() }, { 0, 0 }, 0.0f, WHITE);
+}
 
 void Shape::drawRepeated(int width, int height)
 {
@@ -45,7 +67,29 @@ void Shape::drawRepeated(int width, int height)
     {
         for (int c = 0; c < numRepsX; c++)
         {
-            DrawTexturePro(shapeTexture, shapeRectangle, { xPos + c * this->width, yPos + r * this->width, this->width, this->height }, { 0, 0 }, 0.0f, WHITE);
+            DrawTexturePro(shapeTexture, textureRectangle, { (xPos + c * this->width) * Screen::GetScreenScale(), (yPos + r * this->width) * Screen::GetScreenScale(), this->width * Screen::GetScreenScale(), this->height * Screen::GetScreenScale() }, { 0, 0 }, 0.0f, WHITE);
+        }
+    }
+}
+
+void Shape::update()
+{
+    if (isInteractable)
+    {
+        if (GetMouseX() > xPos * Screen::GetScreenScale() && GetMouseX() < (xPos + width) * Screen::GetScreenScale() && GetMouseY() > yPos * Screen::GetScreenScale() && GetMouseY() < (yPos + height) * Screen::GetScreenScale())
+        {
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            {
+                if (onClick != NULL)
+                {
+                    onClick();
+                }
+            }
+            // Highlight.
+        }
+        else
+        {
+            // Unhighlight.
         }
     }
 }

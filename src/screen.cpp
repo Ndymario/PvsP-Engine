@@ -4,6 +4,7 @@
 
 float Screen::screenScale;
 int Screen::lastWidth;
+bool Screen::quitGame = false;
 
 void Screen::Init()
 {

@@ -11,6 +11,7 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "gameplay.h"
 #include "screen.h"
 #include "input.h"
+#include "ui.h"
 
 // Main method.
 int main(void)
@@ -42,7 +43,7 @@ int main(void)
 	Scene::ChangeScene("TitleScreen");
 
 	// Main game loop
-	while (!WindowShouldClose())
+	while (!WindowShouldClose() && !Screen::quitGame)
 	{
 
 		// Do update.
