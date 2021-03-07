@@ -3,54 +3,82 @@ Main contributors to this file: Nolan Y.
 
 Bug fixers: Gota7, bbomb64, SkilLP
 */
-#include <main.h>
+
+#include <raylib.h>
+#include "scene.h"
+#include "menu/titleScreen.h"
+#include "menu/pvpScreen.h"
+#include "gameplay.h"
+#include "screen.h"
+#include "input.h"
+#include "ui.h"
+#include "menu/optionsScreen.h"
+#include "menu/characterSelectScreen.h"
 
 // Main method.
-int main(void) {
+int main(void)
+{
 
-    // Initalize the game window
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Mario vs Luigi - Title Screen");
-    SetTargetFPS(60);
-    InitAudioDevice();
-    SetMasterVolume(100);
+	// Initalize the game window
+	InitWindow(Screen::GAME_WIDTH, Screen::GAME_HEIGHT, "Player vs Player Engine (development build)");
+	Screen::Init();
+	SetTargetFPS(60);
+	InitAudioDevice();
+	SetMasterVolume(100);
 
-    // Set the initial scene.
-    Scene::ChangeScene(&TitleScreenScene);
+    // Some input.
+    Input::AddControl("Left", KEY_A, GAMEPAD_BUTTON_LEFT_FACE_LEFT, GAMEPAD_AXIS_LEFT_X, false, 0);
+    Input::AddControl("Right", KEY_D, GAMEPAD_BUTTON_LEFT_FACE_RIGHT, GAMEPAD_AXIS_LEFT_X, true, 0);
+    Input::AddControl("Run", KEY_LEFT_SHIFT, 0);
+    Input::AddControl("Jump", KEY_SPACE, 0);
+    Input::gamePadIDs[0] = -1;
 
-    // Init camera.
-    MainCamera = new Camera();
-    MainCamera->position = { 10.0f, 10.0f, 10.0f }; // Camera position
-    MainCamera->target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
-    MainCamera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    MainCamera->fovy = 45.0f;                                // Camera field-of-view Y
-    MainCamera->type = CAMERA_PERSPECTIVE;                   // Camera mode type
-    SetCameraMode(*MainCamera, CAMERA_FREE);
+    // Scenes that exist.
+    TitleScreen titleScreen;
+	PvsPScreen pvspScreen;
+    Gameplay gameplay;
+	OptionsScreen optionsScreen;
+	CharacterSelectScreen characterSelectScreen;
 
-    // Main game loop
-    while (!WindowShouldClose())
-    {
-        
-        // Do update.
-        UpdateCamera(MainCamera);
-        Scene::DoUpdate();
+	// Set the initial scene.
+	Scene::LoadScene("TitleScreen", &titleScreen);
+	Scene::LoadScene("OptionsScreen", &optionsScreen);
+	Scene::LoadScene("Gameplay", &gameplay);
+	Scene::LoadScene("PvsPScreen", &pvspScreen);
+	Scene::LoadScene("CharacterSelectScreen", &characterSelectScreen);
+	Scene::ChangeScene("TitleScreen");
 
-        // Draw everything.
-        BeginDrawing();
-            ClearBackground(BLACK);
-            Scene::DoDrawBackground2D();
-            BeginMode3D(*MainCamera);
-                Scene::DoDraw3D();
-            EndMode3D();
-            Scene::DoDrawForeground2D();
-        EndDrawing();
+	// Main game loop
+	while (!WindowShouldClose() && !Screen::quitGame)
+	{
 
-    }
+		// Do update.
+		UpdateCamera(&Scene::GetCamera());
+		Scene::DoUpdate();
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseAudioDevice();   // Close the Audio Device
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+		// Fullscreen check.
+		if (IsKeyPressed(KEY_F4))
+		{
+			Screen::DoToggleFullscreen();
+		}
 
-    return 0;
+		// Draw everything.
+		BeginDrawing();
+		ClearBackground(BLACK);
+		Scene::DoDrawBackground2D();
+		BeginMode3D(Scene::GetCamera());
+		Scene::DoDraw3D();
+		EndMode3D();
+		Scene::DoDrawForeground2D();
+		DrawFPS(5, 0);
+		EndDrawing();
+	}
+
+	// De-Initialization
+	//--------------------------------------------------------------------------------------
+	CloseAudioDevice(); // Close the Audio Device
+	CloseWindow();      // Close window and OpenGL context
+	//--------------------------------------------------------------------------------------
+
+	return 0;
 }

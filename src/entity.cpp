@@ -1,134 +1,82 @@
-/*
-Main contributors to this file: Nolan Y?
+#include "entity.h"
 
-Bug fixers: [None, yet]
-*/
-
-#include <raylib.h>
-
-// Physics Object struct
-struct PhysicsObject
+Vector3& Entity::GetPosition()
 {
-    // Declare the object's postion, velocity, and acceleration
-    // Initalize each var to (0, 0)
-    Vector2 pos = { 0, 0 };
-    Vector2 vel = { 0, 0 };
-    Vector2 accel = { 0, 0 };
-};
+    return position;
+}
 
-// Player Struct
-struct Player : PhysicsObject
+Vector2& Entity::GetVelocity()
 {
-    // Declare and initalize the player's special properties.
-    int playerPowerState = 0;
-    bool isJumping = false;
-    bool isRunning = false;
-    bool isSkidding = false;
-    bool isGroundPounding = false;
-    bool isSpinning = false;
-    bool isWalljumping = false;
-    bool isAttacking = false;
-    bool isDead = false;
-    bool isTransitioning = false;
-    bool isStomped = false;
-    bool isInvincible = false;
-    bool isHurt = false;
-};
+    return velocity;
+}
 
-// Entity Structs
-struct BigStar : PhysicsObject
+Vector2& Entity::GetAcceleration()
 {
-    // Declare and initalize the Big Star's special properties
-    int starID = 0;
-    bool wasCollected = false;
-};
+    return acceleration;
+}
 
-struct Goomba : PhysicsObject
+Mdl& Entity::GetModel()
 {
-    // Declare and initalize the Goomba's special properties
-    bool isStomped = false;
-    bool isFacingRight = false;
-};
+    return mainModel;
+}
 
-struct Koopa : PhysicsObject
+void Entity::SetPosition(Vector3 pos)
 {
-    // Declare and initalize the Koopa's special properties
-    int shellType = 0;
-    bool isStomped = false;
-    bool isFacingRight = false;
-    bool wasThrown = false;
+    position = pos;
+}
 
-};
-
-struct BulletBill : PhysicsObject
+void Entity::SetVelocity(Vector2 vel)
 {
-    // Declare and initalize the Bullet Bill's special properties
-    bool isStomped = false;
-    bool isFacingRight = false;
-};
+    velocity = vel;
+}
 
-struct PiranhaPlant : PhysicsObject
+void Entity::SetAcceleration(Vector2 acc)
 {
-    // Declare and initalize the Piranha Plant's special properties
-    bool isStomped = false;
-    bool isInPipe = false;
-};
+    acceleration = acc;
+}
 
-struct Bobomb : PhysicsObject
+void Entity::SetMaxVelocity(Vector2 max)
 {
-    // Declare and initalize the Bobomb's special properties
-    bool isStomped = false;
-    int fuseTimer = 500;
-};
+    maxVelocity = max;
+}
 
-struct StoneWall
+void Entity::SetModel(std::string name)
 {
-    // Declare and initalize the Stone Wall's special properties
-    int width = 0;
-    int height = 0;
-};
+    mainModel.SetModel(name);
+}
 
-struct FireBall : PhysicsObject
+void Entity::UpdatePhysics(float dt)
 {
-    // Declare the Fire Ball's special properties
-    int playerNumber = 0;
-};
+    velocity.x += acceleration.x * dt;
+    position.x += velocity.x * dt;
+    
+    if (velocity.x >= maxVelocity.x)
+    {
+        velocity.x = maxVelocity.x;
+    }
+    if (velocity.x <= -maxVelocity.x)
+    {
+        velocity.x = -maxVelocity.x;
+    }
+}
 
-
-// Powerup Structs
-struct Mushroom : PhysicsObject
+void Entity::UpdateModel()
 {
-    // Declare and initalize the Mushroom's special properties
-    int powerupValue = 0;
-    bool isEvil = false;
-};
+    mainModel.Update();
+}
 
-struct FireFlower : PhysicsObject
+void Entity::InitStates(int numStates)
 {
-    // Declare and initalize the Fire Flower's special properties
-    int powerupValue = 1;
-};
+    stateFunctions = new StateFunction[numStates];
+}
 
-struct BlueShell : PhysicsObject
+void Entity::DoState()
 {
-    // Declare and initalize the Blue Shell's special properties
-    int powerupValue = 2;
-};
+    if (currentState == -1) { return; }
+    stateFunctions[currentState](this);
+}
 
-struct MiniMushroom : PhysicsObject
+void Entity::Cleanup()
 {
-    // Declare and initalize the Mini Mushroom's special properties
-    int powerupValue = 3;
-};
-
-struct SuperStar : PhysicsObject
-{
-    // Declare and initalize the Super Star's special properties
-    int powerupValue = 4;
-};
-
-struct MegaMushroom : PhysicsObject
-{
-    // Declare and initalize the Fire Flower's special properties
-    int powerupValue = 5;
-};
+    delete[] stateFunctions;
+}

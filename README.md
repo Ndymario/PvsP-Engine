@@ -1,5 +1,5 @@
-# MvsL-Recoded
-Public project to port the New Super Mario Bros. DS gamemode Mario vs Luigi to C++ 
+# PvsP Engine
+Public project to create a fun way to play PvsP with your friends with plenty of gamemodes to choose from.
 
 # Contributor Notes
 Please note that this is a public project. Be open to any and all implementations. Ndymario reserves the final say in an implementation argument.
