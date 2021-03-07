@@ -4,6 +4,8 @@
 
 using namespace std;
 
+typedef unsigned int uint;
+
 // For drawing tiles on screen.
 struct Tile
 {
