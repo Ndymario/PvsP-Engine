@@ -13,6 +13,7 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "input.h"
 #include "ui.h"
 #include "menu/optionsScreen.h"
+#include "menu/characterSelectScreen.h"
 
 // Main method.
 int main(void)
@@ -37,12 +38,14 @@ int main(void)
 	PvsPScreen pvspScreen;
     Gameplay gameplay;
 	OptionsScreen optionsScreen;
+	CharacterSelectScreen characterSelectScreen;
 
 	// Set the initial scene.
 	Scene::LoadScene("TitleScreen", &titleScreen);
 	Scene::LoadScene("OptionsScreen", &optionsScreen);
 	Scene::LoadScene("Gameplay", &gameplay);
 	Scene::LoadScene("PvsPScreen", &pvspScreen);
+	Scene::LoadScene("CharacterSelectScreen", &characterSelectScreen);
 	Scene::ChangeScene("TitleScreen");
 
 	// Main game loop

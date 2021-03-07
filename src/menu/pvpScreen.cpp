@@ -117,12 +117,15 @@ void PvsPScreen::Cleanup()
 
 void ClickLocalButton()
 {
+	Scene::ChangeScene("CharacterSelectScreen");
 }
 
 void ClickOnlineButton()
 {
+	Scene::ChangeScene("CharacterSelectScreen");
 }
 
 void ClickTrainingButton()
 {
+	Scene::ChangeScene("CharacterSelectScreen");
 }
