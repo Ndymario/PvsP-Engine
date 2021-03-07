@@ -6,12 +6,13 @@ Bug fixers: Gota7, bbomb64, SkilLP
 
 #include <raylib.h>
 #include "scene.h"
-#include "titleScreen.h"
-#include "pvpScene.h"
+#include "menu/titleScreen.h"
+#include "menu/pvpScreen.h"
 #include "gameplay.h"
 #include "screen.h"
 #include "input.h"
 #include "ui.h"
+#include "menu/optionsScreen.h"
 
 // Main method.
 int main(void)
@@ -33,13 +34,15 @@ int main(void)
 
     // Scenes that exist.
     TitleScreen titleScreen;
-	PvsP_Menu pvspMenu;
+	PvsPScreen pvspScreen;
     Gameplay gameplay;
+	OptionsScreen optionsScreen;
 
 	// Set the initial scene.
 	Scene::LoadScene("TitleScreen", &titleScreen);
+	Scene::LoadScene("OptionsScreen", &optionsScreen);
 	Scene::LoadScene("Gameplay", &gameplay);
-	Scene::LoadScene("PvsP Menu", &pvspMenu);
+	Scene::LoadScene("PvsPScreen", &pvspScreen);
 	Scene::ChangeScene("TitleScreen");
 
 	// Main game loop
@@ -64,7 +67,7 @@ int main(void)
 		Scene::DoDraw3D();
 		EndMode3D();
 		Scene::DoDrawForeground2D();
-		DrawFPS(0, 0);
+		DrawFPS(5, 0);
 		EndDrawing();
 	}
 

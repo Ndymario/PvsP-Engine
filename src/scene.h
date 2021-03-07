@@ -11,11 +11,12 @@ struct Scene
 
 	// Private data.
 private:
-	static Scene *currentScene;
-	static map<string, Scene *> loadedScenes;
+	static Scene* currentScene;
+	static map<string, Scene*> loadedScenes;
 
 	// Public members.
 public:
+	static Vector2 BGPos;
 	Camera3D camera;
 
 	// To be implemented.
@@ -33,5 +34,6 @@ public:
 	static void DoDraw3D();
 	static void DoUpdate();
 	static void LoadScene(string name, Scene *scene);
+	static Scene* CurrentScene();
 	static Camera &GetCamera();
 };

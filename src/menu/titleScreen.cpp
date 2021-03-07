@@ -1,6 +1,6 @@
 #include "titleScreen.h"
-#include "assetManager.h"
-#include "screen.h"
+#include "../assetManager.h"
+#include "../screen.h"
 
 // Define some constants for the dimentions of the UI elements
 const int buttonWidth = 730;
@@ -12,6 +12,7 @@ const float BG_SCALE = 2.007f;
 const float LOGO_SCALE = 0.23f * 2.007f;
 const float BUTTON_SCALE_X = 1.7f;
 const float BUTTON_SCALE_Y = 1.0f;
+const float BG_SCROLL_SPEED = 70.0f;
 
 void TitleScreen::Initialize()
 {
@@ -20,6 +21,8 @@ void TitleScreen::Initialize()
 	AssetManager::LoadTextureAsset("menu/TitleBg.png", "TitleBG");
 	BG = Shape::createShape("BG", "TitleBG", false, false, 0, 0, 0, 0, AssetManager::GetTexture("TitleBG").width, AssetManager::GetTexture("TitleBG").height, false, 0, 0, 0, false, 0);
 	BG.scale(BG_SCALE);
+	BG.xPos = Scene::BGPos.x;
+	BG.yPos = Scene::BGPos.y;
 
 	// Logo.
 	AssetManager::LoadTextureAsset("menu/TitleLogo.png", "TitleLogo");
@@ -102,11 +105,13 @@ void TitleScreen::Cleanup()
 	AssetManager::UnloadTextureAsset("TitleBG");
 	AssetManager::UnloadTextureAsset("TitleLogo");
 	AssetManager::UnloadTextureAsset("TitleUI");
+	Scene::BGPos.x = BG.xPos;
+	Scene::BGPos.y = BG.yPos;
 }
 
 void ClickPvsPButton()
 {
-	Scene::ChangeScene("PvsP Menu");
+	Scene::ChangeScene("PvsPScreen");
 }
 
 void ClickMinigameButton()
@@ -116,7 +121,7 @@ void ClickMinigameButton()
 
 void ClickOptionsButton()
 {
-
+	Scene::ChangeScene("OptionsScreen");
 }
 
 void ClickQuitButton()

@@ -3,6 +3,9 @@
 Scene *Scene::currentScene;
 map<string, Scene *> Scene::loadedScenes;
 
+// BG Position.
+Vector2 Scene::BGPos = { 0, 0 };
+
 void Scene::ChangeScene(string name)
 {
 	if (currentScene != nullptr)
@@ -46,7 +49,12 @@ void Scene::LoadScene(string name, Scene *scene)
 	loadedScenes[name] = scene;
 }
 
-Camera &Scene::GetCamera()
+Scene* Scene::CurrentScene()
+{
+	return currentScene;
+}
+
+Camera& Scene::GetCamera()
 {
 	return currentScene->camera;
 }
