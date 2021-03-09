@@ -1,13 +1,26 @@
 #include "player.h"
+#include "input.h"
 
-void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft, bool playerTwo, string modelName)
+bool Player::PlayerPhysicsInitialized;
+PlayerPhysics Player::MartinPhysics;
+
+void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft, int playerId, string modelName)
 {
+
+    // Player physics.
+    if (!PlayerPhysicsInitialized)
+    {
+        MartinPhysics.MaxWalkXVel = { (MU)0x0140, { (MU)0x0140, (MU)0x0140 }, { (MU)0x0180, (MU)0x0110 }, { (MU)0x0240, (MU)0x00F0 }, { (MU)0x0240, (MU)0xFFFF } };
+        MartinPhysics.MaxRunXVel = { (MU)0x0240, { (MU)0x0240, (MU)0x0240 }, { (MU)0x0240, (MU)0x01F0 }, { (MU)0x0240, (MU)0x01B0 }, { (MU)0x0240, (MU)0xFFFF } };
+        MartinPhysics.MaxSprintXVel = { (MU)0x0300, { (MU)0x0300, (MU)0x0300 }, { (MU)0x0300, (MU)0xFFFF }, { (MU)0x0300, (MU)0xFFFF }, { (MU)0x0300, (MU)0xFFFF } };
+        PlayerPhysicsInitialized = true;
+    }
 
     // Init stats.
     lives = startingLives;
     powerState = initPowerUp;
     isFacingLeft = startFacingLeft;
-    isPlayerTwo = playerTwo;
+    this->playerId = playerId;
 
     // Setup model.
     SetModel(modelName);
@@ -28,8 +41,8 @@ void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft
 
     // Set up all the state and state pointers.
     InitStates(NUM_PLAYER_STATES);
-    stateFunctions[PLAYER_IDLE] = PlayerIdle;
-    stateFunctions[PLAYER_WALK] = PlayerWalk;
+    states[PLAYER_IDLE].main = PlayerIdleMain;
+    states[PLAYER_WALK].main = PlayerWalkMain;
 
 }
 
@@ -37,33 +50,36 @@ void Player::Update(float dt)
 {
     DoState();
 
-    if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_A))
+    if ((Input::ButtonReleased("Right", playerId) || Input::ButtonReleased("Left", playerId)) &&\
+    Input::ButtonUp("Right", playerId) && Input::ButtonUp("Left", playerId))
     {
-        currentState = PLAYER_IDLE;
+        ChangeState(PLAYER_IDLE);
     }
-    if (IsKeyPressed(KEY_D))
+    if (Input::ButtonPressed("Right", playerId))
     {   
         isFacingLeft = false;
-        currentState = PLAYER_WALK;
+        ChangeState(PLAYER_WALK);
     }
-    if (IsKeyPressed(KEY_A))
+    if (Input::ButtonPressed("Left", playerId))
     {
         isFacingLeft = true;
-        currentState = PLAYER_WALK;
+        ChangeState(PLAYER_WALK);
     }
 
     UpdatePhysics(dt);
     UpdateModel();
 }
 
-void PlayerIdle(Entity* ent)
+void PlayerIdleMain(Entity* ent)
 {
     Player* p = (Player*)ent;
+    p->SetVelocity({ 0.0f, 0 });
 }
 
-void PlayerWalk(Entity* ent)
+void PlayerWalkMain(Entity* ent)
 {
     Player* p = (Player*)ent;
+    p->SetVelocity({ 30.0f * p->isFacingLeft ? -1.0f : 1.0f, 0 });
 }
 
 /*

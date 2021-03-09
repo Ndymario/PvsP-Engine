@@ -57,7 +57,7 @@ void Gameplay::Initialize()
 	AssetManager::LoadAnimationAsset("player/Skeleton.gltf", "Skelewalk");
 	martinModel.SetModel("Skeleton");
 	martinModel.SetAnimation("Skelewalk");
-	player.Initialize(5, 0, false, false, "Skeleton");
+	player.Initialize(5, 0, false, 0, "Skeleton");
 }
 
 void Gameplay::DrawBackground2D()
@@ -74,7 +74,7 @@ void Gameplay::Draw3D()
 	//DrawModelEx(hammerBro.GetModel(), { 0, 0, 0 }, { 1.0f, 0.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	//DrawModel(player.GetModel().GetModel(), player.GetPosition(), 0.1f, WHITE);
 	//DrawModelEx(playerHeadModel.GetModel(), {0, 3, 0 }, { 1.0f, 0.0f, 0.0f }, -270.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
-	DrawModelEx(player.GetModel().GetModel(), { 0, 1, 0 }, { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
+	DrawModelEx(player.GetModel().GetModel(), player.GetPosition(), { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	Tile::DrawTile(0, { 0, 0, 0}, 0, 0, 0, 1.0f);
 	Tile::DrawTile(0, { 0, 0, 0}, 1, 0, 0, 1.0f);
 	Tile::DrawTile(0, { 0, 0, 0}, 1, 1, 0, 1.0f);

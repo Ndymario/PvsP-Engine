@@ -7,6 +7,16 @@ struct Entity;
 
 typedef void(*StateFunction)(Entity* ent);
 
+// Measurement unit, where 0xABCD represents A in tiles (&8 is sign), B in pixels, C in subpixels, and D in subsubpixels. There are 16 subpixels in a pixel, 16 pixels in a block, etc. 0xFFFF is NA.
+typedef unsigned short MU;
+
+struct EntityState
+{
+    StateFunction init = NULL;
+    StateFunction main = NULL;
+    StateFunction cleanup = NULL;
+};
+
 struct Entity 
 {
 // Physics variables.
@@ -20,10 +30,12 @@ private:
     // Main model for the entity
     Mdl mainModel;
 
+    // State.
+    int currentState = -1;
+
 // Getters and setters.
 public:
-    int currentState = -1;
-    StateFunction* stateFunctions;
+    EntityState* states;
 
     Vector3& GetPosition();
     Vector2& GetVelocity();
@@ -39,8 +51,16 @@ public:
     void UpdatePhysics(float dt);
     void UpdateModel();
 
+    // State functions.
     void InitStates(int numStates);
+    void ChangeState(int state);
     void DoState();
+    int GetState();
 
+    // Cleanup.
     void Cleanup();
+
+    // Static stuff.
+    static float ConvMU(MU m);
+
 };

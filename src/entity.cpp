@@ -1,5 +1,8 @@
 #include "entity.h"
 
+// Magical conversion constant.
+const float MU_2_FLOAT = 0.0004880371094f; // TILE_SIZE (1.999) / MU's per block (0x1000).
+
 Vector3& Entity::GetPosition()
 {
     return position;
@@ -67,16 +70,38 @@ void Entity::UpdateModel()
 
 void Entity::InitStates(int numStates)
 {
-    stateFunctions = new StateFunction[numStates];
+    states = new EntityState[numStates];
+}
+
+void Entity::ChangeState(int state)
+{
+    if (currentState != -1 && states[currentState].cleanup != NULL) { states[currentState].cleanup(this); }
+    currentState = state;
+    if (currentState != -1 && states[currentState].init != NULL) { states[currentState].init(this); }
 }
 
 void Entity::DoState()
 {
-    if (currentState == -1) { return; }
-    stateFunctions[currentState](this);
+    if (currentState == -1 || states[currentState].main == NULL) { return; }
+    states[currentState].main(this);
 }
 
 void Entity::Cleanup()
 {
-    delete[] stateFunctions;
+    delete[] states;
+}
+
+int Entity::GetState()
+{
+    return currentState;
+}
+
+float Entity::ConvMU(MU m)
+{
+    float ret = NAN;
+    if (m != 0xFFFF)
+    {
+        ret = (m & 0x8000) ? (-1.0 * MU_2_FLOAT * (m & 0x7FFF)) : (1.0 * MU_2_FLOAT * (m & 0x7FFF));
+    }
+    return ret;
 }
