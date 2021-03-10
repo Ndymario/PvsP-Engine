@@ -85,7 +85,7 @@ struct Player : Entity
     int powerState = 0;
     int playerId;
     bool isFacingLeft = false;
-    PlayerPhysics physics;
+    PlayerPhysics* physics;
 
     // Movement variables
     float maxSpeed;

@@ -41,8 +41,14 @@ public:
     EntityState* states;
 
     Vector3& GetPosition();
+    MU GetPositionX();
+    MU GetPositionY();
     Vector2& GetVelocity();
+    MU GetVelocityX();
+    MU GetVelocityY();
     Vector2& GetAcceleration();
+    MU GetAccelerationX();
+    MU GetAccelerationY();
     Mdl& GetModel();
 
     void SetPosition(Vector3 pos);

@@ -11,14 +11,44 @@ Vector3& Entity::GetPosition()
     return position;
 }
 
+MU Entity::GetPositionX()
+{
+    return ConvFloat(position.x);
+}
+
+MU Entity::GetPositionY()
+{
+    return ConvFloat(position.y);
+}
+
 Vector2& Entity::GetVelocity()
 {
     return velocity;
 }
 
+MU Entity::GetVelocityX()
+{
+    return ConvFloat(velocity.x / FPS_FACTOR);
+}
+
+MU Entity::GetVelocityY()
+{
+    return ConvFloat(velocity.y / FPS_FACTOR);
+}
+
 Vector2& Entity::GetAcceleration()
 {
     return acceleration;
+}
+
+MU Entity::GetAccelerationX()
+{
+    return ConvFloat(acceleration.x / FPS_FACTOR / FPS_FACTOR);
+}
+
+MU Entity::GetAccelerationY()
+{
+    return ConvFloat(acceleration.y / FPS_FACTOR / FPS_FACTOR);
 }
 
 Mdl& Entity::GetModel()
