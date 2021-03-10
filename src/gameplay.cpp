@@ -75,11 +75,14 @@ void Gameplay::Draw3D()
 	//DrawModel(player.GetModel().GetModel(), player.GetPosition(), 0.1f, WHITE);
 	//DrawModelEx(playerHeadModel.GetModel(), {0, 3, 0 }, { 1.0f, 0.0f, 0.0f }, -270.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	DrawModelEx(player.GetModel().GetModel(), player.GetPosition(), { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
-	Tile::DrawTile(0, { 0, 0, 0}, 0, 0, 0, 1.0f);
-	Tile::DrawTile(0, { 0, 0, 0}, 1, 0, 0, 1.0f);
-	Tile::DrawTile(0, { 0, 0, 0}, 1, 1, 0, 1.0f);
-	Tile::DrawTile(1, { 0, 0, 0}, 1, 2, 0, 1.0f);
-	Tile::DrawTile(1, { 0, 0, 0}, 2, 2, 0, 1.0f);
+	for (int i = -15; i < 15; i++)
+	{
+		Tile::DrawTile(1, { 0, -.8f, 0}, i, 0, 0, 1.0f);
+		for (int j = 1; j < 10; j++)
+		{
+			Tile::DrawTile(0, { 0, -.8f, 0}, i, -j, 0, 1.0f);
+		}
+	}
 }
 
 void Gameplay::Update()

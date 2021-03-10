@@ -32,6 +32,9 @@ private:
 
     // State.
     int currentState = -1;
+    int prevState = -1;
+    bool doInitFrame = false;
+    bool doCleanupFrame = false;
 
 // Getters and setters.
 public:
@@ -43,9 +46,17 @@ public:
     Mdl& GetModel();
 
     void SetPosition(Vector3 pos);
+    void SetPositionX(MU m);
+    void SetPositionY(MU m);
     void SetVelocity(Vector2 vel);
+    void SetVelocityX(MU m);
+    void SetVelocityY(MU m);
     void SetAcceleration(Vector2 acc);
+    void SetAccelerationX(MU m);
+    void SetAccelerationY(MU m);
     void SetMaxVelocity(Vector2 max);
+    void SetMaxVelocityX(MU m);
+    void SetMaxVelocityY(MU m);
     void SetModel(std::string name);
 
     void UpdatePhysics(float dt);
@@ -56,11 +67,13 @@ public:
     void ChangeState(int state);
     void DoState();
     int GetState();
+    int GetPrevState();
 
     // Cleanup.
     void Cleanup();
 
     // Static stuff.
     static float ConvMU(MU m);
+    static MU ConvFloat(float f);
 
 };

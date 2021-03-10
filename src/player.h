@@ -5,6 +5,8 @@
 enum PlayerStates {
     PLAYER_IDLE,
     PLAYER_WALK,
+    PLAYER_JUMP,
+    PLAYER_SPINJUMP,
     NUM_PLAYER_STATES
 };
 
@@ -60,9 +62,10 @@ struct PlayerPhysics
     XPhys NaturalUnderwaterXVel;
 
     // Jump physics.
+    int NumJumpPhysics;
     JumpPhys* JumpPhysics; // Each X velocity is the miniumum needed to have that jump speed.
-    MU GravityBYVel;
-    MU GravityNoBYVel;
+    MU GravityBYAccel;
+    MU GravityNoBYAccel;
     MU TerminalYVel;
     MU AirForwardXAccel;
     MU AirBackwardXAccel;
@@ -82,6 +85,7 @@ struct Player : Entity
     int powerState = 0;
     int playerId;
     bool isFacingLeft = false;
+    PlayerPhysics physics;
 
     // Movement variables
     float maxSpeed;
@@ -95,9 +99,12 @@ struct Player : Entity
     // Basic actions
     void Initialize(int lives, int initPowerUp, bool startFacingLeft, int playerId, string modelName);
     void Update(float dt);
+    int DetermineJumpTableIndex();
 
 };
 
 // States.
 void PlayerIdleMain(Entity* ent);
 void PlayerWalkMain(Entity* ent);
+void PlayerJumpInit(Entity* ent);
+void PlayerJumpMain(Entity* ent);
