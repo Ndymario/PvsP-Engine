@@ -14,6 +14,9 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "ui.h"
 #include "menu/optionsScreen.h"
 #include "menu/characterSelectScreen.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_raylib.h"
 
 // Main method.
 int main(void)
@@ -48,6 +51,12 @@ int main(void)
 	Scene::LoadScene("CharacterSelectScreen", &characterSelectScreen);
 	Scene::ChangeScene("TitleScreen");
 
+	// ImGUI.
+	ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+    ImGui_ImplOpenGL3_Init();
+    ImGui_ImplRaylib_Init();
+
 	// Main game loop
 	while (!WindowShouldClose() && !Screen::quitGame)
 	{
@@ -62,6 +71,12 @@ int main(void)
 			Screen::DoToggleFullscreen();
 		}
 
+		// ImGUI.
+		ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplRaylib_NewFrame();
+        ImGui::NewFrame();
+        ImGui_ImplRaylib_ProcessEvent();
+
 		// Draw everything.
 		BeginDrawing();
 		ClearBackground(BLACK);
@@ -71,8 +86,14 @@ int main(void)
 		EndMode3D();
 		Scene::DoDrawForeground2D();
 		DrawFPS(5, 0);
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		EndDrawing();
 	}
+
+	// ImGUI.
+	ImGui_ImplRaylib_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------

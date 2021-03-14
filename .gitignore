@@ -28,3 +28,5 @@ bin/
 build/
 .DS_Store
 *.sh
+imgui.ini
+Makefile

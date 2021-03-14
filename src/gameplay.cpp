@@ -2,6 +2,7 @@
 #include <assetManager.h>
 #include "input.h"
 #include "tile.h"
+#include "imgui.h"
 
 int frameCounter;
 Vector3 pos = {0, 0, 0};
@@ -62,6 +63,7 @@ void Gameplay::Initialize()
 
 void Gameplay::DrawBackground2D()
 {
+	ImGui::ShowDemoWindow();
 }
 
 void Gameplay::DrawForeground2D()
