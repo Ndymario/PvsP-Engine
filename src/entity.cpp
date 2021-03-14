@@ -160,8 +160,7 @@ void Entity::InitStates(int numStates)
 
 void Entity::ChangeState(int state)
 {
-    if (currentState != -1 && states[currentState].cleanup != NULL) { doCleanupFrame = true; }
-    prevState = currentState;
+    if (currentState != -1 && states[currentState].cleanup != NULL) { doCleanupFrame = true; cleanupStack.push_back(currentState); }
     currentState = state;
     if (currentState != -1 && states[currentState].init != NULL) { doInitFrame = true; }
 }
@@ -170,7 +169,11 @@ void Entity::DoState()
 {
     if (doCleanupFrame)
     {
-        states[prevState].cleanup(this);
+        while (cleanupStack.size() > 0)
+        {
+            states[cleanupStack[cleanupStack.size() - 1]].cleanup(this);
+            cleanupStack.pop_back();
+        }
         doCleanupFrame = false;
     }
     if (doInitFrame)
@@ -191,11 +194,6 @@ void Entity::Cleanup()
 int Entity::GetState()
 {
     return currentState;
-}
-
-int Entity::GetPrevState()
-{
-    return prevState;
 }
 
 float Entity::ConvMU(MU m)

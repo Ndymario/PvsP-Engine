@@ -32,7 +32,7 @@ private:
 
     // State.
     int currentState = -1;
-    int prevState = -1;
+    std::vector<int> cleanupStack;
     bool doInitFrame = false;
     bool doCleanupFrame = false;
 
@@ -73,7 +73,6 @@ public:
     void ChangeState(int state);
     void DoState();
     int GetState();
-    int GetPrevState();
 
     // Cleanup.
     void Cleanup();

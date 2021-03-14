@@ -15,6 +15,7 @@ void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft
         MartinPhysics.MaxWalkXVel = { (MU)0x0140, { (MU)0x0140, (MU)0x0140 }, { (MU)0x0180, (MU)0x0110 }, { (MU)0x0240, (MU)0x00F0 }, { (MU)0x0240, (MU)0xFFFF } };
         MartinPhysics.MaxRunXVel = { (MU)0x0240, { (MU)0x0240, (MU)0x0240 }, { (MU)0x0240, (MU)0x01F0 }, { (MU)0x0240, (MU)0x01B0 }, { (MU)0x0240, (MU)0xFFFF } };
         MartinPhysics.MaxSprintXVel = { (MU)0x0300, { (MU)0x0300, (MU)0x0300 }, { (MU)0x0300, (MU)0xFFFF }, { (MU)0x0300, (MU)0xFFFF }, { (MU)0x0300, (MU)0xFFFF } };
+        MartinPhysics.WalkRunXAccel = { (MU)0x0018, { (MU)0x0018, (MU)0x00180 }, { (MU)0x0018, (MU)0x0014 }, { (MU)0x0018, (MU)0x0010 }, { (MU)0x0040, (MU)0xFFFF } };
         // TODO!!!
         MartinPhysics.JumpPhysics = new PlayerPhysics::JumpPhys[7];
         MartinPhysics.JumpPhysics[0].XVel = 0;
@@ -75,6 +76,8 @@ void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft
     InitStates(NUM_PLAYER_STATES);
     states[PLAYER_IDLE].main = PlayerIdleMain;
     states[PLAYER_WALK].main = PlayerWalkMain;
+    states[PLAYER_WALK].cleanup = PlayerWalkCleanup;
+    states[PLAYER_RUN].main = PlayerRunMain;
     states[PLAYER_JUMP].init = PlayerJumpInit;
     states[PLAYER_JUMP].main = PlayerJumpMain;
     ChangeState(PLAYER_IDLE);
@@ -141,12 +144,30 @@ void PlayerIdleMain(Entity* ent)
 void PlayerWalkMain(Entity* ent)
 {
     Player* p = (Player*)ent;
-    if ((p->GetVelocityX() & 0x7FFF) >= p->physics->MaxWalkXVel.FlatSpeed) { p->ChangeState(PLAYER_RUN); }
+    if (Input::ButtonDown("Run", p->playerId) && (p->GetVelocityX() & 0x7FFF) >= p->physics->MaxWalkXVel.FlatSpeed) { p->ChangeState(PLAYER_RUN); return; }
     if (Input::ButtonPressed("Left", p->playerId)) { p->isFacingLeft = true; }
     if (Input::ButtonPressed("Right", p->playerId)) { p->isFacingLeft = false; }
     if (Input::ButtonUp("Left", p->playerId)) { p->isFacingLeft = false; }
     if (Input::ButtonUp("Right", p->playerId)) { p->isFacingLeft = true; }
-    p->SetVelocityX(0x300 | (p->isFacingLeft ? 0x8000 : 0x0));
+    p->SetAccelerationX(p->physics->WalkRunXAccel.FlatSpeed | (p->isFacingLeft ? 0x8000 : 0x0));
+    p->SetMaxVelocityX(p->physics->MaxWalkXVel.FlatSpeed);
+}
+
+void PlayerRunMain(Entity* ent)
+{
+    Player* p = (Player*)ent;
+    //if (Input::ButtonDown("Run", p->playerId) && (p->GetVelocityX() & 0x7FFF) >= p->physics->MaxWalkXVel.FlatSpeed) { p->ChangeState(PLAYER_RUN); }
+    if (Input::ButtonPressed("Left", p->playerId)) { p->isFacingLeft = true; }
+    if (Input::ButtonPressed("Right", p->playerId)) { p->isFacingLeft = false; }
+    if (Input::ButtonUp("Left", p->playerId)) { p->isFacingLeft = false; }
+    if (Input::ButtonUp("Right", p->playerId)) { p->isFacingLeft = true; }
+    p->SetAccelerationX(p->physics->WalkRunXAccel.FlatSpeed | (p->isFacingLeft ? 0x8000 : 0x0));
+    p->SetMaxVelocityX(p->physics->MaxRunXVel.FlatSpeed);
+}
+
+void PlayerWalkCleanup(Entity* ent)
+{
+    ent->SetAccelerationX(0);
 }
 
 void PlayerJumpInit(Entity* ent)

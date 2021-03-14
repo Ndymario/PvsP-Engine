@@ -106,6 +106,7 @@ struct Player : Entity
 // States.
 void PlayerIdleMain(Entity* ent);
 void PlayerWalkMain(Entity* ent);
+void PlayerWalkCleanup(Entity* ent);
 void PlayerRunMain(Entity* ent);
 void PlayerSprintMain(Entity* ent);
 void PlayerJumpInit(Entity* ent);
