@@ -5,6 +5,8 @@
 enum PlayerStates {
     PLAYER_IDLE,
     PLAYER_WALK,
+    PLAYER_RUN,
+    PLAYER_SPRINT,
     PLAYER_JUMP,
     PLAYER_SPINJUMP,
     NUM_PLAYER_STATES
@@ -80,23 +82,21 @@ struct PlayerPhysics
 // The controllable player.
 struct Player : Entity
 {
-    // Define some player states
+    // Define some player states.
     int lives = 0;
     int powerState = 0;
     int playerId;
-    bool isFacingLeft = false;
     PlayerPhysics* physics;
+    bool isFacingLeft = false;
 
-    // Movement variables
-    float maxSpeed;
-    float accelRate;
-    float deaccelRate;
+    // Movement variables.
+    char runMeter;
 
     // Player specific.
     static bool PlayerPhysicsInitialized;
     static PlayerPhysics MartinPhysics;
 
-    // Basic actions
+    // Basic actions.
     void Initialize(int lives, int initPowerUp, bool startFacingLeft, int playerId, string modelName);
     void Update(float dt);
     int DetermineJumpTableIndex();
@@ -106,5 +106,7 @@ struct Player : Entity
 // States.
 void PlayerIdleMain(Entity* ent);
 void PlayerWalkMain(Entity* ent);
+void PlayerRunMain(Entity* ent);
+void PlayerSprintMain(Entity* ent);
 void PlayerJumpInit(Entity* ent);
 void PlayerJumpMain(Entity* ent);

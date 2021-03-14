@@ -4,6 +4,7 @@
 
 bool Player::PlayerPhysicsInitialized = false;
 PlayerPhysics Player::MartinPhysics;
+const char RUN_METER_MAX = 112;
 
 void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft, int playerId, string modelName)
 {
@@ -69,8 +70,6 @@ void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft
 
     // Physic.
     SetMaxVelocity({4.5f, 0});
-    accelRate = 15.0f; // p/s^2
-    deaccelRate = 20.0f; // p/s^2
 
     // Set up all the state and state pointers.
     InitStates(NUM_PLAYER_STATES);
@@ -142,6 +141,7 @@ void PlayerIdleMain(Entity* ent)
 void PlayerWalkMain(Entity* ent)
 {
     Player* p = (Player*)ent;
+    if ((p->GetVelocityX() & 0x7FFF) >= p->physics->MaxWalkXVel.FlatSpeed) { p->ChangeState(PLAYER_RUN); }
     if (Input::ButtonPressed("Left", p->playerId)) { p->isFacingLeft = true; }
     if (Input::ButtonPressed("Right", p->playerId)) { p->isFacingLeft = false; }
     if (Input::ButtonUp("Left", p->playerId)) { p->isFacingLeft = false; }
@@ -165,30 +165,41 @@ void PlayerJumpMain(Entity* ent)
     Player* p = (Player*)ent;
     p->SetAccelerationY(Input::ButtonDown("Jump", p->playerId) ? p->physics->GravityBYAccel : p->physics->GravityNoBYAccel);
     p->SetMaxVelocityY(p->physics->TerminalYVel);
-    if (Input::ButtonPressed("Left", p->playerId)) { p->isFacingLeft = true; }
-    if (Input::ButtonPressed("Right", p->playerId)) { p->isFacingLeft = false; }
-    if (Input::ButtonUp("Left", p->playerId)) { p->isFacingLeft = false; }
-    if (Input::ButtonUp("Right", p->playerId)) { p->isFacingLeft = true; }
+    int goDir = 0; // 0 - None, 1 - Left, 2 - Right.
+    if (Input::ButtonDown("Left", p->playerId)) { goDir = 1; }
+    if (Input::ButtonDown("Right", p->playerId) && Input::ButtonUp("Left", p->playerId)) { goDir = 2; }
+    if (Input::ButtonPressed("Left", p->playerId)) { goDir = 1; }
+    if (Input::ButtonPressed("Right", p->playerId)) { goDir = 2; }
+    if (goDir == 1 && Input::ButtonUp("Left", p->playerId)) { goDir = 0; }
+    if (goDir == 2 && Input::ButtonUp("Right", p->playerId)) { goDir = 0; }
     if (p->isFacingLeft)
     {
-        if (Input::ButtonDown("Left", p->playerId))
+        if (goDir == 1)
         {
             p->SetAccelerationX(p->physics->AirForwardXAccel | 0x8000);
         }
-        else if (Input::ButtonDown("Right", p->playerId))
+        else if (goDir == 2)
         {
             p->SetAccelerationX(p->physics->AirBackwardXAccel);
+        }
+        else
+        {
+            p->SetAccelerationX(0);
         }
     }
     else
     {
-        if (Input::ButtonDown("Right", p->playerId))
+        if (goDir == 2)
         {
             p->SetAccelerationX(p->physics->AirForwardXAccel);
         }
-        else if (Input::ButtonDown("Left", p->playerId))
+        else if (goDir == 1)
         {
             p->SetAccelerationX(p->physics->AirBackwardXAccel | 0x8000);
+        }
+        else
+        {
+            p->SetAccelerationX(0);
         }
     }
     if (p->GetPosition().y <= 0.0f)
