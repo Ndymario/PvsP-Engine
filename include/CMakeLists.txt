@@ -19,7 +19,7 @@
 #        raylib/src/external/glfw/deps/mingw
 #)
 
-find_package(raylib 3.0 QUIET)
+find_package(raylib 3.5.0 QUIET)
 
 if (NOT raylib_FOUND)
   include(FetchContent)
@@ -34,7 +34,7 @@ if (NOT raylib_FOUND)
     set(FETCHCONTENT_QUIET NO)
     FetchContent_Populate(raylib)
 
-    set(BUILD_EXAMPLES ON CACHE BOOL "" FORCE)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
     add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
 
@@ -48,6 +48,26 @@ endif()
 
 # Use winmm instead of X11, pthread, and dl if Windows!
 #TARGET_LINK_LIBRARIES(raylib PUBLIC X11 pthread dl)
+
+### GLAD
+find_package(glad 0.1.34 QUIET)
+if (NOT glad_FOUND)
+  include(FetchContent)
+
+  FetchContent_Declare(
+    glad
+    URL https://github.com/Dav1dde/glad/archive/master.tar.gz
+  )
+
+  FetchContent_GetProperties(glad)
+  if (NOT glad_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(glad)
+    add_subdirectory(${glad_SOURCE_DIR} ${glad_BINARY_DIR})
+
+  endif()
+
+endif()
 
 ### IMGUI
 
@@ -65,3 +85,4 @@ TARGET_INCLUDE_DIRECTORIES(imgui
     PRIVATE raylib/src/external raylib/src)
 
 TARGET_COMPILE_DEFINITIONS(imgui PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
+TARGET_LINK_LIBRARIES(imgui glad)
