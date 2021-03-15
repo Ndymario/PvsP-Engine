@@ -76,8 +76,8 @@ ADD_LIBRARY(imgui STATIC
     imgui/imgui_demo.cpp
     imgui/imgui_draw.cpp
     imgui/imgui_widgets.cpp
-    imgui/examples/imgui_impl_opengl3.cpp
-    imgui_impl_raylib.cpp
+    #imgui/examples/imgui_impl_opengl3.cpp
+    #imgui_impl_raylib.cpp
 )
 
 TARGET_INCLUDE_DIRECTORIES(imgui

@@ -63,7 +63,10 @@ void Gameplay::Initialize()
 
 void Gameplay::DrawBackground2D()
 {
-	ImGui::ShowDemoWindow();
+	//ImGui::Begin("Test Window");
+	//ImGui::InputInt("Jump Y#1", (int*)&player.physics->JumpPhysics[0].FirstFrameJumpY, 0x0000, 0x7FFF);
+	//ImGui::DragScalar("Jump Y#2", ImGuiDataType_U16, &player.physics->JumpPhysics[0].FirstFrameJumpY, 1, 0, NULL, "%x");
+	//ImGui::End();
 }
 
 void Gameplay::DrawForeground2D()

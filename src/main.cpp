@@ -15,8 +15,9 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "menu/optionsScreen.h"
 #include "menu/characterSelectScreen.h"
 #include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_raylib.h"
+//#include "imgui_impl_opengl3.h"
+//#include "imgui_impl_raylib.h"
+#include "rlImGui/rlImGui.h"
 
 // Main method.
 int main(void)
@@ -54,8 +55,7 @@ int main(void)
 	// ImGUI.
 	ImGui::CreateContext();
     ImGui::StyleColorsDark();
-    ImGui_ImplOpenGL3_Init();
-    ImGui_ImplRaylib_Init();
+	SetupRLImGui(true);
 
 	// Main game loop
 	while (!WindowShouldClose() && !Screen::quitGame)
@@ -69,31 +69,37 @@ int main(void)
 		if (IsKeyPressed(KEY_F4))
 		{
 			Screen::DoToggleFullscreen();
-		}
+		}	
 
-		// ImGUI.
-		ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplRaylib_NewFrame();
-        ImGui::NewFrame();
-        ImGui_ImplRaylib_ProcessEvent();
-
-		// Draw everything.
+		// Init draw.
+		BeginRLImGui();
 		BeginDrawing();
 		ClearBackground(BLACK);
+
+		// Background.
+		ImGui::ShowDemoWindow();
 		Scene::DoDrawBackground2D();
 		BeginMode3D(Scene::GetCamera());
+
+		// 3D.
 		Scene::DoDraw3D();
 		EndMode3D();
+
+		// ImGUI.
+		ImGui::Render();
+		EndRLImGui();
+
+		// Foreground.
 		Scene::DoDrawForeground2D();
 		DrawFPS(5, 0);
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		// End draw.
 		EndDrawing();
+
 	}
 
 	// ImGUI.
-	ImGui_ImplRaylib_Shutdown();
-    ImGui_ImplOpenGL3_Shutdown();
+	ShutdownRLImGui();
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------
