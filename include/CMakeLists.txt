@@ -1,29 +1,53 @@
 ### RAYLIB
 
-ADD_LIBRARY(raylib STATIC
-    raylib/src/core.c
-    raylib/src/shapes.c
-    raylib/src/textures.c
-    raylib/src/text.c
-    raylib/src/utils.c
-    raylib/src/rglfw.c
-    raylib/src/models.c
-    raylib/src/raudio.c
-)
+#ADD_LIBRARY(raylib STATIC
+#    raylib/src/core.c
+#    raylib/src/shapes.c
+#    raylib/src/textures.c
+#    raylib/src/text.c
+#    raylib/src/utils.c
+#    raylib/src/rglfw.c
+#    raylib/src/models.c
+#    raylib/src/raudio.c
+#)
 
-TARGET_INCLUDE_DIRECTORIES(raylib
-    PUBLIC
-        raylib/src
-    PRIVATE
-        raylib/src/external/glfw/include
-        raylib/src/external/glfw/deps/mingw
-)
+#TARGET_INCLUDE_DIRECTORIES(raylib
+#    PUBLIC
+#        raylib/src
+#    PRIVATE
+#        raylib/src/external/glfw/include
+#        raylib/src/external/glfw/deps/mingw
+#)
 
-TARGET_COMPILE_DEFINITIONS(raylib PRIVATE PLATFORM_DESKTOP GRAPHICS_API_OPENGL_33)
+find_package(raylib 3.0 QUIET)
 
-TARGET_COMPILE_OPTIONS(raylib PRIVATE -std=c99 -fno-strict-aliasing)
+if (NOT raylib_FOUND)
+  include(FetchContent)
 
-TARGET_LINK_LIBRARIES(raylib PUBLIC X11 pthread dl)
+  FetchContent_Declare(
+    raylib
+    URL https://github.com/raysan5/raylib/archive/master.tar.gz
+  )
+
+  FetchContent_GetProperties(raylib)
+  if (NOT raylib_POPULATED)
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_Populate(raylib)
+
+    set(BUILD_EXAMPLES ON CACHE BOOL "" FORCE)
+
+    add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+
+  endif()
+
+endif()
+
+#TARGET_COMPILE_DEFINITIONS(raylib PRIVATE PLATFORM_DESKTOP GRAPHICS_API_OPENGL_33)
+
+#TARGET_COMPILE_OPTIONS(raylib PRIVATE -std=c99 -fno-strict-aliasing)
+
+# Use winmm instead of X11, pthread, and dl if Windows!
+#TARGET_LINK_LIBRARIES(raylib PUBLIC X11 pthread dl)
 
 ### IMGUI
 
