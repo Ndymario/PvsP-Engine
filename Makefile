@@ -58,19 +58,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.19.1/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.19.6/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.19.1/bin/cmake -E rm -f
+RM = /usr/local/Cellar/cmake/3.19.6/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine
+CMAKE_SOURCE_DIR = /Users/ndymario/Desktop/Programming/Cpp/PvsP-Engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine
+CMAKE_BINARY_DIR = /Users/ndymario/Desktop/Programming/Cpp/PvsP-Engine
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -78,7 +78,7 @@ CMAKE_BINARY_DIR = /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/local/Cellar/cmake/3.19.1/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/Cellar/cmake/3.19.6/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -89,7 +89,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/local/Cellar/cmake/3.19.1/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/Cellar/cmake/3.19.6/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine/CMakeFiles /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/Cpp/PvsP-Engine/CMakeFiles /Users/ndymario/Desktop/Programming/Cpp/PvsP-Engine//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/C/PvsP-Engine/PvsP-Engine/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ndymario/Desktop/Programming/Cpp/PvsP-Engine/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -141,6 +141,45 @@ pvsp_engine: cmake_check_build_system
 pvsp_engine/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/build
 .PHONY : pvsp_engine/fast
+
+#=============================================================================
+# Target rules for targets named imgui
+
+# Build rule for target.
+imgui: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imgui
+.PHONY : imgui
+
+# fast build rule for target.
+imgui/fast:
+	$(MAKE) $(MAKESILENT) -f include/CMakeFiles/imgui.dir/build.make include/CMakeFiles/imgui.dir/build
+.PHONY : imgui/fast
+
+#=============================================================================
+# Target rules for targets named glad
+
+# Build rule for target.
+glad: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glad
+.PHONY : glad
+
+# fast build rule for target.
+glad/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/glad-build/CMakeFiles/glad.dir/build.make _deps/glad-build/CMakeFiles/glad.dir/build
+.PHONY : glad/fast
+
+#=============================================================================
+# Target rules for targets named glad-generate-files
+
+# Build rule for target.
+glad-generate-files: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glad-generate-files
+.PHONY : glad-generate-files
+
+# fast build rule for target.
+glad-generate-files/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/glad-build/CMakeFiles/glad-generate-files.dir/build.make _deps/glad-build/CMakeFiles/glad-generate-files.dir/build
+.PHONY : glad-generate-files/fast
 
 src/assetManager.o: src/assetManager.cpp.o
 
@@ -250,6 +289,33 @@ src/input.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/input.cpp.s
 .PHONY : src/input.cpp.s
 
+src/level.o: src/level.cpp.o
+
+.PHONY : src/level.o
+
+# target to build an object file
+src/level.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/level.cpp.o
+.PHONY : src/level.cpp.o
+
+src/level.i: src/level.cpp.i
+
+.PHONY : src/level.i
+
+# target to preprocess a source file
+src/level.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/level.cpp.i
+.PHONY : src/level.cpp.i
+
+src/level.s: src/level.cpp.s
+
+.PHONY : src/level.s
+
+# target to generate assembly for a file
+src/level.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/level.cpp.s
+.PHONY : src/level.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -304,6 +370,114 @@ src/mdl.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/mdl.cpp.s
 .PHONY : src/mdl.cpp.s
 
+src/menu/characterSelectScreen.o: src/menu/characterSelectScreen.cpp.o
+
+.PHONY : src/menu/characterSelectScreen.o
+
+# target to build an object file
+src/menu/characterSelectScreen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/characterSelectScreen.cpp.o
+.PHONY : src/menu/characterSelectScreen.cpp.o
+
+src/menu/characterSelectScreen.i: src/menu/characterSelectScreen.cpp.i
+
+.PHONY : src/menu/characterSelectScreen.i
+
+# target to preprocess a source file
+src/menu/characterSelectScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/characterSelectScreen.cpp.i
+.PHONY : src/menu/characterSelectScreen.cpp.i
+
+src/menu/characterSelectScreen.s: src/menu/characterSelectScreen.cpp.s
+
+.PHONY : src/menu/characterSelectScreen.s
+
+# target to generate assembly for a file
+src/menu/characterSelectScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/characterSelectScreen.cpp.s
+.PHONY : src/menu/characterSelectScreen.cpp.s
+
+src/menu/optionsScreen.o: src/menu/optionsScreen.cpp.o
+
+.PHONY : src/menu/optionsScreen.o
+
+# target to build an object file
+src/menu/optionsScreen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/optionsScreen.cpp.o
+.PHONY : src/menu/optionsScreen.cpp.o
+
+src/menu/optionsScreen.i: src/menu/optionsScreen.cpp.i
+
+.PHONY : src/menu/optionsScreen.i
+
+# target to preprocess a source file
+src/menu/optionsScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/optionsScreen.cpp.i
+.PHONY : src/menu/optionsScreen.cpp.i
+
+src/menu/optionsScreen.s: src/menu/optionsScreen.cpp.s
+
+.PHONY : src/menu/optionsScreen.s
+
+# target to generate assembly for a file
+src/menu/optionsScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/optionsScreen.cpp.s
+.PHONY : src/menu/optionsScreen.cpp.s
+
+src/menu/pvpScreen.o: src/menu/pvpScreen.cpp.o
+
+.PHONY : src/menu/pvpScreen.o
+
+# target to build an object file
+src/menu/pvpScreen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/pvpScreen.cpp.o
+.PHONY : src/menu/pvpScreen.cpp.o
+
+src/menu/pvpScreen.i: src/menu/pvpScreen.cpp.i
+
+.PHONY : src/menu/pvpScreen.i
+
+# target to preprocess a source file
+src/menu/pvpScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/pvpScreen.cpp.i
+.PHONY : src/menu/pvpScreen.cpp.i
+
+src/menu/pvpScreen.s: src/menu/pvpScreen.cpp.s
+
+.PHONY : src/menu/pvpScreen.s
+
+# target to generate assembly for a file
+src/menu/pvpScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/pvpScreen.cpp.s
+.PHONY : src/menu/pvpScreen.cpp.s
+
+src/menu/titleScreen.o: src/menu/titleScreen.cpp.o
+
+.PHONY : src/menu/titleScreen.o
+
+# target to build an object file
+src/menu/titleScreen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/titleScreen.cpp.o
+.PHONY : src/menu/titleScreen.cpp.o
+
+src/menu/titleScreen.i: src/menu/titleScreen.cpp.i
+
+.PHONY : src/menu/titleScreen.i
+
+# target to preprocess a source file
+src/menu/titleScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/titleScreen.cpp.i
+.PHONY : src/menu/titleScreen.cpp.i
+
+src/menu/titleScreen.s: src/menu/titleScreen.cpp.s
+
+.PHONY : src/menu/titleScreen.s
+
+# target to generate assembly for a file
+src/menu/titleScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/menu/titleScreen.cpp.s
+.PHONY : src/menu/titleScreen.cpp.s
+
 src/player.o: src/player.cpp.o
 
 .PHONY : src/player.o
@@ -331,32 +505,32 @@ src/player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/player.cpp.s
 .PHONY : src/player.cpp.s
 
-src/pvpScene.o: src/pvpScene.cpp.o
+src/rlImGui/rlImGui.o: src/rlImGui/rlImGui.cpp.o
 
-.PHONY : src/pvpScene.o
+.PHONY : src/rlImGui/rlImGui.o
 
 # target to build an object file
-src/pvpScene.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/pvpScene.cpp.o
-.PHONY : src/pvpScene.cpp.o
+src/rlImGui/rlImGui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/rlImGui/rlImGui.cpp.o
+.PHONY : src/rlImGui/rlImGui.cpp.o
 
-src/pvpScene.i: src/pvpScene.cpp.i
+src/rlImGui/rlImGui.i: src/rlImGui/rlImGui.cpp.i
 
-.PHONY : src/pvpScene.i
+.PHONY : src/rlImGui/rlImGui.i
 
 # target to preprocess a source file
-src/pvpScene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/pvpScene.cpp.i
-.PHONY : src/pvpScene.cpp.i
+src/rlImGui/rlImGui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/rlImGui/rlImGui.cpp.i
+.PHONY : src/rlImGui/rlImGui.cpp.i
 
-src/pvpScene.s: src/pvpScene.cpp.s
+src/rlImGui/rlImGui.s: src/rlImGui/rlImGui.cpp.s
 
-.PHONY : src/pvpScene.s
+.PHONY : src/rlImGui/rlImGui.s
 
 # target to generate assembly for a file
-src/pvpScene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/pvpScene.cpp.s
-.PHONY : src/pvpScene.cpp.s
+src/rlImGui/rlImGui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/rlImGui/rlImGui.cpp.s
+.PHONY : src/rlImGui/rlImGui.cpp.s
 
 src/scene.o: src/scene.cpp.o
 
@@ -439,33 +613,6 @@ src/tile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/tile.cpp.s
 .PHONY : src/tile.cpp.s
 
-src/titleScreen.o: src/titleScreen.cpp.o
-
-.PHONY : src/titleScreen.o
-
-# target to build an object file
-src/titleScreen.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/titleScreen.cpp.o
-.PHONY : src/titleScreen.cpp.o
-
-src/titleScreen.i: src/titleScreen.cpp.i
-
-.PHONY : src/titleScreen.i
-
-# target to preprocess a source file
-src/titleScreen.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/titleScreen.cpp.i
-.PHONY : src/titleScreen.cpp.i
-
-src/titleScreen.s: src/titleScreen.cpp.s
-
-.PHONY : src/titleScreen.s
-
-# target to generate assembly for a file
-src/titleScreen.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pvsp_engine.dir/build.make CMakeFiles/pvsp_engine.dir/src/titleScreen.cpp.s
-.PHONY : src/titleScreen.cpp.s
-
 src/ui.o: src/ui.cpp.o
 
 .PHONY : src/ui.o
@@ -501,6 +648,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... glad-generate-files"
+	@echo "... glad"
+	@echo "... imgui"
 	@echo "... pvsp_engine"
 	@echo "... src/assetManager.o"
 	@echo "... src/assetManager.i"
@@ -514,18 +664,33 @@ help:
 	@echo "... src/input.o"
 	@echo "... src/input.i"
 	@echo "... src/input.s"
+	@echo "... src/level.o"
+	@echo "... src/level.i"
+	@echo "... src/level.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
 	@echo "... src/mdl.o"
 	@echo "... src/mdl.i"
 	@echo "... src/mdl.s"
+	@echo "... src/menu/characterSelectScreen.o"
+	@echo "... src/menu/characterSelectScreen.i"
+	@echo "... src/menu/characterSelectScreen.s"
+	@echo "... src/menu/optionsScreen.o"
+	@echo "... src/menu/optionsScreen.i"
+	@echo "... src/menu/optionsScreen.s"
+	@echo "... src/menu/pvpScreen.o"
+	@echo "... src/menu/pvpScreen.i"
+	@echo "... src/menu/pvpScreen.s"
+	@echo "... src/menu/titleScreen.o"
+	@echo "... src/menu/titleScreen.i"
+	@echo "... src/menu/titleScreen.s"
 	@echo "... src/player.o"
 	@echo "... src/player.i"
 	@echo "... src/player.s"
-	@echo "... src/pvpScene.o"
-	@echo "... src/pvpScene.i"
-	@echo "... src/pvpScene.s"
+	@echo "... src/rlImGui/rlImGui.o"
+	@echo "... src/rlImGui/rlImGui.i"
+	@echo "... src/rlImGui/rlImGui.s"
 	@echo "... src/scene.o"
 	@echo "... src/scene.i"
 	@echo "... src/scene.s"
@@ -535,9 +700,6 @@ help:
 	@echo "... src/tile.o"
 	@echo "... src/tile.i"
 	@echo "... src/tile.s"
-	@echo "... src/titleScreen.o"
-	@echo "... src/titleScreen.i"
-	@echo "... src/titleScreen.s"
 	@echo "... src/ui.o"
 	@echo "... src/ui.i"
 	@echo "... src/ui.s"
