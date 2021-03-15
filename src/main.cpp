@@ -53,8 +53,6 @@ int main(void)
 	Scene::ChangeScene("TitleScreen");
 
 	// ImGUI.
-	ImGui::CreateContext();
-    ImGui::StyleColorsDark();
 	SetupRLImGui(true);
 
 	// Main game loop
@@ -72,21 +70,22 @@ int main(void)
 		}	
 
 		// Init draw.
-		BeginRLImGui();
 		BeginDrawing();
 		ClearBackground(BLACK);
-
+		
 		// Background.
-		ImGui::ShowDemoWindow();
 		Scene::DoDrawBackground2D();
-		BeginMode3D(Scene::GetCamera());
 
 		// 3D.
+		BeginMode3D(Scene::GetCamera());
 		Scene::DoDraw3D();
-		EndMode3D();
+		EndMode3D();	
 
 		// ImGUI.
-		ImGui::Render();
+		BeginRLImGui();
+		ImGui::Begin("Hello World!");
+		ImGui::End();
+		ImGui::ShowDemoWindow();
 		EndRLImGui();
 
 		// Foreground.
