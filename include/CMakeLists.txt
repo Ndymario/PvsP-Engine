@@ -35,6 +35,7 @@ if (NOT raylib_FOUND)
     FetchContent_Populate(raylib)
 
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(SUPPORT_FILEFORMAT_GLTF ON CACHE BOOL "" FORCE)
 
     add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
 

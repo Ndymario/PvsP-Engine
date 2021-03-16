@@ -79,13 +79,11 @@ int main(void)
 		// 3D.
 		BeginMode3D(Scene::GetCamera());
 		Scene::DoDraw3D();
-		EndMode3D();	
+		EndMode3D();
 
 		// ImGUI.
 		BeginRLImGui();
-		ImGui::Begin("Hello World!");
-		ImGui::End();
-		ImGui::ShowDemoWindow();
+		Scene::DoDrawImGui();
 		EndRLImGui();
 
 		// Foreground.

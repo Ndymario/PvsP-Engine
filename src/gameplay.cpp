@@ -63,10 +63,6 @@ void Gameplay::Initialize()
 
 void Gameplay::DrawBackground2D()
 {
-	//ImGui::Begin("Test Window");
-	//ImGui::InputInt("Jump Y#1", (int*)&player.physics->JumpPhysics[0].FirstFrameJumpY, 0x0000, 0x7FFF);
-	//ImGui::DragScalar("Jump Y#2", ImGuiDataType_U16, &player.physics->JumpPhysics[0].FirstFrameJumpY, 1, 0, NULL, "%x");
-	//ImGui::End();
 }
 
 void Gameplay::DrawForeground2D()
@@ -88,6 +84,19 @@ void Gameplay::Draw3D()
 			Tile::DrawTile(0, { 0, -.8f, 0}, i, -j, 0, 1.0f);
 		}
 	}
+}
+
+void Gameplay::DrawImGui()
+{
+	ImGui::Begin("Player Stats");
+	ImGui::SliderFloat("X Position", &player.GetPosition().x, -27.5f, 27.5f);
+	ImGui::SliderFloat("Y Position", &player.GetPosition().y, -27.5f, 27.5f);
+	ImGui::SliderFloat("Z Position", &player.GetPosition().z, -27.5f, 27.5f);
+	ImGui::SliderFloat("X Velocity", &player.GetVelocity().x, -100.0f, 100.0f);
+	ImGui::SliderFloat("Y Velocity", &player.GetVelocity().y, -100.0f, 100.0f);
+	ImGui::SliderFloat("X Acceleration", &player.GetAcceleration().x, -100.0f, 100.0f);
+	ImGui::SliderFloat("Y Acceleration", &player.GetAcceleration().y, -100.0f, 100.0f);
+	ImGui::End();
 }
 
 void Gameplay::Update()
