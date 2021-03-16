@@ -2,6 +2,7 @@
 #include <assetManager.h>
 #include "input.h"
 #include "tile.h"
+#include "imgui.h"
 
 int frameCounter;
 Vector3 pos = {0, 0, 0};
@@ -57,7 +58,7 @@ void Gameplay::Initialize()
 	AssetManager::LoadAnimationAsset("player/Skeleton.gltf", "Skelewalk");
 	martinModel.SetModel("Skeleton");
 	martinModel.SetAnimation("Skelewalk");
-	player.Initialize(5, 0, false, false, "Skeleton");
+	player.Initialize(5, 0, false, 0, "Skeleton");
 }
 
 void Gameplay::DrawBackground2D()
@@ -74,12 +75,28 @@ void Gameplay::Draw3D()
 	//DrawModelEx(hammerBro.GetModel(), { 0, 0, 0 }, { 1.0f, 0.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	//DrawModel(player.GetModel().GetModel(), player.GetPosition(), 0.1f, WHITE);
 	//DrawModelEx(playerHeadModel.GetModel(), {0, 3, 0 }, { 1.0f, 0.0f, 0.0f }, -270.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
-	DrawModelEx(player.GetModel().GetModel(), { 0, 1, 0 }, { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
-	Tile::DrawTile(0, { 0, 0, 0}, 0, 0, 0, 1.0f);
-	Tile::DrawTile(0, { 0, 0, 0}, 1, 0, 0, 1.0f);
-	Tile::DrawTile(0, { 0, 0, 0}, 1, 1, 0, 1.0f);
-	Tile::DrawTile(1, { 0, 0, 0}, 1, 2, 0, 1.0f);
-	Tile::DrawTile(1, { 0, 0, 0}, 2, 2, 0, 1.0f);
+	DrawModelEx(player.GetModel().GetModel(), player.GetPosition(), { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
+	for (int i = -15; i < 15; i++)
+	{
+		Tile::DrawTile(1, { 0, -.8f, 0}, i, 0, 0, 1.0f);
+		for (int j = 1; j < 10; j++)
+		{
+			Tile::DrawTile(0, { 0, -.8f, 0}, i, -j, 0, 1.0f);
+		}
+	}
+}
+
+void Gameplay::DrawImGui()
+{
+	ImGui::Begin("Player Stats");
+	ImGui::SliderFloat("X Position", &player.GetPosition().x, -27.5f, 27.5f);
+	ImGui::SliderFloat("Y Position", &player.GetPosition().y, -27.5f, 27.5f);
+	ImGui::SliderFloat("Z Position", &player.GetPosition().z, -27.5f, 27.5f);
+	ImGui::SliderFloat("X Velocity", &player.GetVelocity().x, -100.0f, 100.0f);
+	ImGui::SliderFloat("Y Velocity", &player.GetVelocity().y, -100.0f, 100.0f);
+	ImGui::SliderFloat("X Acceleration", &player.GetAcceleration().x, -100.0f, 100.0f);
+	ImGui::SliderFloat("Y Acceleration", &player.GetAcceleration().y, -100.0f, 100.0f);
+	ImGui::End();
 }
 
 void Gameplay::Update()

@@ -37,6 +37,13 @@ void Scene::DoDraw3D()
 	currentScene->Draw3D();
 }
 
+void Scene::DoDrawImGui()
+{
+	if (currentScene == nullptr)
+		return;
+	currentScene->DrawImGui();
+}
+
 void Scene::DoUpdate()
 {
 	if (currentScene == nullptr)

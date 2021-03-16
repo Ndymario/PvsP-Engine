@@ -24,6 +24,7 @@ public:
 	virtual void DrawBackground2D() {}
 	virtual void DrawForeground2D() {}
 	virtual void Draw3D() {}
+	virtual void DrawImGui() {}
 	virtual void Update() {}
 	virtual void Cleanup() {}
 
@@ -32,6 +33,7 @@ public:
 	static void DoDrawBackground2D();
 	static void DoDrawForeground2D();
 	static void DoDraw3D();
+	static void DoDrawImGui();
 	static void DoUpdate();
 	static void LoadScene(string name, Scene *scene);
 	static Scene* CurrentScene();
