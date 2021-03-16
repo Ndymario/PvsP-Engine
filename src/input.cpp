@@ -1,7 +1,9 @@
 #include "input.h"
+#include <imgui.h>
 
 map<string, int[3]> Input::controls[4]; // 0 - Keyboard key, 1 - Gamepad button, 2 - 0xPQAADDUU P: Was previously down. Q: Was previously up. A: Axis, D: Direction, U: Use gamepad axis.
 int Input::gamePadIDs[4] = { -1, -1, -1, -1 };
+bool Input::enabled = true;
 
 void Input::AddControl(string name, int keyboard, int player)
 {
@@ -58,6 +60,10 @@ void Input::RemoveControl(string name, int player)
 
 float Input::ButtonDown(string name, int player)
 {
+	if (!enabled)
+	{
+		return false;
+	}
 	int key = controls[player][name][0];
 	int gamepad = controls[player][name][1];
 	int gamepadId = gamePadIDs[player];
@@ -90,6 +96,10 @@ float Input::ButtonDown(string name, int player)
 
 bool Input::ButtonUp(string name, int player)
 {
+	if (!enabled)
+	{
+		return true;
+	}
 	int key = controls[player][name][0];
 	int gamepad = controls[player][name][1];
 	int gamepadId = gamePadIDs[player];
@@ -122,6 +132,10 @@ bool Input::ButtonUp(string name, int player)
 
 float Input::ButtonPressed(string name, int player)
 {
+	if (!enabled)
+	{
+		return false;
+	}
 	int key = controls[player][name][0];
 	int gamepad = controls[player][name][1];
 	int gamepadId = gamePadIDs[player];
@@ -156,6 +170,10 @@ float Input::ButtonPressed(string name, int player)
 
 bool Input::ButtonReleased(string name, int player)
 {
+	if (!enabled)
+	{
+		return false;
+	}
 	int key = controls[player][name][0];
 	int gamepad = controls[player][name][1];
 	int gamepadId = gamePadIDs[player];

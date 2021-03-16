@@ -14,6 +14,7 @@ struct Input
 
 	// Public members.
 	public:
+		static bool enabled;
 		static int gamePadIDs[4];
 		static void AddControl(string name, int keyboard, int player);
 		static void AddControl(string name, int keyboard, int gamepadButton, int player);

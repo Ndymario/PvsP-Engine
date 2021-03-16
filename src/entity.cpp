@@ -216,3 +216,24 @@ MU Entity::ConvFloat(float f)
     }
     return ret;
 }
+
+float Entity::ConvEMU(EMU e)
+{
+    float ret = NAN;
+    if (e != 0xFFFFFFFF)
+    {
+        ret = (e & 0x80000000) ? (-1.0 * MU_2_FLOAT * (e & 0x7FFFFFFF)) : (1.0 * MU_2_FLOAT * (e & 0x7FFFFFFF));
+    }
+    return ret;
+}
+
+EMU Entity::ConvFloatE(float f)
+{
+    EMU ret = 0xFFFFFFFF;
+    if (f != NAN)
+    {
+        ret = abs(f) * (1.0f / MU_2_FLOAT);
+        if (f < 0.0f) { ret |= 0x80000000; }
+    }
+    return ret;
+}

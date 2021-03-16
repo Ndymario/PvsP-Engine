@@ -10,6 +10,9 @@ typedef void(*StateFunction)(Entity* ent);
 // Measurement unit, where 0xABCD represents A in tiles (&8 is sign), B in pixels, C in subpixels, and D in subsubpixels. There are 16 subpixels in a pixel, 16 pixels in a block, etc. 0xFFFF is NA.
 typedef unsigned short MU;
 
+// Extended measurement unit, where 0xABCDEFGH represents ABCDE in tiles (&8 is sign), F in pixels, G in subpixels, and H in subsubpixels. There are 16 subpixels in a pixel, 16 pixels in a block, etc. 0xFFFFFFFF is NA.
+typedef unsigned int EMU;
+
 struct EntityState
 {
     StateFunction init = NULL;
@@ -23,12 +26,8 @@ struct Entity
 private:
     Vector3 position = {0, 0, 0};
     Vector2 velocity = {0, 0};
-    Vector2 acceleration = {0, 0};
-
     Vector2 maxVelocity = {0, 0};
-
-    // Main model for the entity
-    Mdl mainModel;
+    Vector2 acceleration = {0, 0};
 
     // State.
     int currentState = -1;
@@ -36,9 +35,12 @@ private:
     bool doInitFrame = false;
     bool doCleanupFrame = false;
 
+    // Main model for the entity
+    Mdl mainModel;
+
 // Getters and setters.
 public:
-    EntityState* states;
+    EntityState* states;    
 
     Vector3& GetPosition();
     MU GetPositionX();
@@ -80,5 +82,7 @@ public:
     // Static stuff.
     static float ConvMU(MU m);
     static MU ConvFloat(float f);
+    static float ConvEMU(EMU e);
+    static EMU ConvFloatE(float f);
 
 };

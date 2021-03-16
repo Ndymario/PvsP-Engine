@@ -15,9 +15,9 @@ Bug fixers: Gota7, bbomb64, SkilLP
 #include "menu/optionsScreen.h"
 #include "menu/characterSelectScreen.h"
 #include "imgui.h"
-//#include "imgui_impl_opengl3.h"
-//#include "imgui_impl_raylib.h"
 #include "rlImGui/rlImGui.h"
+#include "level.h"
+#include "levelEditor.h"
 
 // Main method.
 int main(void)
@@ -43,6 +43,7 @@ int main(void)
     Gameplay gameplay;
 	OptionsScreen optionsScreen;
 	CharacterSelectScreen characterSelectScreen;
+	LevelEditor levelEditor;
 
 	// Set the initial scene.
 	Scene::LoadScene("TitleScreen", &titleScreen);
@@ -50,7 +51,15 @@ int main(void)
 	Scene::LoadScene("Gameplay", &gameplay);
 	Scene::LoadScene("PvsPScreen", &pvspScreen);
 	Scene::LoadScene("CharacterSelectScreen", &characterSelectScreen);
+	Scene::LoadScene("LevelEditor", &levelEditor);
 	Scene::ChangeScene("TitleScreen");
+
+	// Level test.
+	PLVL p;
+	GFile f = GFile("assets/level/debug/test.lvl");
+	f.Clear();
+	p.Write(&f);
+	f.Close();
 
 	// ImGUI.
 	SetupRLImGui(true);
