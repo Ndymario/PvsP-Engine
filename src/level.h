@@ -54,7 +54,7 @@ struct PLVL : public GReadable, public GWriteable
     };
 
     // Zone darkness mode.
-    enum DarknessMode : u8
+    enum DarknessMode : s32
     {
         DARKNESS_NONE,
         DARKNESS_NO_SPOT,

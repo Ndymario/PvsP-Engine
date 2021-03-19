@@ -46,13 +46,13 @@ void Gameplay::Initialize()
 	camera.target = {0.0f, 0.0f, 0.0f};    // Camera looking at point
 	camera.up = {0.0f, 1.0f, 0.0f};        // Camera up vector (rotation towards target)
 	camera.fovy = 35.0f;                   // Camera field-of-view Y
-	camera.type = CAMERA_ORTHOGRAPHIC;     // Camera mode type
+	camera.projection = CAMERA_ORTHOGRAPHIC;     // Camera mode type
 
 	AssetManager::LoadModelAsset("tileset/Cube.gltf", "Cube");
 	AssetManager::LoadTextureAsset("tileset/dummyGrass/grassCenter.png", "Dirt");
 	AssetManager::LoadTextureAsset("tileset/dummyGrass/grassMid.png", "Grass");
-	Tile::AddTileDef(0, "Dirt");
-	Tile::AddTileDef(1, "Grass");
+	Tile::AddTileDef("TSDebug", 0, "Dirt");
+	Tile::AddTileDef("TSDebug", 1, "Grass");
 
 	AssetManager::LoadModelAsset("player/Skeleton.gltf", "Skeleton");
 	AssetManager::LoadAnimationAsset("player/Skeleton.gltf", "Skelewalk");
@@ -78,10 +78,10 @@ void Gameplay::Draw3D()
 	DrawModelEx(player.GetModel().GetModel(), player.GetPosition(), { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	for (int i = -15; i < 15; i++)
 	{
-		Tile::DrawTile(1, { 0, -.8f, 0}, i, 0, 0, 1.0f);
+		Tile::DrawTile("TSDebug", 1, { 0, -.8f, 0}, i, 0, 0, 1.0f);
 		for (int j = 1; j < 10; j++)
 		{
-			Tile::DrawTile(0, { 0, -.8f, 0}, i, -j, 0, 1.0f);
+			Tile::DrawTile("TSDebug", 0, { 0, -.8f, 0}, i, -j, 0, 1.0f);
 		}
 	}
 }

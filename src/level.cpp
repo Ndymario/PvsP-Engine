@@ -688,12 +688,11 @@ PLVL::~PLVL()
 
 void PLVL::DrawTiles(TileLayer layer, float scale)
 {
-    // TODO!!! TILESETS!
     AREA* a = FindArea(currAreaID);
     if (a == NULL) { return; }
     TILE* t = &a->tileLayers[layer];
     for (u32 i = 0; i < t->numTiles; i++)
     {
-        Tile::DrawTile(t->tiles[i].tileID, { offset.x, offset.y , 0 }, t->tiles[i].xPos, t->tiles[i].yPos, 0, scale); // TODO!!! Z!!!
+        Tile::DrawTile(a->tilesets[layer], t->tiles[i].tileID, { offset.x, offset.y , 0 }, t->tiles[i].xPos, t->tiles[i].yPos, 0, scale); // TODO!!! Z!!!
     }
 }
