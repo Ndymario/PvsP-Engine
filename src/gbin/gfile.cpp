@@ -1,6 +1,14 @@
 #include "gfile.h"
 #include <memory.h>
 
+// If the OS is macOS, define the bswap functions
+#if __APPLE__
+#include <libkern/OSByteOrder.h>
+#define __bswap_16(x) OSSwapInt16(x)
+#define __bswap_32(x) OSSwapInt32(x)
+#define __bswap_64(x) OSSwapInt64(x)
+#endif
+
 u32 GFile::systemEndian = 0;
 
 GFile::GFile()

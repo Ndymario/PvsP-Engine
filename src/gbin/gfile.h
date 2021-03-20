@@ -4,7 +4,13 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+
+// If the OS is macOS, use the correct include path
+#if __APPLE__
+#include <machine/endian.h>
+#else
 #include <endian.h>
+#endif
 
 using namespace std;
 
