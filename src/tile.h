@@ -46,4 +46,7 @@ public:
     // Get tileset at tileset index.
     static string GetTilesetAtIndex(int tilesetIndex);
 
+    // Get the list of tiles used for a tileset.
+    static vector<string> GetTilesInTileset(string tilesetName);
+
 };

@@ -132,3 +132,15 @@ string Tile::GetTilesetAtIndex(int tilesetIndex)
     }
     return loadedTilesets[0];
 }
+
+vector<string> Tile::GetTilesInTileset(string tilesetName)
+{
+    string path = string(GetWorkingDirectory()) + "/assets/tileset/" + tilesetName;
+    vector<string> files;
+    for (const auto & entry : fs::directory_iterator(path))
+    {
+        files.push_back(tilesetName + "_" + GetFileNameWithoutExt(entry.path().c_str()));
+    }
+    std::sort(files.begin(), files.end(), std::less<std::string>());
+    return files;
+}

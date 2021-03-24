@@ -1,6 +1,7 @@
 #include "titleScreen.h"
 #include "../assetManager.h"
 #include "../screen.h"
+#include <imgui.h>
 
 // Define some constants for the dimentions of the UI elements
 const int buttonWidth = 730;
@@ -76,6 +77,10 @@ void TitleScreen::DrawForeground2D()
 }
 
 void TitleScreen::Draw3D()
+{
+}
+
+void TitleScreen::DrawImGui()
 {
 }
 

@@ -1,6 +1,13 @@
 #pragma once
 #include "level.h"
 #include "scene.h"
+#include "rlImGui/fileBrowser.h"
+
+enum GridView {
+	GRID_NONE,
+	GRID_LINES,
+	GRID_TILES
+};
 
 struct LevelEditor : public Scene
 {
@@ -8,6 +15,10 @@ struct LevelEditor : public Scene
 	// Editor data.
     PLVL lvl;
 	bool showZones = true;
+	imgui_addons::ImGuiFileBrowser file_dialog;
+	GridView grid;
+	TileLayer paintMode = LAYER_1;
+	vector<string> tilenameSets[4];
 
 	// To implement.
 	void Initialize();
@@ -19,6 +30,7 @@ struct LevelEditor : public Scene
 	void Cleanup();
 
 	// Level editor stuff.
+	void DrawToolbox(bool& isWindowFocused);
 	void DrawZoneInfo(PLVL::AREA* area);
 	
 };

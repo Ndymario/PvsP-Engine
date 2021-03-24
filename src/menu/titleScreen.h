@@ -18,6 +18,7 @@ struct TitleScreen : public Scene
 	void DrawBackground2D();
 	void DrawForeground2D();
 	void Draw3D();
+	void DrawImGui();
 	void Update();
 	void Cleanup();
 	

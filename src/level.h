@@ -6,7 +6,7 @@
 using namespace std;
 
 // Tile layers.
-enum TileLayer : u8
+enum TileLayer : s32
 {
     LAYER_COLLISION,
     LAYER_2,

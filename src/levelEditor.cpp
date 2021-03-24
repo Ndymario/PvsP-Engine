@@ -4,6 +4,7 @@
 #include "input.h"
 #include <imgui.h>
 #include "rlImGui/utils.h"
+#include "rlImGui/rlImGui.h"
 
 void LevelEditor::Initialize()
 {
@@ -15,20 +16,20 @@ void LevelEditor::Initialize()
 	camera.fovy = 35.0f;                   // Camera field-of-view Y.
 	camera.projection = CAMERA_ORTHOGRAPHIC;     // Camera mode type.
 
-    // Dummy tileset.
-    Tile::LoadTileset("dummyGrass");
-    Tile::LoadTileset("dummyGrass2");
-    AssetManager::LoadTextureAsset("PhysicsChart.png", "Phys");
-    lvl.FindArea(0)->tilesets[LAYER_1] = "dummyGrass";
+    // Tilesets.
+    Tile::LoadTileset("Overworld");
+    lvl.FindArea(0)->tilesets[LAYER_1] = "Overworld";
     lvl.offset.y = -.8f;
     PLVL::TILE* tiles = &lvl.FindArea(0)->tileLayers[LAYER_1];
-    tiles->AddTile(0, 0, 0);
-    tiles->AddTile(0, 1, 0);
-    tiles->AddTile(0, 2, 0);
-    tiles->AddTile(0, 3, 0);
-    tiles->AddTile(1, 0, 1);
+    tiles->AddTile(4, 0, 0);
+    tiles->AddTile(5, 1, 0);
+    tiles->AddTile(6, 2, 0);
+    tiles->AddTile(7, 3, 0);
+    tiles->AddTile(0, 0, 1);
     tiles->AddTile(1, 1, 1);
-    tiles->AddTile(1, 2, 1);
+    tiles->AddTile(2, 2, 1);
+    tiles->AddTile(3, 3, 1);
+    tilenameSets[LAYER_1] = Tile::GetTilesInTileset("Overworld");
 
 }
 
@@ -38,6 +39,10 @@ void LevelEditor::DrawBackground2D()
 
 void LevelEditor::DrawForeground2D()
 {
+    if (grid == GRID_LINES)
+    {
+        
+    }
 }
 
 void LevelEditor::Draw3D()
@@ -73,7 +78,6 @@ void LevelEditor::DrawImGui()
         ImGui::InputScalar("Timer Settings", ImGuiDataType_U16, &lvl.levelSettings.timer);
         ImGuiTooltip("How many game seconds to give the player to complete the level.");
     }
-    //ImGui::Image((void*)&AssetManager::GetTexture("Phys"), ImVec2(AssetManager::GetTexture("Phys").width, AssetManager::GetTexture("Phys").height));
 
     // Manage current areas.
     static s64 areaId = 0;
@@ -95,8 +99,7 @@ void LevelEditor::DrawImGui()
             lvl.RemoveArea(areaId);
         }
     }
-    ImGuiTooltip("Add or remove the given area ID from the level.");
-    
+    ImGuiTooltip("Add or remove the given area ID from the level.");  
 
     // Area listing.
     if (ImGui::BeginTabBar("Areas"), ImGuiTabBarFlags_Reorderable) {
@@ -148,9 +151,66 @@ void LevelEditor::DrawImGui()
 
     // Scrollbar Y.
 
+    // Toolbox.
+    DrawToolbox(enableInput);
+
     // Input.
     Input::enabled = enableInput;
 
+}
+
+void LevelEditor::DrawToolbox(bool& isWindowFocused)
+{
+    ImGui::Begin("Toolbox");
+    if (ImGui::IsWindowFocused())
+    {
+        isWindowFocused = false;
+    }
+    if (ImGui::BeginTabBar("ToolboxMode"))
+    {
+        if (ImGui::BeginTabItem("Tilesets"))
+        {
+
+            // Paint layer.
+            ImGui::Text("Paint Layer:");
+            ImGuiTooltip("What layer to paint on.\n0 is the foreground layer.\n1 is the interactive/player level layer.\n2 is the background layer.\nC is the collision layer.");
+            ImGui::RadioButton("0", (s32*)&paintMode, LAYER_0);
+            ImGui::SameLine();
+            ImGui::RadioButton("1", (s32*)&paintMode, LAYER_1);
+            ImGui::SameLine();
+            ImGui::RadioButton("2", (s32*)&paintMode, LAYER_2);
+            ImGui::SameLine();
+            ImGui::RadioButton("C", (s32*)&paintMode, LAYER_COLLISION); 
+            
+            // Get tileset selecting info.
+            static s64 tileSize = 48;
+            ImGui::SameLine();
+            ImGuiNumEdit("Tile Size##Selector", tileSize, 1, 200);
+            ImGuiTooltip("Size to preview tiles in the toolbox.");
+            ImVec2 tileSizeVec = ImVec2(tileSize, tileSize);
+            s32 tilesPerRow = (s32)(ImGui::GetWindowContentRegionWidth() / (tileSize + ImGui::GetStyle().FramePadding.x * 1.5)) - 1;
+            s32 lineCtr = 0;
+            for (s32 i = 0; i < tilenameSets[paintMode].size(); i++)
+            {
+                ImGui::Image(&AssetManager::GetTexture(tilenameSets[paintMode][i]), tileSizeVec);
+                lineCtr++;
+                if (lineCtr > tilesPerRow)
+                {
+                    lineCtr = 0;
+                }
+                else
+                {
+                    ImGui::SameLine();
+                }
+            }
+
+            //Finish.
+            ImGui::EndTabItem();
+
+        }
+        ImGui::EndTabBar();
+    }
+    ImGui::End();
 }
 
 void LevelEditor::DrawZoneInfo(PLVL::AREA* area)
