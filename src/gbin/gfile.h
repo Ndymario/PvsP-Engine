@@ -8,7 +8,8 @@
 // If the OS is macOS, use the correct include path
 #if __APPLE__
 #include <machine/endian.h>
-#else
+#endif
+#if __linux__
 #include <endian.h>
 #endif
 

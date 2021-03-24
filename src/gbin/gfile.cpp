@@ -9,7 +9,17 @@
 #define __bswap_64(x) OSSwapInt64(x)
 #endif
 
+#ifdef _WIN32
+#define __bswap_16(x) _byteswap_ushort(x)
+#define __bswap_32(x) _byteswap_ulong(x)
+#define __bswap_64(x) _byteswap_uint64(x)
+#endif
+
 u32 GFile::systemEndian = 0;
+enum e_endian {
+    EndianBig,
+    EndianLittle
+};
 
 GFile::GFile()
 {
@@ -41,14 +51,14 @@ void GFile::Init()
             u.i = 0x01020304;
             if (0x04 == u.c[0])
             {
-                systemEndian = LITTLE_ENDIAN;
+                systemEndian = EndianLittle;
             }
             else
             {
-                systemEndian = BIG_ENDIAN;
+                systemEndian = EndianBig;
             }
         }
-    if (systemEndian == LITTLE_ENDIAN)
+    if (systemEndian == EndianLittle)
     {
         swapEndian = false;
     }
@@ -70,7 +80,7 @@ void GFile::Init()
 
 void GFile::SetEndian(bool big)
 {
-    if (big && systemEndian != BIG_ENDIAN)
+    if (big && systemEndian != EndianBig)
     {
         swapEndian = true;
     }
@@ -140,12 +150,13 @@ void GFile::DumpData(char *fileName)
     }
     else
     {
-        u8 tmpBuff[fileSize];
+        u8* tmpBuff = (u8*)malloc(fileSize);
         u64 oldPos = position;
         position = 0;
         Read(tmpBuff, fileSize);
         fwrite(&tmpBuff, sizeof(u8), fileSize, tmp);
         position = oldPos;
+        free(tmpBuff);
     }
     fclose(tmp);
 }

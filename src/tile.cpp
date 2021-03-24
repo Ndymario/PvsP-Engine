@@ -70,7 +70,7 @@ void Tile::LoadTileset(string tileset)
     vector<string> files;
     for (const auto & entry : fs::directory_iterator(path))
     {
-        files.push_back(entry.path());
+        files.push_back(entry.path().string());
     }
     std::sort(files.begin(), files.end(), std::less<std::string>());
     for (uint i = 0; i < files.size(); i++)
@@ -89,7 +89,7 @@ void Tile::UnloadTileset(string tileset)
     vector<string> files;
     for (const auto & entry : fs::directory_iterator(path))
     {
-        files.push_back(entry.path());
+        files.push_back(entry.path().string());
     }
     for (uint i = 0; i < files.size(); i++)
     {
