@@ -6,6 +6,25 @@ using namespace std;
 
 typedef unsigned int uint;
 
+/*
+// Tileset Object List (for level editing).
+struct TOL
+{
+    char magic[4];                          // PTOL.
+    u32 numObjects;                         // Number of objects used.
+    TOL_Object objects[numObjects];         // Objects.
+
+    // An object used, it is padded to 4 bytes.
+    struct TOL_Object
+    {
+        u8 randomizeOffset;                 // First bit is to randomize the tile data instead of use it in the correct order, next is pos or negative, rest are for how much to move up when placing next object.
+        u8 width;                           // Width.
+        u8 height;                          // Height.
+        u8 tileIds[width * height];         // Tile IDs. They are stored left to right, top to bottom.
+    };
+};
+*/
+
 // For drawing tiles on screen.
 struct Tile
 {

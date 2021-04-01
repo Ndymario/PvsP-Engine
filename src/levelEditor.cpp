@@ -17,8 +17,10 @@ void LevelEditor::Initialize()
 	camera.projection = CAMERA_ORTHOGRAPHIC;     // Camera mode type.
 
     // Tilesets.
+    Tile::LoadTileset("KCL");
     Tile::LoadTileset("Overworld");
     lvl.FindArea(0)->tilesets[LAYER_1] = "Overworld";
+    lvl.FindArea(0)->tilesets[LAYER_COLLISION] = "KCL";
     lvl.offset.y = -.8f;
     PLVL::TILE* tiles = &lvl.FindArea(0)->tileLayers[LAYER_1];
     tiles->AddTile(4, 0, 0);
@@ -30,6 +32,7 @@ void LevelEditor::Initialize()
     tiles->AddTile(2, 2, 1);
     tiles->AddTile(3, 3, 1);
     tilenameSets[LAYER_1] = Tile::GetTilesInTileset("Overworld");
+    tilenameSets[LAYER_COLLISION] = Tile::GetTilesInTileset("KCL");
 
 }
 
@@ -65,6 +68,13 @@ void LevelEditor::DrawImGui()
     }
     
     // Level offset.
+    ImGui::DragFloat("Zoom", &camera.fovy, 1, 1, 200, "%f", 1.0f);
+    ImGui::SameLine();
+    if (ImGui::Button("Reset##Zoom"))
+    {
+        camera.fovy = 35.0f;
+    }
+    ImGuiTooltip("Controls the orthographic camera FOV.");
     ImGui::DragFloat2("Level Offset", (float*)&lvl.offset, 1.0f, -1000.0f, 1000.0f, "%f", 1.0f);
     ImGuiTooltip("To see other parts of the level when editing.");
 
@@ -111,11 +121,11 @@ void LevelEditor::DrawImGui()
                 if (ImGui::CollapsingHeader("Area Settings")) {
                     int tilesetIndices[4] = { Tile::GetTilesetIndex(area->tilesets[LAYER_COLLISION]), Tile::GetTilesetIndex(area->tilesets[LAYER_2]), Tile::GetTilesetIndex(area->tilesets[LAYER_1]), Tile::GetTilesetIndex(area->tilesets[LAYER_0]) };
                     char* tilesets = Tile::GetAvailableTilesets();
-                    if (ImGui::Combo("Collision Tileset", &tilesetIndices[LAYER_COLLISION], tilesets, IM_ARRAYSIZE(tilesets)))
+                    /*if (ImGui::Combo("Collision Tileset", &tilesetIndices[LAYER_COLLISION], tilesets, IM_ARRAYSIZE(tilesets)))
                     {
                         area->tilesets[LAYER_COLLISION] = Tile::GetTilesetAtIndex(tilesetIndices[LAYER_COLLISION]);
                     }
-                    ImGuiTooltip("Which tileset to use for displaying the collision if show collision in debug options is enabled.\nNote that this does not change collision behavior.");
+                    ImGuiTooltip("Which tileset to use for displaying the collision if show collision in debug options is enabled.\nNote that this does not change collision behavior.");*/
                     if (ImGui::Combo("Layer 2 Tileset", &tilesetIndices[LAYER_2], tilesets, IM_ARRAYSIZE(tilesets)))
                     {
                         area->tilesets[LAYER_2] = Tile::GetTilesetAtIndex(tilesetIndices[LAYER_2]);
