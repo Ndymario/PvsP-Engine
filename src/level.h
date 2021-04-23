@@ -1,7 +1,9 @@
 #pragma once
+#include <raylib.h>
+#include <raymath.h>
 #include <string>
 #include "gbin/gtypes.h"
-#include "entity.h"
+#include "mu.h"
 
 using namespace std;
 
@@ -21,8 +23,8 @@ struct PLVL : public GReadable, public GWriteable
     // LeVeL Settings.
     struct LVLS : public GReadable, public GWriteable
     {
-        bool isClassicLevel = false;            // If the level is a classic level with a flagpole ending.
-        u16 timer = 400;                        // If it is a classic level, how much time to give the player(s).
+        bool isRaceLevel = false;               // If the level is a race level with a flagpole ending.
+        u16 timer = 400;                        // If it is a race level, how much time to give the player(s).
         u8 pad = 0;                             // General purpose padding.
 
         // Read and write functions.

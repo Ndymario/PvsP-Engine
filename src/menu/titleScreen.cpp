@@ -122,6 +122,7 @@ void ClickPvsPButton()
 void ClickMinigameButton()
 {
 	Scene::ChangeScene("LevelEditor");
+	//Scene::ChangeScene("Gameplay");
 }
 
 void ClickOptionsButton()

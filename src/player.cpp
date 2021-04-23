@@ -56,6 +56,10 @@ void Player::Initialize(int startingLives, int initPowerUp, bool startFacingLeft
     isFacingLeft = startFacingLeft;
     this->playerId = playerId;
     physics = &MartinPhysics;
+    boundingBox.x = -16;
+    boundingBox.width = 32;
+    boundingBox.y = -48;
+    boundingBox.height = 48;
 
     // Setup model.
     SetModel(modelName);
@@ -163,6 +167,10 @@ void PlayerRunMain(Entity* ent)
     if (Input::ButtonUp("Right", p->playerId)) { p->isFacingLeft = true; }
     p->SetAccelerationX(p->physics->WalkRunXAccel.FlatSpeed | (p->isFacingLeft ? 0x8000 : 0x0));
     p->SetMaxVelocityX(p->physics->MaxRunXVel.FlatSpeed);
+    if (Input::ButtonUp("Run", p->playerId))
+    {
+        p->ChangeState(PLAYER_WALK);
+    }
 }
 
 void PlayerWalkCleanup(Entity* ent)
@@ -223,7 +231,7 @@ void PlayerJumpMain(Entity* ent)
             p->SetAccelerationX(0);
         }
     }
-    if (p->GetPosition().y <= 0.0f)
+    if (p->resolvedUp)
     {
         p->SetPositionY(0);
         p->SetVelocityY(0);

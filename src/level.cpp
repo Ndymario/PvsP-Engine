@@ -37,7 +37,7 @@ void PLVL::Write(GFile* f)
 void PLVL::LVLS::Read(GFile* f)
 {
     f->ReadU32();
-    isClassicLevel = f->ReadU8();
+    isRaceLevel = f->ReadU8();
     timer = f->ReadU16();
     f->ReadU8();
 }
@@ -45,7 +45,7 @@ void PLVL::LVLS::Read(GFile* f)
 void PLVL::LVLS::Write(GFile* f)
 {
     f->Write((u32)'SLVL');
-    f->Write((u8)isClassicLevel);
+    f->Write((u8)isRaceLevel);
     f->Write(timer);
     f->Write((u8)0);
 }

@@ -2,16 +2,13 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "mdl.h"
+#include "gbin/types.h"
+#include "level.h"
+#include "mu.h"
 
 struct Entity;
 
 typedef void(*StateFunction)(Entity* ent);
-
-// Measurement unit, where 0xABCD represents A in tiles (&8 is sign), B in pixels, C in subpixels, and D in subsubpixels. There are 16 subpixels in a pixel, 16 pixels in a block, etc. 0xFFFF is NA.
-typedef unsigned short MU;
-
-// Extended measurement unit, where 0xABCDEFGH represents ABCDE in tiles (&8 is sign), F in pixels, G in subpixels, and H in subsubpixels. There are 16 subpixels in a pixel, 16 pixels in a block, etc. 0xFFFFFFFF is NA.
-typedef unsigned int EMU;
 
 struct EntityState
 {
@@ -38,9 +35,25 @@ private:
     // Main model for the entity
     Mdl mainModel;
 
+    // Collision funcs.
+    void UpdateCollision(float dt);
+    bool CollidesWith(Entity& other);
+    PLVL::TILE::TileDef* CollidesWithTile(PLVL::AREA* area, u16 tileX, u16 tileY);
+    void CollisionTileResponse(PLVL::AREA* area, PLVL::TILE::TileDef* tile);
+    void CollisionEjectPlayer(Rectangle kickOutFrom, bool canMoveUp, bool canMoveDown, bool canMoveLeft, bool canMoveRight);
+
 // Getters and setters.
 public:
-    EntityState* states;    
+    EntityState* states;
+    bool collisionEnabled = false;
+    Rectangle boundingBox;
+    Vector2 pastBoundingPos;
+
+    // Collision flags.
+    bool resolvedUp = false;
+    bool resolvedDown = false;
+    bool resolvedLeft = false;
+    bool resolvedRight = false;
 
     Vector3& GetPosition();
     MU GetPositionX();

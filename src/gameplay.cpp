@@ -48,17 +48,26 @@ void Gameplay::Initialize()
 	camera.fovy = 35.0f;                   // Camera field-of-view Y
 	camera.projection = CAMERA_ORTHOGRAPHIC;     // Camera mode type
 
-	AssetManager::LoadModelAsset("tileset/Cube.gltf", "Cube");
-	AssetManager::LoadTextureAsset("tileset/dummyGrass/grassCenter.png", "Dirt");
-	AssetManager::LoadTextureAsset("tileset/dummyGrass/grassMid.png", "Grass");
-	Tile::AddTileDef("TSDebug", 0, "Dirt");
-	Tile::AddTileDef("TSDebug", 1, "Grass");
+	Tile::LoadTileset("KCL");
+    Tile::LoadTileset("Overworld");
+	lvl.FindArea(0)->tilesets[LAYER_1] = "Overworld";
+	lvl.offset.y = -0.8f - 10 * 1.999f;
+	lvl.offset.x = -15 * 1.999f;
+	PLVL::TILE* tiles = &lvl.FindArea(0)->tileLayers[LAYER_1];
+	for (int i = 0; i < 30; i++)
+	{
+		tiles->AddTile(std::rand() % 4, i, 10);
+		for (int j = 0; j <= 9; j++)
+		{
+			tiles->AddTile(std::rand() % 4 + 4, i, j);
+		}
+	}
 
 	AssetManager::LoadModelAsset("player/Skeleton.gltf", "Skeleton");
-	AssetManager::LoadAnimationAsset("player/Skeleton.gltf", "Skelewalk");
-	martinModel.SetModel("Skeleton");
-	martinModel.SetAnimation("Skelewalk");
-	player.Initialize(5, 0, false, 0, "Skeleton");
+	AssetManager::LoadModelAsset("player/Brobot.gltf", "Brobot");
+	//AssetManager::LoadAnimationAsset("player/Skeleton.gltf", "Skelewalk");
+	player.Initialize(5, 0, false, 0, "Brobot");
+	player.GetModel().Scale({ 10.0f, 10.0f, 10.0f });
 }
 
 void Gameplay::DrawBackground2D()
@@ -76,14 +85,7 @@ void Gameplay::Draw3D()
 	//DrawModel(player.GetModel().GetModel(), player.GetPosition(), 0.1f, WHITE);
 	//DrawModelEx(playerHeadModel.GetModel(), {0, 3, 0 }, { 1.0f, 0.0f, 0.0f }, -270.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
 	DrawModelEx(player.GetModel().GetModel(), player.GetPosition(), { 0.0f, 1.0f, 0.0f }, -90.0f, { 0.1f, 0.1f, 0.1f }, WHITE);
-	for (int i = -15; i < 15; i++)
-	{
-		Tile::DrawTile("TSDebug", 1, { 0, -.8f, 0}, i, 0, 0, 1.0f);
-		for (int j = 1; j < 10; j++)
-		{
-			Tile::DrawTile("TSDebug", 0, { 0, -.8f, 0}, i, -j, 0, 1.0f);
-		}
-	}
+	lvl.DrawTiles(LAYER_1);
 }
 
 void Gameplay::DrawImGui()
@@ -101,6 +103,7 @@ void Gameplay::DrawImGui()
 
 void Gameplay::Update()
 {
+	//player.GetModel().Rotate({ 0, 1, 0 });
     player.Update(GetFrameTime());
 }
 

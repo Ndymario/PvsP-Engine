@@ -79,9 +79,9 @@ void LevelEditor::DrawImGui()
     ImGuiTooltip("To see other parts of the level when editing.");
 
     // Level settings.
-    ImGui::Checkbox("Classic Level", &lvl.levelSettings.isClassicLevel);
+    ImGui::Checkbox("Classic Level", &lvl.levelSettings.isRaceLevel);
     ImGuiTooltip("If the level is a classic one where there is a time limit to complete the goal.");
-    if(lvl.levelSettings.isClassicLevel)
+    if(lvl.levelSettings.isRaceLevel)
     {
         ImGui::SameLine();
         ImGui::SetNextItemWidth(50.0f);

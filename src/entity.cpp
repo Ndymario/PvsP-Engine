@@ -1,10 +1,142 @@
 #include "entity.h"
+#include "tile.h"
 
 // T for FPS.
 const float FPS_FACTOR = 30.0f;
 
 // Magical conversion constant.
 const float MU_2_FLOAT = 0.0004880371094f; // TILE_SIZE (1.999) / MU's per block (0x1000).
+
+// Tile size.
+const float TILE_SIZE = 64;
+
+void Entity::UpdateCollision(float dt)
+{
+    pastBoundingPos.x = boundingBox.x;
+    pastBoundingPos.y = boundingBox.y;
+}
+
+bool Entity::CollidesWith(Entity& other)
+{
+    if (other.collisionEnabled)
+    {
+        return CheckCollisionRecs(boundingBox, other.boundingBox);
+    }
+    return false;
+}
+
+PLVL::TILE::TileDef* Entity::CollidesWithTile(PLVL::AREA* area, u16 tileX, u16 tileY)
+{
+    PLVL::TILE::TileDef* t = area->tileLayers[LAYER_COLLISION].FindTile(tileX, tileY);
+    if (t != NULL)
+    {
+        Rectangle tile = Rectangle { tileX * TILE_SIZE, tileY * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+        if (CheckCollisionRecs(tile, boundingBox))
+        {
+            // TODO: SOLID IN CERTAIN DIRECTION LOGIC.
+            return t;
+        }
+    }
+    return NULL;
+}
+
+void Entity::CollisionTileResponse(PLVL::AREA* area, PLVL::TILE::TileDef* tile)
+{
+
+    // First determine surrounding blocks to know where we can push to.
+    bool canMoveUp = true;
+    bool canMoveDown = true;
+    bool canMoveLeft = true;
+    bool canMoveRight = true;
+    if (tile->xPos != 0 && area->tileLayers[LAYER_COLLISION].FindTile(tile->xPos - 1, tile->yPos) != NULL)
+    {
+        canMoveLeft = false;
+    }
+    if (tile->xPos != 0xFFFF && area->tileLayers[LAYER_COLLISION].FindTile(tile->xPos + 1, tile->yPos) != NULL)
+    {
+        canMoveRight = false;
+    }
+    if (tile->yPos != 0 && area->tileLayers[LAYER_COLLISION].FindTile(tile->xPos, tile->yPos - 1) != NULL)
+    {
+        canMoveUp = false;
+    }
+    if (tile->yPos != 0xFFFF && area->tileLayers[LAYER_COLLISION].FindTile(tile->xPos, tile->yPos + 1) != NULL)
+    {
+        canMoveDown = false;
+    }
+    
+    // Achievement get: how did we get here?
+    if (!canMoveUp && !canMoveDown && !canMoveLeft && !canMoveRight)
+    {
+        canMoveLeft = true;
+    }
+
+    // Different KCL types.
+    switch(tile->tileID)
+    {
+        case KCL_TILE_TOP:
+            CollisionEjectPlayer(Rectangle { tile->xPos * TILE_SIZE, tile->yPos * TILE_SIZE, TILE_SIZE, TILE_SIZE / 2 }, canMoveUp, canMoveDown, canMoveLeft, canMoveRight);
+            break;
+        case KCL_TILE_BOTTOM:
+            CollisionEjectPlayer(Rectangle { tile->xPos * TILE_SIZE, tile->yPos * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE, TILE_SIZE / 2 }, canMoveUp, canMoveDown, canMoveLeft, canMoveRight);
+            break;
+        case KCL_TILE_FULL:
+        default:
+            CollisionEjectPlayer(Rectangle { tile->xPos * TILE_SIZE, tile->yPos * TILE_SIZE, TILE_SIZE, TILE_SIZE }, canMoveUp, canMoveDown, canMoveLeft, canMoveRight);
+            break;
+    }
+
+}
+
+void Entity::CollisionEjectPlayer(Rectangle kickOutFrom, bool canMoveUp, bool canMoveDown, bool canMoveLeft, bool canMoveRight)
+{
+
+    // Helpers.
+    float midX = boundingBox.x + boundingBox.width / 2;
+    float midY = boundingBox.y + boundingBox.height / 2;
+    const float TILE_SIZE_DIV = 28;
+
+    // First, determine the X and Y directions. There is only one.
+    if (canMoveLeft && canMoveRight)
+    {
+        canMoveLeft = midX < kickOutFrom.x + kickOutFrom.width / 2;
+        canMoveRight = !canMoveLeft;
+    }
+    if (canMoveUp && canMoveDown)
+    {
+        canMoveUp = midY < kickOutFrom.y + kickOutFrom.height / 2;
+        canMoveDown = !canMoveUp;
+    }
+
+    // Move in proper direction. There are spaces on the top and bottom that are grace, that will push up or down first instead of left and right.
+    if (canMoveUp)
+    {
+        if (boundingBox.y + boundingBox.height > kickOutFrom.y + TILE_SIZE / TILE_SIZE_DIV && (canMoveLeft || canMoveRight))
+        {
+            canMoveUp = false;
+        }
+        else if (boundingBox.y + boundingBox.height > kickOutFrom.y)
+        {
+            canMoveLeft = false;
+            canMoveRight = false;
+            boundingBox.y = kickOutFrom.y - boundingBox.height;
+            resolvedUp = true;
+        }
+    }
+    else if (canMoveDown)
+    {
+
+    }
+    if (canMoveLeft)
+    {
+
+    }
+    else if (canMoveRight)
+    {
+
+    }
+    
+}
 
 Vector3& Entity::GetPosition()
 {

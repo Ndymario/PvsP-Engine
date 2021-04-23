@@ -2,6 +2,7 @@
 #include "scene.h"
 #include "mdl.h"
 #include "player.h"
+#include "level.h"
 #include <raylib.h>
 #include <raymath.h>
 
@@ -15,6 +16,9 @@ struct Gameplay : public Scene
 
     // Player
     Player player;
+
+	// Level.
+	PLVL lvl;
 
 	// To implement.
 	void Initialize();
