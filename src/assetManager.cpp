@@ -25,7 +25,7 @@ Model &AssetManager::GetModel(string name)
 
 void AssetManager::LoadAnimationAsset(string path, string name)
 {
-    loadedAnimations[name] = LoadModelAnimations((AssetFolder + path).c_str(), &dummyCount);
+    loadedAnimations[name] = LoadModelAnimations((AssetFolder + path).c_str(), (unsigned int *)&dummyCount);
 }
 
 void AssetManager::UnloadAnimationAsset(string name)

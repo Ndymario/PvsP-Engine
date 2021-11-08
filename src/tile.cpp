@@ -29,7 +29,7 @@ void Tile::DrawTile(string tileSet, uint id, Vector3 tilesOrigin, int x, int y, 
         basicCube.SetModel("Cube");
         init = true;
     }
-    basicCube.SetTexture(tileDefinitions[tileSet][id], 0, MAP_DIFFUSE);
+    basicCube.SetTexture(tileDefinitions[tileSet][id], 0, MATERIAL_MAP_DIFFUSE);
     DrawModel(basicCube.GetModel(), { tilesOrigin.x + TILE_SIZE * x * scale, tilesOrigin.y + TILE_SIZE * y * scale, tilesOrigin.z + TILE_SIZE * z * scale }, scale, WHITE);
 }
 
