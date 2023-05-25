@@ -255,13 +255,14 @@ graph_offset = Vector2(103.86, -48.3225)
 [node name="Block" type="Node2D"]
 position = Vector2(-8, -8)
 script = ExtResource("1_y205k")
+current_block = 3
 
 [node name="BlockSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_l08c2")
 centered = false
 hframes = 36
 vframes = 8
-frame = 2
+frame = 3
 region_enabled = true
 region_rect = Rect2(0, 0, 612, 136)
 
