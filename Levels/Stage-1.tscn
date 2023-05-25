@@ -1019,3 +1019,7 @@ position = Vector2(0, -64)
 [node name="Block" parent="." instance=ExtResource("4_5g3pi")]
 position = Vector2(-80, -48)
 current_block = 88
+
+[node name="Dummy" parent="." instance=ExtResource("2_gvkdk")]
+position = Vector2(48, -8)
+dummy = true

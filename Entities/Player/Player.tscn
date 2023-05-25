@@ -1,10 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://cgmo7hdyxtr1t"]
+[gd_scene load_steps=38 format=3 uid="uid://cgmo7hdyxtr1t"]
 
 [ext_resource type="Script" path="res://Entities/Player/Player.gd" id="1_3kkn8"]
 [ext_resource type="Texture2D" uid="uid://bn0puhjet4h3v" path="res://Entities/Player/Small Mario.png" id="1_l2c62"]
 [ext_resource type="PackedScene" uid="uid://ig4hs74eulny" path="res://Entities/character_state_machine.tscn" id="3_gp3jq"]
 [ext_resource type="Script" path="res://Entities/Player/GroundState.gd" id="4_niits"]
 [ext_resource type="Script" path="res://Entities/Player/AirState.gd" id="5_a5tc0"]
+[ext_resource type="Script" path="res://Entities/Player/Bump.gd" id="6_fj7co"]
 [ext_resource type="PackedScene" uid="uid://d014ofq0uti3s" path="res://Entities/hitbox_component.tscn" id="7_kkc7s"]
 [ext_resource type="Script" path="res://Entities/Player/StateDebug.gd" id="7_nb2wc"]
 
@@ -104,7 +105,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_j3p8q"]
 resource_name = "dead"
-length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -427,6 +427,9 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_o6ari")
 blend_point_2/pos = -1.0
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_83qm3"]
+animation = &"dead"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_65g3m"]
 animation = &"double_jump"
 
@@ -444,26 +447,32 @@ advance_mode = 2
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6iod7"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nq3s1"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cl2mi"]
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_2b6sa")
 states/Move/position = Vector2(476, 100.046)
+states/dead/node = SubResource("AnimationNodeAnimation_83qm3")
+states/dead/position = Vector2(668.56, 99.9458)
 states/double_jump/node = SubResource("AnimationNodeAnimation_65g3m")
 states/double_jump/position = Vector2(669, -18.0204)
 states/jump/node = SubResource("AnimationNodeAnimation_gl251")
 states/jump/position = Vector2(476.625, -17.9325)
-transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_krmsn"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_l7fa5"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_kcx6n"), "double_jump", "jump", SubResource("AnimationNodeStateMachineTransition_8xcww")]
-graph_offset = Vector2(65.19, -63.0408)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_krmsn"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_l7fa5"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_kcx6n"), "double_jump", "jump", SubResource("AnimationNodeStateMachineTransition_8xcww"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_6iod7"), "dead", "Move", SubResource("AnimationNodeStateMachineTransition_nq3s1")]
+graph_offset = Vector2(13.2599, -33.2658)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_50ogp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_puqi6"]
-size = Vector2(16, 12)
+size = Vector2(18, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdnnv"]
-size = Vector2(16, 2)
+size = Vector2(13, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0jf4u"]
-size = Vector2(16, 2)
+size = Vector2(13, 3)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3kkn8")
@@ -499,6 +508,11 @@ air_state = NodePath("../Air")
 script = ExtResource("5_a5tc0")
 ground_state = NodePath("../Ground")
 
+[node name="Bump" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "air_state")]
+script = ExtResource("6_fj7co")
+ground_state = NodePath("../Ground")
+air_state = NodePath("../Air")
+
 [node name="StateDebug" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
 offset_left = -46.0
 offset_top = -35.0
@@ -516,14 +530,14 @@ shape = SubResource("RectangleShape2D_puqi6")
 [node name="FeetHitbox" parent="." instance=ExtResource("7_kkc7s")]
 
 [node name="Feet" type="CollisionShape2D" parent="FeetHitbox"]
-position = Vector2(0, 7)
+position = Vector2(-0.5, 7.5)
 shape = SubResource("RectangleShape2D_mdnnv")
 debug_color = Color(0.411765, 0.603922, 0.105882, 0.419608)
 
 [node name="HeadHitbox" parent="." instance=ExtResource("7_kkc7s")]
 
 [node name="Head" type="CollisionShape2D" parent="HeadHitbox"]
-position = Vector2(0, -7)
+position = Vector2(-0.5, -7.5)
 shape = SubResource("RectangleShape2D_0jf4u")
 debug_color = Color(0.980392, 0.0666667, 0.32549, 0.419608)
 

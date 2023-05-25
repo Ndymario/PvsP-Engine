@@ -15,7 +15,7 @@ func state_process(delta):
 		next_state = ground_state
 		
 func state_input(event: InputEvent):
-	if event.is_action_pressed("jump") && not has_double_jumped:
+	if event.is_action_pressed("jump") && not has_double_jumped && not character.dummy:
 		double_jump()
 		
 func on_exit():

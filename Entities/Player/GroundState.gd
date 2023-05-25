@@ -8,13 +8,14 @@ class_name GroundState
 
 func on_enter():
 	playback.travel("Move")
+	character.speed = 160
 
 func state_process(delta):
 	if not character.is_on_floor():
 		next_state = air_state
 
 func state_input(event: InputEvent):
-	if event.is_action_pressed("jump"):
+	if event.is_action_pressed("jump") && not character.dummy:
 		jump()
 		
 func jump():

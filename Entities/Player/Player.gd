@@ -4,6 +4,8 @@ class_name Player
 
 @export var speed: float = 160.0
 @export var air_penalty: float = 0.75
+@export var dummy: bool = false
+@export var dummy_color: String = "555555"
 
 @onready var sprite: Sprite2D = $SmallMario
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -16,6 +18,8 @@ var direction: Vector2 = Vector2.ZERO
 
 func _ready():
 	animation_tree.active = true
+	if dummy:
+		sprite.modulate = dummy_color
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -23,8 +27,11 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 			
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	direction = Input.get_vector("left", "right", "up", "down")
+	
+	if dummy:
+		direction = Vector2.ZERO
+		
 	if direction.x != 0 && state_machine.can_move():
 		velocity.x = direction.x * speed
 		
@@ -49,18 +56,30 @@ func update_facing_direction():
 
 func _on_torso_hitbox_area_entered(area):
 	if area is Hitbox:
-		var hitbox: Hitbox = area
+		if !(area.get_parent() is Player):
+			var hitbox: Hitbox = area
+			
+			area.collect()
 		
-		area.collect()
+		else:
+			area.get_parent().velocity.x = 300 * Input.get_vector("left", "right", "up", "down").x
 
 func _on_feet_hitbox_area_entered(area):
 	if area is Hitbox:
-		var hitbox: Hitbox = area
+		if !(area.get_parent() is Player && area.get_parent() != self):
+			var hitbox: Hitbox = area
+			
+			area.collect()
 		
-		area.collect()
+		else:
+			velocity.y = -250
 
 func _on_head_hitbox_area_entered(area):
 	if area is Hitbox:
-		var hitbox: Hitbox = area
+		if !(area.get_parent() is Player && area.get_parent() != self):
+			var hitbox: Hitbox = area
+			
+			area.collect()
 		
-		area.collect()
+		else:
+			state_machine.current_state = $CharacterStateMachine/Bump
