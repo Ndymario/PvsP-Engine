@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d014ofq0uti3s"]
+
+[ext_resource type="Script" path="res://Entities/BattleStar/HitboxComponent.gd" id="1_45ifn"]
+
+[node name="HitboxComponent" type="Area2D" node_paths=PackedStringArray("collectable")]
+script = ExtResource("1_45ifn")
+collectable = NodePath("")

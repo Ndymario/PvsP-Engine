@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5b6p0va03m25"]
+
+[ext_resource type="Texture2D" uid="uid://dxfucci17yqmn" path="res://Entities/BattleStar/StarBig.png" id="1_hnylj"]
+[ext_resource type="PackedScene" uid="uid://crxqdf4kdf8w" path="res://Entities/collectable.tscn" id="2_q7p5n"]
+[ext_resource type="PackedScene" uid="uid://d014ofq0uti3s" path="res://Entities/hitbox_component.tscn" id="3_jfef2"]
+
+[node name="BattleStar" type="Node2D"]
+
+[node name="BigStar" type="Sprite2D" parent="."]
+texture = ExtResource("1_hnylj")
+
+[node name="Collectable" parent="." instance=ExtResource("2_q7p5n")]
+
+[node name="Hitbox" parent="." node_paths=PackedStringArray("collectable") instance=ExtResource("3_jfef2")]
+collectable = NodePath("../Collectable")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(-1, -15, 1, -15, 1, -13, 2, -13, 2, -11, 3, -11, 3, -9, 4, -9, 4, -7, 5, -7, 5, -6, 8, -6, 8, -5, 15, -5, 15, -3, 14, -3, 14, -2, 13, -2, 13, -1, 12, -1, 12, 0, 11, 0, 11, 1, 10, 1, 10, 2, 9, 2, 9, 3, 8, 3, 8, 6, 9, 6, 9, 11, 10, 11, 10, 15, 8, 15, 8, 14, 7, 14, 7, 13, 5, 13, 5, 12, 3, 12, 3, 11, 1, 11, 1, 10, -1, 10, -1, 11, -3, 11, -3, 12, -5, 12, -5, 13, -7, 13, -7, 14, -8, 14, -8, 15, -10, 15, -10, 11, -9, 11, -9, 6, -8, 6, -8, 3, -9, 3, -9, 2, -10, 2, -10, 1, -11, 1, -11, 0, -12, 0, -12, -1, -13, -1, -13, -2, -14, -2, -14, -3, -15, -3, -15, -5, -8, -5, -8, -6, -5, -6, -5, -7, -4, -7, -4, -9, -3, -9, -3, -11, -2, -11, -2, -13, -1, -13)

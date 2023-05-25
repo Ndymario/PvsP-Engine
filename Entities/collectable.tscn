@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://crxqdf4kdf8w"]
+
+[ext_resource type="Script" path="res://Entities/BattleStar/Collectable.gd" id="1_p0su3"]
+
+[node name="Collectable" type="Node"]
+script = ExtResource("1_p0su3")
