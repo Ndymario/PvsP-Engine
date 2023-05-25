@@ -1,18 +1,132 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5b6p0va03m25"]
+[gd_scene load_steps=14 format=3 uid="uid://c5b6p0va03m25"]
 
 [ext_resource type="Texture2D" uid="uid://dxfucci17yqmn" path="res://Entities/BattleStar/StarBig.png" id="1_hnylj"]
 [ext_resource type="PackedScene" uid="uid://crxqdf4kdf8w" path="res://Entities/collectable.tscn" id="2_q7p5n"]
 [ext_resource type="PackedScene" uid="uid://d014ofq0uti3s" path="res://Entities/hitbox_component.tscn" id="3_jfef2"]
+
+[sub_resource type="Animation" id="Animation_nraja"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigStar:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.05, 1.05), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_wo7fe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigStar:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BigStar:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cb4o7"]
+resource_name = "collected"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigStar:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BigStar:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hfwfh"]
+_data = {
+"RESET": SubResource("Animation_wo7fe"),
+"collected": SubResource("Animation_cb4o7"),
+"idle": SubResource("Animation_nraja")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2dtew"]
+animation = &"collected"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8u7nn"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fblqu"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gvis4"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_obk6e"]
+states/collected/node = SubResource("AnimationNodeAnimation_2dtew")
+states/collected/position = Vector2(612.62, 99.7525)
+states/idle/node = SubResource("AnimationNodeAnimation_8u7nn")
+states/idle/position = Vector2(386.62, 99.8762)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_fblqu"), "idle", "collected", SubResource("AnimationNodeStateMachineTransition_gvis4")]
+graph_offset = Vector2(155.4, -33.6525)
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_6j0aq"]
 
 [node name="BattleStar" type="Node2D"]
 
 [node name="BigStar" type="Sprite2D" parent="."]
 texture = ExtResource("1_hnylj")
 
-[node name="Collectable" parent="." instance=ExtResource("2_q7p5n")]
+[node name="Collectable" parent="." node_paths=PackedStringArray("animation_tree") instance=ExtResource("2_q7p5n")]
+animation_tree = NodePath("../AnimationTree")
 
 [node name="Hitbox" parent="." node_paths=PackedStringArray("collectable") instance=ExtResource("3_jfef2")]
 collectable = NodePath("../Collectable")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PackedVector2Array(-1, -15, 1, -15, 1, -13, 2, -13, 2, -11, 3, -11, 3, -9, 4, -9, 4, -7, 5, -7, 5, -6, 8, -6, 8, -5, 15, -5, 15, -3, 14, -3, 14, -2, 13, -2, 13, -1, 12, -1, 12, 0, 11, 0, 11, 1, 10, 1, 10, 2, 9, 2, 9, 3, 8, 3, 8, 6, 9, 6, 9, 11, 10, 11, 10, 15, 8, 15, 8, 14, 7, 14, 7, 13, 5, 13, 5, 12, 3, 12, 3, 11, 1, 11, 1, 10, -1, 10, -1, 11, -3, 11, -3, 12, -5, 12, -5, 13, -7, 13, -7, 14, -8, 14, -8, 15, -10, 15, -10, 11, -9, 11, -9, 6, -8, 6, -8, 3, -9, 3, -9, 2, -10, 2, -10, 1, -11, 1, -11, 0, -12, 0, -12, -1, -13, -1, -13, -2, -14, -2, -14, -3, -15, -3, -15, -5, -8, -5, -8, -6, -5, -6, -5, -7, -4, -7, -4, -9, -3, -9, -3, -11, -2, -11, -2, -13, -1, -13)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hfwfh")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_obk6e")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_6j0aq")
+
+[connection signal="animation_finished" from="AnimationTree" to="Collectable" method="_on_animation_tree_animation_finished"]

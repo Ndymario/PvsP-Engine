@@ -1000,13 +1000,13 @@ layer_0/name = "Solid"
 layer_0/tile_data = PackedInt32Array(65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 0, 0, 65529, 0, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_gvkdk")]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 zoom = Vector2(4, 4)
 process_callback = 0
 position_smoothing_enabled = true
