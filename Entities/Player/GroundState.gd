@@ -8,7 +8,6 @@ class_name GroundState
 
 func on_enter():
 	playback.travel("Move")
-	character.speed = 160
 
 func state_process(delta):
 	if not character.is_on_floor():
