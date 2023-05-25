@@ -1021,5 +1021,5 @@ position = Vector2(-80, -48)
 current_block = 88
 
 [node name="Dummy" parent="." instance=ExtResource("2_gvkdk")]
-position = Vector2(40, -8)
+position = Vector2(64, -8)
 dummy = true

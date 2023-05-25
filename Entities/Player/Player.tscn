@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cgmo7hdyxtr1t"]
+[gd_scene load_steps=42 format=3 uid="uid://cgmo7hdyxtr1t"]
 
 [ext_resource type="Script" path="res://Entities/Player/Player.gd" id="1_3kkn8"]
 [ext_resource type="Texture2D" uid="uid://bn0puhjet4h3v" path="res://Entities/Player/Small Mario.png" id="1_l2c62"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Entities/Player/GroundState.gd" id="4_niits"]
 [ext_resource type="Script" path="res://Entities/Player/AirState.gd" id="5_a5tc0"]
 [ext_resource type="Script" path="res://Entities/Player/Bump.gd" id="6_fj7co"]
+[ext_resource type="Script" path="res://Entities/Player/WallSlide.gd" id="7_e0753"]
 [ext_resource type="PackedScene" uid="uid://d014ofq0uti3s" path="res://Entities/hitbox_component.tscn" id="7_kkc7s"]
 [ext_resource type="Script" path="res://Entities/Player/StateDebug.gd" id="7_nb2wc"]
 
@@ -66,6 +67,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_f1xuq"]
 resource_name = "climb"
 length = 0.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -427,6 +429,9 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_o6ari")
 blend_point_2/pos = -1.0
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vcpb0"]
+animation = &"climb"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_83qm3"]
 animation = &"dead"
 
@@ -451,17 +456,23 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nq3s1"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mgnup"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j12ly"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cl2mi"]
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_2b6sa")
 states/Move/position = Vector2(476, 100.046)
+states/climb/node = SubResource("AnimationNodeAnimation_vcpb0")
+states/climb/position = Vector2(342.76, -18.1083)
 states/dead/node = SubResource("AnimationNodeAnimation_83qm3")
 states/dead/position = Vector2(668.56, 99.9458)
 states/double_jump/node = SubResource("AnimationNodeAnimation_65g3m")
 states/double_jump/position = Vector2(669, -18.0204)
 states/jump/node = SubResource("AnimationNodeAnimation_gl251")
 states/jump/position = Vector2(476.625, -17.9325)
-transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_krmsn"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_l7fa5"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_kcx6n"), "double_jump", "jump", SubResource("AnimationNodeStateMachineTransition_8xcww"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_6iod7"), "dead", "Move", SubResource("AnimationNodeStateMachineTransition_nq3s1")]
-graph_offset = Vector2(13.2599, -33.2658)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_krmsn"), "Move", "jump", SubResource("AnimationNodeStateMachineTransition_l7fa5"), "jump", "double_jump", SubResource("AnimationNodeStateMachineTransition_kcx6n"), "double_jump", "jump", SubResource("AnimationNodeStateMachineTransition_8xcww"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_6iod7"), "dead", "Move", SubResource("AnimationNodeStateMachineTransition_nq3s1"), "jump", "climb", SubResource("AnimationNodeStateMachineTransition_mgnup"), "climb", "jump", SubResource("AnimationNodeStateMachineTransition_j12ly")]
+graph_offset = Vector2(13.26, -54.1083)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_50ogp"]
 
@@ -504,12 +515,18 @@ animation_tree = NodePath("../AnimationTree")
 script = ExtResource("4_niits")
 air_state = NodePath("../Air")
 
-[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
+[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "wall_slide_state")]
 script = ExtResource("5_a5tc0")
 ground_state = NodePath("../Ground")
+wall_slide_state = NodePath("../WallSlide")
 
 [node name="Bump" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "air_state")]
 script = ExtResource("6_fj7co")
+ground_state = NodePath("../Ground")
+air_state = NodePath("../Air")
+
+[node name="WallSlide" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "air_state")]
+script = ExtResource("7_e0753")
 ground_state = NodePath("../Ground")
 air_state = NodePath("../Air")
 

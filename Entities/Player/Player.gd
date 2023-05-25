@@ -67,9 +67,8 @@ func _on_torso_hitbox_area_entered(area):
 func _on_feet_hitbox_area_entered(area):
 	if area is Hitbox:
 		if !(area.get_parent() is Player && area.get_parent() != self):
-			var hitbox: Hitbox = area
-			
-			area.collect()
+			state_machine.current_state = $CharacterStateMachine/Bump
+			print("Bump")
 		
 		else:
 			velocity.y = -250

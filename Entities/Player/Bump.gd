@@ -20,7 +20,6 @@ func state_process(delta):
 	character.speed = lerp(0.0, bump_speed, 0.05 * bump_inc_multiplier)
 	
 	bump_inc_multiplier += 0.8
-	print(character.speed)
 		
 	if character.velocity.x == 0 && character.velocity.y == 0:
 		is_bumped = false

@@ -7,6 +7,8 @@ class_name GroundState
 @export var jump_animation: String = "jump"
 
 func on_enter():
+	character.speed = 160.0
+	character.air_penalty = 0.75
 	playback.travel("Move")
 
 func state_process(delta):
