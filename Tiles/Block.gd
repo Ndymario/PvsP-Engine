@@ -20,6 +20,7 @@ func _on_below_hitbox_area_entered(area):
 			
 
 func _on_animation_tree_animation_finished(anim_name):
-	if current_block == BLOCK_TYPE.BRICK:
-		current_block = BLOCK_TYPE.EMPTY
-		sprite.frame = current_block
+	if anim_name == "bump":
+		if current_block == BLOCK_TYPE.BRICK or current_block == BLOCK_TYPE.POWER:
+			current_block = BLOCK_TYPE.EMPTY
+			sprite.frame = current_block
